@@ -7,6 +7,9 @@ import Login from './pages/Login/Login';
 // Styles
 import GlobalStyle from './global/styles';
 
+// Bootstrap style
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const App = () => {
   return (
     <>
