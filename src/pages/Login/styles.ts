@@ -12,7 +12,7 @@ export const PicDiv = styled.img`
   height: 100%;
 `
 
-export const ContentDiv = styled.div`
+export const ContentDiv = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,6 +41,10 @@ export const StyledInput = styled.input`
   width: 60%;
   height: 5%;
   margin-bottom: 6%;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const StyledMessage = styled(Link)`

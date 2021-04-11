@@ -1,6 +1,9 @@
+// React
+import { useState } from 'react';
+
 // Styles
-import { 
-  MainDiv, 
+import {
+  MainDiv,
   PicDiv,
   ContentDiv,
   StyledTitle,
@@ -14,22 +17,37 @@ import {
 import Picture from '../../assets/images/mclaren.jpg';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('')
+
   return (
     <MainDiv>
       <PicDiv src={Picture} alt="mclaren-720s" />
-      <ContentDiv>
-        <StyledTitle>ICar</StyledTitle>
+      <div>
+        <ContentDiv>
+          <StyledTitle>ICar</StyledTitle>
 
-        <StyledLabel>Email</StyledLabel>
-        <StyledInput />
+          <StyledLabel>Email</StyledLabel>
+          <StyledInput
+            onChange={event => setEmail(event.target.value)}
+            value={email}
+            type="email"
+            required
+          />
 
-        <StyledLabel>Password</StyledLabel>
-        <StyledInput />
+          <StyledLabel>Password</StyledLabel>
+          <StyledInput
+            onChange={event => setPassword(event.target.value)}
+            value={password}
+            type="password"
+            required
+          />
 
-        <StyledMessage to="forgot">Forgot password?</StyledMessage>
-        <StyledLoginBtn>Login</StyledLoginBtn>
+          <StyledMessage to="forgot">Forgot password?</StyledMessage>
+          <StyledLoginBtn type="submit">Login</StyledLoginBtn>
+        </ContentDiv>
 
-      </ContentDiv>
+      </div>
     </MainDiv>
   )
 }
