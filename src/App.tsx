@@ -1,8 +1,14 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Login from './pages/Login/Login';
 
 const App = () => {
   return (
-    <h1>Hello</h1>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/login" component={ Login } />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
