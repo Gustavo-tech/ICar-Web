@@ -5,11 +5,19 @@ export const MainDiv = styled.div`
   display: grid;
   grid-template-columns: 50vw 50vw;
   grid-template-rows: 100vh;
+
+  @media(max-width: 900px) {
+    grid-template-columns: 100vw;
+  }
 `;
 
 export const PicDiv = styled.img`
   width: 100%;
   height: 100%;
+
+  @media(max-width: 900px) {
+    display: none;
+  }
 `
 
 export const ContentDiv = styled.form`
@@ -39,7 +47,8 @@ export const StyledLabel = styled.label`
 export const StyledInput = styled.input`
   display: block;
   width: 60%;
-  height: 5%;
+  height: 2.5%;
+  padding: 1%;
   margin-bottom: 6%;
 
   &:focus {
