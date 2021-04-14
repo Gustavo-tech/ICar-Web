@@ -1,15 +1,24 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: 50vw 50vw;
   grid-template-rows: 100vh;
+
+  @media(max-width: 900px) {
+    grid-template-columns: 100vw;
+  }
 `;
 
 export const Presentation = styled.div`
   height: 100%;
   width: 100%;
   background-color: var(--black);
+
+  @media(max-width: 900px) {
+    display: none;
+  }
 `;
 
 export const Title = styled.h1`
@@ -31,7 +40,7 @@ export const DataDiv = styled.div`
   height: 100%;
   width: 100%;
   background-color: var(--red);
-`
+`;
 
 export const Form = styled.form`
   display: flex;
@@ -58,4 +67,17 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
+`;
+
+export const SubmitButton = styled.button`
+  width: 60%;
+  height: 7%;
+  margin-top: 5%;
+  border: none;
+  background-color: var(--white);
+`;
+
+export const RegisterOption = styled(Link)`
+  text-decoration: none;
+  color: var(--white);
 `;

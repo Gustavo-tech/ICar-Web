@@ -6,7 +6,9 @@ import {
   Input, 
   Label, 
   Presentation, 
-  Title 
+  Title,
+  SubmitButton,
+  RegisterOption
 } from "./styles"
 
 const Register = () => {
@@ -25,6 +27,9 @@ const Register = () => {
       <DataDiv>
         <Form>
           <Title>ICar</Title>
+          <b><RegisterOption to='User'>User</RegisterOption> / <RegisterOption to='company'>Company</RegisterOption></b>
+          <Label>CPF</Label>
+          <Input />
           <Label>Email</Label>
           <Input />
           <Label>Password</Label>
@@ -33,6 +38,8 @@ const Register = () => {
           <Input />
           <Label>City</Label>
           <Input />
+
+          <SubmitButton>Submit</SubmitButton>
         </Form>
       </DataDiv>
     </GridWrapper>
