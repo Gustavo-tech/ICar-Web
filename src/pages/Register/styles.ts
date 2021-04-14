@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button'
 
-export const GridWrapper = styled.div`
+export const Page = styled.div`
   display: grid;
   grid-template-columns: 50vw 50vw;
   grid-template-rows: 100vh;
@@ -11,7 +12,7 @@ export const GridWrapper = styled.div`
   }
 `;
 
-export const Presentation = styled.div`
+export const TextDiv = styled.div`
   height: 100%;
   width: 100%;
   background-color: var(--black);
@@ -19,65 +20,35 @@ export const Presentation = styled.div`
   @media(max-width: 900px) {
     display: none;
   }
-`;
+`
 
-export const Title = styled.h1`
-  font-family: 'Satisfy', cursive;
-  color: var(--white);
+export const WelcomeMessage = styled.h2`
+  color: white;
   text-align: center;
-  font-size: 72px;
-  margin: 1%;
-`;
+  font-family: 'Satisfy', cursive;
+  font-size: 70px;
+`
 
 export const Description = styled.p`
-  color: var(--white);
-  justify-content: center;
-  padding: 5%;
-  font-size: 18px;
+  text-align: center;
+  color: white;
+  padding: 4%;
 `;
 
-export const DataDiv = styled.div`
-  height: 100%;
+export const FormDiv = styled.div`
   width: 100%;
+  height: 100%;
   background-color: var(--red);
 `;
 
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+export const StyledLabel = styled(Form.Label)`
+  color: white;
 `;
 
-export const Label = styled.label`
-  font-family: 'Lobster', cursive;
-  color: var(--white);
-  width: 60%;
-  font-size: 1.3rem;
+export const AccountInformation = styled(Form.Text)`
+  color: white;
 `;
 
-export const Input = styled.input`
-  width: 60%;
-  height: 4%;
-  margin-bottom: 2%;
-  margin-top: 1%;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-export const SubmitButton = styled.button`
-  width: 60%;
-  height: 7%;
-  margin-top: 5%;
-  border: none;
+export const SubmitButton = styled(Button)`
   background-color: var(--white);
-`;
-
-export const RegisterOption = styled(Link)`
-  text-decoration: none;
-  color: var(--white);
 `;

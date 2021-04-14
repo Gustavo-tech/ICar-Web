@@ -1,12 +1,15 @@
-// React
+// react
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-// Pages
+// pages
 import Login from './pages/Login/Login';
 
-// Styles
+// styles
 import GlobalStyle from './global/styles';
 import Register from './pages/Register/Register';
+
+// bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   return (

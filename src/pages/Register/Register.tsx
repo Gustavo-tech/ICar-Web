@@ -1,84 +1,97 @@
 // react
 import { useState, useEffect } from 'react';
 
+// react bootstrap
+import { Col } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
+
 // styles
 import {
-  DataDiv,
   Description,
-  Form,
-  GridWrapper,
-  Input,
-  Label,
-  Presentation,
-  Title,
-  SubmitButton,
-  RegisterOption
-} from "./styles"
+  FormDiv,
+  Page, 
+  TextDiv, 
+  WelcomeMessage,
+  StyledLabel,
+  AccountInformation,
+  SubmitButton
+} from './styles';
 
-const Register = ({ location }: any) => {
-  const [userType, setUserType] = useState('user');
-
-  function getUserType(): string {
-    return location.pathname.replace('/register/', '');
-  }
-
-  useEffect(() => {
-    setUserType(getUserType);
-    console.log(userType)
-  }, [location])
-
-  const formTemplate = userType == 'user' ? (
-    <>
-      <Label>CPF</Label>
-      <Input />
-      <Label>Email</Label>
-      <Input />
-      <Label>Password</Label>
-      <Input />
-      <Label>Name</Label>
-      <Input />
-      <Label>City</Label>
-      <Input />
-    </>
-
-  ) : (
-    <>
-      <Label>CNPJ</Label>
-      <Input />
-      <Label>Name</Label>
-      <Input />
-      <Label>Email</Label>
-      <Input />
-      <Label>Password</Label>
-      <Input />
-    </>
-  )
-
+const Register = () => {
   return (
-    <GridWrapper>
-      <Presentation>
-        <Title>Welcome to ICar</Title>
-        <Description>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos earum reiciendis,
-          libero saepe quae facilis officiis nihil assumenda laborum aperiam minima consectetur,
-          dolore maxime ut quasi atque et cupiditate mollitia fuga illum incidunt a quos totam!
-          Beatae assumenda doloremque repellat voluptatem alias. Placeat accusantium doloribus aut,
-          magni eius aliquam assumenda!
-        </Description>
-      </Presentation>
-      <DataDiv>
+    <Page>
+      <TextDiv>
+        <Container>
+          <WelcomeMessage>Welcome to ICar</WelcomeMessage>
+          <Description>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Iste at non esse quas, ut laboriosam. Deserunt voluptatum
+             quos officia, unde ipsa facere dolores eaque esse, ducimus maxime
+            mollitia consequuntur explicabo.
+          </Description>
+        </Container>
+      </TextDiv>
+      <FormDiv>
         <Form>
-          <Title>ICar</Title>
-          <b
-            style={{
-              margin: '5%'
-            }}
-          ><RegisterOption to='/register/user'>User</RegisterOption> / <RegisterOption to='/register/company'>Company</RegisterOption></b>
-          { formTemplate }
-          <SubmitButton>Submit</SubmitButton>
+          <Container>
+            <WelcomeMessage>ICar</WelcomeMessage>
+            <Row className="justify-content-md-center">
+              <Col sm={12} lg={8}>
+                <Form.Group>
+                  <StyledLabel>CPF</StyledLabel>
+                  <Form.Control />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="justify-content-md-center">
+              <Col sm={12} lg={8}>
+                <Form.Group>
+                  <StyledLabel>Name</StyledLabel>
+                  <Form.Control />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="justify-content-md-center">
+              <Col sm={12} lg={8}>
+                <Form.Group>
+                  <StyledLabel>Email</StyledLabel>
+                  <Form.Control />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="justify-content-md-center">
+              <Col sm={12} lg={8}>
+                <Form.Group>
+                  <StyledLabel>Password</StyledLabel>
+                  <Form.Control />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="justify-content-md-center">
+              <Col sm={12} lg={8}>
+                <Form.Group>
+                  <StyledLabel>City</StyledLabel>
+                  <Form.Control />
+                  <AccountInformation>We will never share your account information</AccountInformation>
+                </Form.Group>
+              </Col>
+            </Row>
+          
+          <Row className="justify-content-md-center">
+            <Col md="auto">
+              <SubmitButton variant="outline-secondary">Submit</SubmitButton>
+            </Col>
+          </Row>
+          </Container>
         </Form>
-      </DataDiv>
-    </GridWrapper>
+      </FormDiv>
+    </Page>
   )
 }
 
