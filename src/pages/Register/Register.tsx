@@ -1,17 +1,59 @@
-import { 
-  DataDiv, 
-  Description, 
-  Form, 
-  GridWrapper, 
-  Input, 
-  Label, 
-  Presentation, 
+// react
+import { useState, useEffect } from 'react';
+
+// styles
+import {
+  DataDiv,
+  Description,
+  Form,
+  GridWrapper,
+  Input,
+  Label,
+  Presentation,
   Title,
   SubmitButton,
   RegisterOption
 } from "./styles"
 
-const Register = () => {
+const Register = ({ location }: any) => {
+  const [userType, setUserType] = useState('user');
+
+  function getUserType(): string {
+    return location.pathname.replace('/register/', '');
+  }
+
+  useEffect(() => {
+    setUserType(getUserType);
+    console.log(userType)
+  }, [location])
+
+  const formTemplate = userType == 'user' ? (
+    <>
+      <Label>CPF</Label>
+      <Input />
+      <Label>Email</Label>
+      <Input />
+      <Label>Password</Label>
+      <Input />
+      <Label>Name</Label>
+      <Input />
+      <Label>City</Label>
+      <Input />
+    </>
+
+  ) : (
+    <>
+      <Label>CNPJ</Label>
+      <Input />
+      <Label>Name</Label>
+      <Input />
+      <Label>Email</Label>
+      <Input />
+      <Label>Password</Label>
+      <Input />
+    </>
+  )
+
   return (
     <GridWrapper>
       <Presentation>
@@ -27,18 +69,12 @@ const Register = () => {
       <DataDiv>
         <Form>
           <Title>ICar</Title>
-          <b><RegisterOption to='User'>User</RegisterOption> / <RegisterOption to='company'>Company</RegisterOption></b>
-          <Label>CPF</Label>
-          <Input />
-          <Label>Email</Label>
-          <Input />
-          <Label>Password</Label>
-          <Input />
-          <Label>Name</Label>
-          <Input />
-          <Label>City</Label>
-          <Input />
-
+          <b
+            style={{
+              margin: '5%'
+            }}
+          ><RegisterOption to='/register/user'>User</RegisterOption> / <RegisterOption to='/register/company'>Company</RegisterOption></b>
+          { formTemplate }
           <SubmitButton>Submit</SubmitButton>
         </Form>
       </DataDiv>
