@@ -1,20 +1,26 @@
-// React
+// react
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-// Styles
+// react bootstrap
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+// styles
 import {
   MainDiv,
-  PicDiv,
-  ContentDiv,
-  StyledTitle,
-  StyledLabel,
-  StyledInput,
-  StyledMessage,
-  StyledLoginBtn
+  Picture,
+  FormDiv,
+  Icar,
+  Label,
+  ForgotPassword
 } from './styles'
 
 // Pictures
-import Picture from '../../assets/images/mclaren.jpg';
+import Mclaren from '../../assets/images/mclaren.jpg';
+import Button from 'react-bootstrap/esm/Button';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,32 +28,36 @@ const Login = () => {
 
   return (
     <MainDiv>
-      <PicDiv src={Picture} alt="mclaren-720s" />
-      <div>
-        <ContentDiv>
-          <StyledTitle>ICar</StyledTitle>
+      <Picture src={Mclaren} />
+      <FormDiv>
+        <Icar>ICar</Icar>
+        <Container>
+          <Row className="justify-content-md-center">
+            <Col lg={8}>
+              <Form.Group>
+                <Label>Email</Label>
+                <Form.Control />
+              </Form.Group>
+            </Col>
+          </Row>
 
-          <StyledLabel>Email</StyledLabel>
-          <StyledInput
-            onChange={event => setEmail(event.target.value)}
-            value={email}
-            type="email"
-            required
-          />
+          <Row className="justify-content-md-center">
+            <Col lg={8}>
+              <Form.Group>
+                <Label>Password</Label>
+                <Form.Control />
+                <ForgotPassword as={Link} to='/forgot'>Forgot your passoword?</ForgotPassword>
+              </Form.Group>
+            </Col>
+          </Row>
 
-          <StyledLabel>Password</StyledLabel>
-          <StyledInput
-            onChange={event => setPassword(event.target.value)}
-            value={password}
-            type="password"
-            required
-          />
-
-          <StyledMessage to="forgot">Forgot password?</StyledMessage>
-          <StyledLoginBtn type="submit">Login</StyledLoginBtn>
-        </ContentDiv>
-
-      </div>
+          <Row className="justify-content-md-center">
+            <Col>
+              <Button variant="light">Login</Button>
+            </Col>
+          </Row>
+        </Container>
+      </FormDiv>
     </MainDiv>
   )
 }
