@@ -25,6 +25,17 @@ import {
 const Register = ({ location }: any) => {
   const [userType, setUserType] = useState('user');
 
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // user info
+  const [cpf, setCpf] = useState('');
+
+  // company info
+  const [cnpj, setCnpj] = useState('');
+  
+
   function getUserType(): string {
     return location.pathname.replace('/register/', '');
   }
@@ -39,7 +50,11 @@ const Register = ({ location }: any) => {
         <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>CPF</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={cpf}
+              onChange={event => setCpf(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -48,7 +63,11 @@ const Register = ({ location }: any) => {
         <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Name</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={name}
+              onChange={event => setName(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -57,7 +76,12 @@ const Register = ({ location }: any) => {
         <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Email</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              type='email'
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -66,7 +90,12 @@ const Register = ({ location }: any) => {
         <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Password</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              type='password'
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -87,7 +116,11 @@ const Register = ({ location }: any) => {
         <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>CNPJ</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={cnpj}
+              onChange={event => setCnpj(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -96,7 +129,11 @@ const Register = ({ location }: any) => {
         <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Name</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={name}
+              onChange={event => setName(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -105,7 +142,12 @@ const Register = ({ location }: any) => {
         <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Email</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={email}
+              type='email'
+              onChange={event => setEmail(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -114,14 +156,18 @@ const Register = ({ location }: any) => {
         <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Password</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              type='password'
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
     </>
   )
   
-  console.log(userType)
   return (
     <Page>
       <TextDiv>
@@ -150,7 +196,13 @@ const Register = ({ location }: any) => {
             { formData }
             <Row className="justify-content-md-center">
               <Col md={8} lg={8} sm={12}>
-              <SubmitButton variant="outline-secondary" block>Submit</SubmitButton>
+              <SubmitButton 
+                variant="outline-secondary" 
+                block
+                type="submit"
+              >
+                Submit
+              </SubmitButton>
             </Col>
             </Row>
           </Container>
