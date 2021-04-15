@@ -41,4 +41,9 @@ export const Label = styled(Form.Label)`
 
 export const ForgotPassword = styled(Form.Text)`
   color: var(--white);
+
+  &:hover {
+    color: var(--black);
+    transition-duration: 1s;
+  }
 `;
