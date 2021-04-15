@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
+import Breadcrumb from 'react-bootstrap/Breadcrumb'
 
 export const Page = styled.div`
   display: grid;
@@ -51,4 +52,12 @@ export const AccountInformation = styled(Form.Text)`
 
 export const SubmitButton = styled(Button)`
   background-color: var(--white);
+`;
+
+export const Bread = styled(Breadcrumb)`
+  background-color: var(--red);
+`;
+
+export const BreadItem = styled(Breadcrumb.Item)`
+  color: var(--white);
 `;
