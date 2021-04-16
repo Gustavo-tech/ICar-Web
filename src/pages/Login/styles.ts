@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 
 export const MainDiv = styled.div`
@@ -44,5 +45,14 @@ export const ForgotPassword = styled(Form.Text)`
   &:hover {
     color: var(--black);
     transition-duration: 1s;
+  }
+`;
+
+export const RegisterLink = styled(Link)`
+  color: var(--white);
+  transition-duration: 0.5s;
+
+  &:hover {
+    color: var(--black);
   }
 `;

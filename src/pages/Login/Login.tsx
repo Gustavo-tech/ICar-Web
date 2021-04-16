@@ -15,7 +15,8 @@ import {
   FormDiv,
   Icar,
   Label,
-  ForgotPassword
+  ForgotPassword,
+  RegisterLink
 } from './styles'
 
 // Pictures
@@ -64,6 +65,12 @@ const Login = () => {
           <Row className="justify-content-md-center">
             <Col sm={12} md={8}>
               <Button variant="light" block>Login</Button>
+            </Col>
+          </Row>
+
+          <Row className="justify-content-md-center">
+            <Col sm={12} md="auto">
+              <RegisterLink to="/register">Create account</RegisterLink>
             </Col>
           </Row>
         </Container>
