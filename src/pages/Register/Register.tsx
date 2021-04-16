@@ -44,7 +44,7 @@ const Register = ({ location }: any) => {
     setUserType(getUserType())
   }, [location])
 
-  const formData = userType == 'user' ? (
+  const formData = userType === 'user' ? (
     <>
       <Row className="justify-content-md-center">
         <Col sm={12} md={8} lg={8}>

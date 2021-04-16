@@ -56,7 +56,7 @@ const Login = () => {
                   value={password}
                   onChange={event => setPassword(event.target.value)}
                 />
-                <ForgotPassword as={Link} to='/forgot'>Forgot your passoword?</ForgotPassword>
+                <ForgotPassword as={Link} to='/forgot'>Forgot your password?</ForgotPassword>
               </Form.Group>
             </Col>
           </Row>
