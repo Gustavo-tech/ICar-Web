@@ -1,11 +1,13 @@
 // react
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 // react bootstrap
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 // styles
 import {
@@ -17,13 +19,22 @@ import {
   StyledLabel,
   AccountInformation,
   SubmitButton,
-  Bread,
-  BreadItem
 } from './styles';
-import { Link } from 'react-router-dom';
+
 
 const Register = ({ location }: any) => {
   const [userType, setUserType] = useState('user');
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // user info
+  const [cpf, setCpf] = useState('');
+
+  // company info
+  const [cnpj, setCnpj] = useState('');
+  
 
   function getUserType(): string {
     return location.pathname.replace('/register/', '');
@@ -31,48 +42,66 @@ const Register = ({ location }: any) => {
 
   useEffect(() => {
     setUserType(getUserType())
-  }, location)
+  }, [location])
 
-  const formData = userType == 'user' ? (
+  const formData = userType === 'user' ? (
     <>
       <Row className="justify-content-md-center">
-        <Col sm={12} lg={8}>
+        <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>CPF</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={cpf}
+              onChange={event => setCpf(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
 
       <Row className="justify-content-md-center">
-        <Col sm={12} lg={8}>
+        <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Name</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={name}
+              onChange={event => setName(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
 
       <Row className="justify-content-md-center">
-        <Col sm={12} lg={8}>
+        <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Email</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              type='email'
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
 
       <Row className="justify-content-md-center">
-        <Col sm={12} lg={8}>
+        <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Password</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              type='password'
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
 
       <Row className="justify-content-md-center">
-        <Col sm={12} lg={8}>
+        <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>City</StyledLabel>
             <Form.Control />
@@ -84,43 +113,61 @@ const Register = ({ location }: any) => {
   ) : (
     <>
       <Row className="justify-content-md-center">
-        <Col sm={12} lg={8}>
+        <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>CNPJ</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={cnpj}
+              onChange={event => setCnpj(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
 
       <Row className="justify-content-md-center">
-        <Col sm={12} lg={8}>
+        <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Name</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={name}
+              onChange={event => setName(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
 
       <Row className="justify-content-md-center">
-        <Col sm={12} lg={8}>
+        <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Email</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              value={email}
+              type='email'
+              onChange={event => setEmail(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
 
       <Row className="justify-content-md-center">
-        <Col sm={12} lg={8}>
+        <Col sm={12} md={8} lg={8}>
           <Form.Group>
             <StyledLabel>Password</StyledLabel>
-            <Form.Control />
+            <Form.Control 
+              required
+              type='password'
+              value={password}
+              onChange={event => setPassword(event.target.value)}
+            />
           </Form.Group>
         </Col>
       </Row>
     </>
   )
-
+  
   return (
     <Page>
       <TextDiv>
@@ -139,17 +186,23 @@ const Register = ({ location }: any) => {
           <Container>
             <WelcomeMessage>ICar</WelcomeMessage>
             <Row className="justify-content-md-center">
-              <Col sm={12} lg={8}>
-                <Bread>
-                  <BreadItem as={Link} to='/register/user'>User</BreadItem>
-                  <BreadItem as={Link} to='/register/company'>Company</BreadItem>
-                </Bread>
+              <Col sm={12} lg={8} md={8}>
+                <Breadcrumb>
+                  <Breadcrumb.Item as={Link} href='/register/user' to='/register/user'>User</Breadcrumb.Item>
+                  <Breadcrumb.Item as={Link} href='/register/company' to='/register/company'>Company</Breadcrumb.Item>
+                </Breadcrumb>
               </Col>
             </Row>
             { formData }
             <Row className="justify-content-md-center">
-              <Col md="auto">
-              <SubmitButton variant="outline-secondary">Submit</SubmitButton>
+              <Col md={8} lg={8} sm={12}>
+              <SubmitButton 
+                variant="outline-secondary" 
+                block
+                type="submit"
+              >
+                Submit
+              </SubmitButton>
             </Col>
             </Row>
           </Container>
