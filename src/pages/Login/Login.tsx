@@ -16,7 +16,8 @@ import {
   Icar,
   Label,
   ForgotPassword,
-  RegisterLink
+  RegisterLink,
+  RegisterRow
 } from './styles'
 
 // Pictures
@@ -34,7 +35,7 @@ const Login = () => {
         <Icar>ICar</Icar>
         <Container>
           <Row className="justify-content-md-center">
-            <Col lg={8} md={8} sm={12}>
+            <Col lg={8}>
               <Form.Group>
                 <Label>Email</Label>
                 <Form.Control 
@@ -48,7 +49,7 @@ const Login = () => {
           </Row>
 
           <Row className="justify-content-md-center">
-            <Col lg={8} md={8} sm={12}>
+            <Col lg={8}>
               <Form.Group>
                 <Label>Password</Label>
                 <Form.Control 
@@ -63,16 +64,16 @@ const Login = () => {
           </Row>
 
           <Row className="justify-content-md-center">
-            <Col sm={12} md={8}>
+            <Col lg={8}>
               <Button variant="light" block>Login</Button>
             </Col>
           </Row>
 
-          <Row className="justify-content-md-center">
-            <Col sm={12} md="auto">
+          <RegisterRow className="justify-content-md-center">
+            <Col md="auto">
               <RegisterLink to="/register">Create account</RegisterLink>
             </Col>
-          </Row>
+          </RegisterRow>
         </Container>
       </FormDiv>
     </MainDiv>

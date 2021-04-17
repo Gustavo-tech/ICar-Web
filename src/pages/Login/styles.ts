@@ -1,24 +1,17 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 export const MainDiv = styled.div`
   display: grid;
   grid-template-columns: 50vw 50vw;
   grid-template-rows: 100vh;
-
-  @media(max-width: 900px) {
-    grid-template-columns: 100vw;
-  }
 `;
 
 export const Picture = styled.img`
   width: 100%;
   height: 100%;
-
-  @media(max-width: 900px) {
-    display: none;
-  }
 `;
 
 export const FormDiv = styled.div`
@@ -55,4 +48,8 @@ export const RegisterLink = styled(Link)`
   &:hover {
     color: var(--black);
   }
+`;
+
+export const RegisterRow = styled(Row)`
+  margin: 4%;
 `;
