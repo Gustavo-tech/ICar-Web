@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Container from 'react-bootstrap/Container'
+import { Link } from 'react-router-dom';
 
 export const Page = styled.div`
   background-color: var(--red);
@@ -23,5 +24,13 @@ export const FormContainer = styled(Container)`
 export const RegisterTitle = styled.h2`
   text-align: center;
   font-family: 'Satisfy', cursive;
+`;
 
+export const LoginMessage = styled(Link)`
+  color: white;
+  transition-duration: 0.5s;
+  
+  &:hover {
+    color: black;
+  }
 `;

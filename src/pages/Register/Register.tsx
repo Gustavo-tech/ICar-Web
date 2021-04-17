@@ -15,6 +15,7 @@ import {
   Logo,
   FormContainer,
   RegisterTitle,
+  LoginMessage,
 } from './styles';
 
 
@@ -188,6 +189,11 @@ const Register = ({ location }: any) => {
               </Row>
             </FormContainer>
           </Form>
+        </Col>
+      </Row>
+      <Row className="justify-content-md-center">
+        <Col lg={8}>
+          <LoginMessage to="/login">Already have an account?</LoginMessage>
         </Col>
       </Row>
     </Page >
