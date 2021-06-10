@@ -12,9 +12,12 @@ import GlobalStyle from './global/styles';
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// context
+import { ProfileProvider } from './contexts/ProfileContext';
+
 const App = () => {
   return (
-    <>
+    <ProfileProvider>
       <BrowserRouter>
         <Switch>
           <Route path="/login" component={Login} />
@@ -23,8 +26,8 @@ const App = () => {
         </Switch>
       </BrowserRouter>
       <GlobalStyle />
-    </>
-   
+    </ProfileProvider >
+
   );
 }
 
