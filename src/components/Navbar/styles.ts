@@ -31,7 +31,7 @@ export const NavItems = styled.div`
 `
 
 export const StyledToogle = styled(Dropdown.Toggle)`
-  background-color: transparent;
+  background-color: var(--red);
   border: 1px solid white;
 
   &:hover {

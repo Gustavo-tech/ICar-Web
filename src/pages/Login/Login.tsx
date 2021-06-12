@@ -1,6 +1,6 @@
 // react
 import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 // react bootstrap
 import Container from 'react-bootstrap/Container';
@@ -28,9 +28,12 @@ import Button from 'react-bootstrap/esm/Button';
 import { ProfileContext } from '../../contexts/ProfileContext'
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [emailInput, setemailInput] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useContext(ProfileContext);
+  const { email, login } = useContext(ProfileContext);
+
+  if (email !== '')
+    return <Redirect to='/' />
 
   return (
     <MainDiv>
@@ -40,17 +43,17 @@ const Login = () => {
         <Container>
           <Row className="justify-content-md-center">
             <Col lg={10}>
-              <Form onSubmit={e => login(e, email, password)}>
+              <Form onSubmit={e => login(e, emailInput, password)}>
                 <FormContainer>
                   <Row className="justify-content-md-center">
                     <Col lg={12}>
                       <Form.Group>
                         <Form.Label>Email</Form.Label>
                         <Form.Control
-                          type="email"
+                          type="emailInput"
                           required
-                          value={email}
-                          onChange={event => setEmail(event.target.value)}
+                          value={emailInput}
+                          onChange={event => setemailInput(event.target.value)}
                         />
                       </Form.Group>
                     </Col>
