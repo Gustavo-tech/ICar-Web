@@ -20,13 +20,17 @@ import {
   ContentDiv
 } from './styles'
 
-// Pictures
+// pictures
 import Mclaren from '../../assets/images/mclaren.jpg';
 import Button from 'react-bootstrap/esm/Button';
+
+// contexts
+import { ProfileContext } from '../../contexts/ProfileContext'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useContext(ProfileContext);
 
   return (
     <MainDiv>
@@ -36,7 +40,7 @@ const Login = () => {
         <Container>
           <Row className="justify-content-md-center">
             <Col lg={10}>
-              <Form>
+              <Form onSubmit={e => login(e, email, password)}>
                 <FormContainer>
                   <Row className="justify-content-md-center">
                     <Col lg={12}>

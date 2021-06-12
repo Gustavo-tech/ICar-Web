@@ -1,13 +1,12 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, FormEvent, ReactNode, useState } from 'react';
 import axios from 'axios';
 
 interface ProfileData {
   identification: string;
   email: string;
-  accountCreationDate: string;
   role: string;
   token: string;
-  login: (email: string, password: string) => void;
+  login: (e: FormEvent, email: string, password: string) => void;
 }
 
 interface ProfileProvider {
@@ -16,26 +15,30 @@ interface ProfileProvider {
 
 export const ProfileContext = createContext({} as ProfileData);
 
-export const ProfileProvider = ({ children, ...rest }: ProfileProvider) => {
+export const ProfileProvider = ({ children }: ProfileProvider) => {
   const [identification, setIdentification] = useState('');
   const [email, setEmail] = useState('');
-  const [accountCreationDate, setAccountCreationDate] = useState('');
   const [role, setRole] = useState('');
   const [token, setToken] = useState('');
 
-  function login(email: string, password: string, isCompany: boolean = false): void {
+  function login(e: FormEvent, email: string, password: string, isCompany: boolean = false): void {
+    e.preventDefault();
     const url: string = isCompany ? 'company' : 'user'
-    axios.post(`https://localhost:5001/authenticate/${url}`, {
-      email,
-      password
+    console.log(url)
+    axios.post(`https://localhost:5001/auth/authenticate/${url}`, {
+      email: email,
+      password: password
     }, {
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       }
     })
       .then(response => {
         if (response.status === 200) {
-          console.log(response.data)
+          setIdentification(response.data.identification);
+          setEmail(response.data.email);
+          setRole(response.data.role);
+          setToken(response.data.token);
         }
       })
   }
@@ -44,7 +47,6 @@ export const ProfileProvider = ({ children, ...rest }: ProfileProvider) => {
     <ProfileContext.Provider value={{
       identification,
       email,
-      accountCreationDate,
       role,
       token,
       login
