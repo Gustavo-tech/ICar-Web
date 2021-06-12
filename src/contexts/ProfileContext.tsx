@@ -1,5 +1,5 @@
 import { createContext, FormEvent, ReactNode, useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 interface ProfileData {
   identification: string;
@@ -21,24 +21,35 @@ export const ProfileProvider = ({ children }: ProfileProvider) => {
   const [role, setRole] = useState('');
   const [token, setToken] = useState('');
 
+  function setUserConfiguration(response: AxiosResponse) {
+    setIdentification(response.data.cpf);
+    setEmail(response.data.email);
+    setRole(response.data.role);
+    setToken(response.data.token);
+  }
+
+  function setCompanyConfiguration(response: AxiosResponse) {
+    setIdentification(response.data.cnpj);
+    setEmail(response.data.email);
+    setRole(response.data.role);
+    setToken(response.data.token);
+  }
+
   function login(e: FormEvent, email: string, password: string, isCompany: boolean = false): void {
     e.preventDefault();
     const url: string = isCompany ? 'company' : 'user'
-    console.log(url)
     axios.post(`https://localhost:5001/auth/authenticate/${url}`, {
       email: email,
       password: password
     }, {
-      headers: {
-        'Content-type': 'application/json',
-      }
+      headers: { 'Content-type': 'application/json' }
     })
       .then(response => {
         if (response.status === 200) {
-          setIdentification(response.data.identification);
-          setEmail(response.data.email);
-          setRole(response.data.role);
-          setToken(response.data.token);
+          if (isCompany)
+            setCompanyConfiguration(response)
+          else
+            setUserConfiguration(response)
         }
       })
   }
