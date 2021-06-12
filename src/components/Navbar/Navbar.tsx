@@ -1,4 +1,9 @@
+// React
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
+// React bootstrap
+import Dropdown from 'react-bootstrap/Dropdown';
 
 // styles
 import {
@@ -6,7 +11,7 @@ import {
   LogoWrapper,
   Logo,
   NavItems,
-  NavButton
+  StyledToogle
 } from './styles';
 
 const Navbar = () => {
@@ -16,8 +21,16 @@ const Navbar = () => {
         <Logo>ICar</Logo>
       </LogoWrapper>
       <NavItems>
-        <NavButton>Buy</NavButton>
-        <NavButton>Sell</NavButton>
+        <Dropdown>
+          <StyledToogle>Menu</StyledToogle>
+          <Dropdown.Menu>
+            <Dropdown.Item as={NavLink} to='/account'>Account</Dropdown.Item>
+            <Dropdown.Item as={NavLink} to='/account/cars'>Cars</Dropdown.Item>
+            <Dropdown.Item as={NavLink} to='/account/messages'>Messages</Dropdown.Item>
+            <Dropdown.Item as={NavLink} to='/account/news'>News</Dropdown.Item>
+            <Dropdown.Item>Logout</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </NavItems>
     </Nav >
   )

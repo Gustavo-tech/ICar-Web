@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 export const Nav = styled.nav`
   display: grid;
@@ -26,20 +27,15 @@ export const NavItems = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 100%;
+  padding: 1%;
 `
 
-export const NavButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--white);
-  height: 100%;
-  width: 5%;
-  cursor: pointer;
-  margin: 0 3%;
-  border: 3px solid transparent;
+export const StyledToogle = styled(Dropdown.Toggle)`
+  background-color: transparent;
+  border: 1px solid white;
 
   &:hover {
-    border-bottom: 3px solid var(--white);
+    color: var(--red);
+    background-color: var(--white);
   }
 `
