@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import NotFound from './pages/NotFound/NotFound';
+import Home from './pages/Home/Home';
 
 // styles
 import GlobalStyle from './global/styles';
@@ -20,6 +21,7 @@ const App = () => {
     <ProfileProvider>
       <BrowserRouter>
         <Switch>
+          <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path='*' component={NotFound} />
