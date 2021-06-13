@@ -5,7 +5,8 @@ import React from 'react';
 import {
   SidebarSettingsDiv,
   SidebarOption,
-  SidebarLink
+  OptionDiv,
+  IconDiv
 } from './styles'
 
 // Icons
@@ -16,12 +17,21 @@ const SidebarSettings = () => {
   return (
     <SidebarSettingsDiv>
       <SidebarOption to='/account/personal'>
-        <AccountCircle />
-        <span>Personal Info</span>
+        <IconDiv>
+          <AccountCircle />
+        </IconDiv>
+        <OptionDiv>
+          <span>Personal Info</span>
+        </OptionDiv>
       </SidebarOption>
+
       <SidebarOption to='/account/security'>
-        <SecurityIcon />
-        <span>Security</span>
+        <IconDiv>
+          <SecurityIcon />
+        </IconDiv>
+        <OptionDiv>
+          <span>Security</span>
+        </OptionDiv>
       </SidebarOption>
     </SidebarSettingsDiv>
   )

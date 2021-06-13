@@ -33,6 +33,22 @@ export const SidebarOption = styled(NavLink)`
   }
 `
 
+export const IconDiv = styled.div`
+  display: flex;
+  width: 20%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`
+
+export const OptionDiv = styled.div`
+  display: flex;
+  width: 80%;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: center;
+`
+
 export const SidebarLink = styled(NavLink)`
   color: var(--black);
   text-decoration: none;
