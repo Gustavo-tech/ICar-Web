@@ -7,6 +7,7 @@ import Register from './pages/Register/Register';
 import NotFound from './pages/NotFound/NotFound';
 import Home from './pages/Home/Home';
 import Account from './pages/Account/Account';
+import PersonalInfo from './pages/PersonalInfo/PersonalInfo';
 
 // styles
 import GlobalStyle from './global/styles';
@@ -23,10 +24,11 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path='/account' component={Account} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path='*' component={NotFound} />
+          <Route exact path='/account' component={Account} />
+          <Route exact path='/account/personal' component={PersonalInfo} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path='*' component={NotFound} />
         </Switch>
       </BrowserRouter>
       <GlobalStyle />
