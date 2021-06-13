@@ -1,15 +1,10 @@
-// React
 import React from 'react';
-
-// Styles
 import {
   SidebarSettingsDiv,
   SidebarOption,
   OptionDiv,
   IconDiv
 } from './styles'
-
-// Icons
 import { AccountCircle } from '@material-ui/icons';
 import SecurityIcon from '@material-ui/icons/Security';
 

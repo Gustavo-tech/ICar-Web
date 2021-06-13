@@ -1,15 +1,10 @@
-// react
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-// react bootstrap
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button'
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-
-// styles
 import {
   Page,
   Logo,

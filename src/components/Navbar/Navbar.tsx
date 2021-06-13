@@ -1,11 +1,6 @@
-// React
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
-// React bootstrap
 import Dropdown from 'react-bootstrap/Dropdown';
-
-// styles
 import {
   Nav,
   LogoWrapper,

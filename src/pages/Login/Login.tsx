@@ -1,14 +1,9 @@
-// react
 import { useState, useContext } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-
-// react bootstrap
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
-// styles
 import {
   MainDiv,
   Picture,
@@ -19,12 +14,8 @@ import {
   FormContainer,
   ContentDiv
 } from './styles'
-
-// pictures
 import Mclaren from '../../assets/images/mclaren.jpg';
 import Button from 'react-bootstrap/esm/Button';
-
-// contexts
 import { ProfileContext } from '../../contexts/ProfileContext'
 
 const Login = () => {

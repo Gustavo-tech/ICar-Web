@@ -1,15 +1,7 @@
-// React
 import React from 'react';
-
-// react bootstrap
 import ListGroup from 'react-bootstrap/ListGroup';
-
-// components
 import Navbar from '../../components/Navbar/Navbar';
 import SidebarSettings from '../../components/SidebarSettings/SidebarSettings';
-
-
-// styles
 import {
   Page,
   HeaderInfo,

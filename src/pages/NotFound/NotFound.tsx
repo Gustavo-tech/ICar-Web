@@ -1,7 +1,4 @@
-// react
 import React from 'react';
-
-// styles
 import { StatusCode } from './styles';
 
 const NotFound = () => {

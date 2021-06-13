@@ -12,24 +12,21 @@ import GlobalStyle from './global/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProfileProvider } from './contexts/ProfileContext';
 
-const App = () => {
-  return (
-    <ProfileProvider>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path='/account' component={Account} />
-          <Route exact path='/account/personal' component={PersonalInfo} />
-          <Route exact path='/account/security' component={Security} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path='*' component={NotFound} />
-        </Switch>
-      </BrowserRouter>
-      <GlobalStyle />
-    </ProfileProvider >
-
-  );
-}
+const App = () => (
+  <ProfileProvider>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path='/account' component={Account} />
+        <Route exact path='/account/personal' component={PersonalInfo} />
+        <Route exact path='/account/security' component={Security} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <Route exact path='*' component={NotFound} />
+      </Switch>
+    </BrowserRouter>
+    <GlobalStyle />
+  </ProfileProvider >
+);
 
 export default App;
