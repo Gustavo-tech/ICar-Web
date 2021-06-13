@@ -18,6 +18,10 @@ export const SidebarOption = styled(NavLink)`
   width: 100%;
   height: 3rem;
 
+  &:hover {
+    background-color: rgba(0,0,0,0.039);
+  }
+
   & > * {
     color: var(--black);
     fill: var(--black);
@@ -47,9 +51,4 @@ export const OptionDiv = styled.div`
   height: 100%;
   justify-content: flex-start;
   align-items: center;
-`
-
-export const SidebarLink = styled(NavLink)`
-  color: var(--black);
-  text-decoration: none;
 `
