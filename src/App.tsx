@@ -10,19 +10,25 @@ import GlobalStyle from './global/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProfileProvider } from './contexts/ProfileContext';
 
+import { clientConfig } from './configurations/open-id'
+
+import { AuthenticationProvider } from '@axa-fr/react-oidc-context';
+
 const App = () => (
-  <ProfileProvider>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path='/account' component={Account} />
-        <Route exact path='/account/personal' component={PersonalInfo} />
-        <Route exact path='/account/security' component={Security} />
-        <Route exact path='*' component={NotFound} />
-      </Switch>
-    </BrowserRouter>
-    <GlobalStyle />
-  </ProfileProvider >
+  <AuthenticationProvider configuration={clientConfig}>
+    <ProfileProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path='/account' component={Account} />
+          <Route exact path='/account/personal' component={PersonalInfo} />
+          <Route exact path='/account/security' component={Security} />
+          <Route exact path='*' component={NotFound} />
+        </Switch>
+      </BrowserRouter>
+      <GlobalStyle />
+    </ProfileProvider >
+  </AuthenticationProvider>
 );
 
 export default App;
