@@ -11,18 +11,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProfileProvider } from './contexts/ProfileContext';
 
 import { clientConfig } from './configurations/open-id'
-
-import { AuthenticationProvider } from '@axa-fr/react-oidc-context';
+import { AuthenticationProvider, withOidcSecure, InMemoryWebStorage, oidcLog } from '@axa-fr/react-oidc-context';
 
 const App = () => (
-  <AuthenticationProvider configuration={clientConfig}>
+  <AuthenticationProvider
+    configuration={clientConfig}
+    UserStore={InMemoryWebStorage}
+    isEnabled={true}
+    loggerLevel={oidcLog.DEBUG}
+  >
     <ProfileProvider>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path='/account' component={Account} />
-          <Route exact path='/account/personal' component={PersonalInfo} />
-          <Route exact path='/account/security' component={Security} />
+          <Route exact path="/" component={withOidcSecure(Home)} />
+          <Route exact path='/account' component={withOidcSecure(Account)} />
+          <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
+          <Route exact path='/account/security' component={withOidcSecure(Security)} />
           <Route exact path='*' component={NotFound} />
         </Switch>
       </BrowserRouter>
