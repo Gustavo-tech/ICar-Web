@@ -1,7 +1,5 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Login from './pages/Login/Login';
-import Register from './pages/Register/Register';
 import NotFound from './pages/NotFound/NotFound';
 import Home from './pages/Home/Home';
 import Account from './pages/Account/Account';
@@ -12,21 +10,28 @@ import GlobalStyle from './global/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProfileProvider } from './contexts/ProfileContext';
 
+import { clientConfig } from './configurations/open-id'
+import { AuthenticationProvider, withOidcSecure, InMemoryWebStorage, oidcLog } from '@axa-fr/react-oidc-context';
+
 const App = () => (
-  <ProfileProvider>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path='/account' component={Account} />
-        <Route exact path='/account/personal' component={PersonalInfo} />
-        <Route exact path='/account/security' component={Security} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path='*' component={NotFound} />
-      </Switch>
-    </BrowserRouter>
-    <GlobalStyle />
-  </ProfileProvider >
+  <AuthenticationProvider
+    configuration={clientConfig}
+    UserStore={InMemoryWebStorage}
+    isEnabled={true}
+  >
+    <ProfileProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={withOidcSecure(Home)} />
+          <Route exact path='/account' component={withOidcSecure(Account)} />
+          <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
+          <Route exact path='/account/security' component={withOidcSecure(Security)} />
+          <Route exact path='*' component={NotFound} />
+        </Switch>
+      </BrowserRouter>
+      <GlobalStyle />
+    </ProfileProvider >
+  </AuthenticationProvider>
 );
 
 export default App;

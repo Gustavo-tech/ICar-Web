@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Page
-} from './styles'
+} from './styles';
 import Navbar from '../../components/Navbar/Navbar';
 import SidebarSettings from '../../components/SidebarSettings/SidebarSettings';
 

@@ -1,5 +1,4 @@
 import { createContext, FormEvent, ReactNode, useState } from 'react';
-import { Redirect } from 'react-router';
 import axios, { AxiosResponse } from 'axios';
 
 interface ProfileData {
@@ -10,13 +9,13 @@ interface ProfileData {
   login: (e: FormEvent, email: string, password: string) => void;
 }
 
-interface ProfileProvider {
+interface ProfileProviderInterface {
   children: ReactNode;
 }
 
 export const ProfileContext = createContext({} as ProfileData);
 
-export const ProfileProvider = ({ children }: ProfileProvider) => {
+export const ProfileProvider = ({ children }: ProfileProviderInterface) => {
   const [identification, setIdentification] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
