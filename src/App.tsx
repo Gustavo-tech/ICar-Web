@@ -18,7 +18,6 @@ const App = () => (
     configuration={clientConfig}
     UserStore={InMemoryWebStorage}
     isEnabled={true}
-    loggerLevel={oidcLog.DEBUG}
   >
     <ProfileProvider>
       <BrowserRouter>
