@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
     --white: #FBF4F4;
     --black: #202731;
     --gray: #CABAAB;
+    --gray-background: #DADADA;
   }
 
   body {
