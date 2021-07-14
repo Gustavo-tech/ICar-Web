@@ -1,41 +1,47 @@
 import styled from 'styled-components';
-import Dropdown from 'react-bootstrap/Dropdown';
 
-export const Nav = styled.nav`
-  display: grid;
-  grid-template-columns: 30% 70%;
-  height: 5%;
+export const Navbar = styled.nav`
+  width: 100vw;
+  height: 10vh;
   background-color: var(--red);
-`;
-
-export const LogoWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: flex-start;
-  padding: 2%;
 `
 
-export const Logo = styled.h2`
+export const Brand = styled.h2`
   font-family: 'Satisfy', cursive;
   color: var(--white);
-  width: 100%;
+  padding: 1.5%;
+  margin: 0;
 `
 
-export const NavItems = styled.div`
+export const ButtonsDiv = styled.div`
   display: flex;
-  flex-direction: row;
+  width: 40%;
+  height: 100%;
   justify-content: flex-end;
   align-items: center;
-  width: 100%;
-  padding: 1%;
 `
 
-export const StyledToogle = styled(Dropdown.Toggle)`
-  background-color: var(--red);
-  border: 1px solid white;
+export const Button = styled.button`
+  height: 100%;
+  width: 12%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: var(--black);
+
+  & > svg {
+    fill: var(--white)
+  }
 
   &:hover {
-    color: var(--red);
     background-color: var(--white);
+
+    & > svg {
+      fill: var(--red)
+    }
   }
 `

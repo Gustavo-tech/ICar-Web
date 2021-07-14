@@ -1,34 +1,25 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import Dropdown from 'react-bootstrap/Dropdown';
+import EmailIcon from '@material-ui/icons/Email';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {
-  Nav,
-  LogoWrapper,
-  Logo,
-  NavItems,
-  StyledToogle
+  Brand,
+  Button,
+  ButtonsDiv,
+  Navbar
 } from './styles';
 
-const Navbar = () => {
+const AppNavbar = () => {
   return (
-    <Nav>
-      <LogoWrapper>
-        <Logo>ICar</Logo>
-      </LogoWrapper>
-      <NavItems>
-        <Dropdown>
-          <StyledToogle>Menu</StyledToogle>
-          <Dropdown.Menu>
-            <Dropdown.Item as={NavLink} to='/account'>Account</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to='/account/cars'>Cars</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to='/account/messages'>Messages</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to='/account/news'>News</Dropdown.Item>
-            <Dropdown.Item>Logout</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </NavItems>
-    </Nav >
+    <Navbar>
+      <Brand>ICar</Brand>
+      <ButtonsDiv>
+        <Button><EmailIcon /></Button>
+        <Button><DriveEtaIcon /></Button>
+        <Button><AccountCircleIcon /></Button>
+      </ButtonsDiv>
+    </Navbar>
   )
 }
 
-export default Navbar;
+export default AppNavbar;
