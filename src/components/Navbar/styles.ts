@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Navbar = styled.nav`
@@ -32,6 +33,7 @@ export const Button = styled.button`
   align-items: center;
   border: none;
   background-color: var(--black);
+  transition-duration: 0.5s;
 
   & > svg {
     fill: var(--white)

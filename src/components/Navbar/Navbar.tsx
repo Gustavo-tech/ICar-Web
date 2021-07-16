@@ -1,4 +1,3 @@
-import React from 'react';
 import EmailIcon from '@material-ui/icons/Email';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -9,17 +8,21 @@ import {
   Navbar
 } from './styles';
 
-const AppNavbar = () => {
-  return (
-    <Navbar>
-      <Brand>ICar</Brand>
-      <ButtonsDiv>
-        <Button><EmailIcon /></Button>
-        <Button><DriveEtaIcon /></Button>
-        <Button><AccountCircleIcon /></Button>
-      </ButtonsDiv>
-    </Navbar>
-  )
-}
+const AppNavbar = () => (
+  <Navbar>
+    <Brand>ICar</Brand>
+    <ButtonsDiv>
+      <Button>
+        <EmailIcon />
+      </Button>
+      <Button>
+        <DriveEtaIcon />
+      </Button>
+      <Button>
+        <AccountCircleIcon />
+      </Button>
+    </ButtonsDiv>
+  </Navbar>
+)
 
 export default AppNavbar;
