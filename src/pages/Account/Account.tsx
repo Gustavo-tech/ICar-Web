@@ -2,13 +2,13 @@ import React from 'react';
 import {
   Page
 } from './styles';
-import Navbar from '../../components/Navbar/Navbar';
 import SidebarSettings from '../../components/SidebarSettings/SidebarSettings';
+import AppNavbar from '../../components/Navbar/Navbar';
 
 const Account = () => {
   return (
     <>
-      <Navbar />
+      <AppNavbar />
       <Page>
         <SidebarSettings />
       </Page>

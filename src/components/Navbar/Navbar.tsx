@@ -7,22 +7,36 @@ import {
   ButtonsDiv,
   Navbar
 } from './styles';
+import MessagesModal from '../Modals/Messages/Messages';
+import { useContext } from 'react';
+import { ModalContext } from '../../contexts/ModalContext';
 
-const AppNavbar = () => (
-  <Navbar>
-    <Brand>ICar</Brand>
-    <ButtonsDiv>
-      <Button>
-        <EmailIcon />
-      </Button>
-      <Button>
-        <DriveEtaIcon />
-      </Button>
-      <Button>
-        <AccountCircleIcon />
-      </Button>
-    </ButtonsDiv>
-  </Navbar>
-)
+const AppNavbar = () => {
+  const { openModal } = useContext(ModalContext);
+
+  function openNavigationModal(type: string) {
+    openModal(type)
+  }
+
+  return (
+    <>
+      <MessagesModal />
+      <Navbar>
+        <Brand>ICar</Brand>
+        <ButtonsDiv>
+          <Button onClick={() => openNavigationModal('messages')}>
+            <EmailIcon />
+          </Button>
+          <Button onClick={() => openNavigationModal('cars')}>
+            <DriveEtaIcon />
+          </Button>
+          <Button onClick={() => openNavigationModal('account')}>
+            <AccountCircleIcon />
+          </Button>
+        </ButtonsDiv>
+      </Navbar>
+    </>
+  )
+}
 
 export default AppNavbar;

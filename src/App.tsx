@@ -9,10 +9,10 @@ import Redirecting from './pages/Redirecting/Redirecting';
 
 import GlobalStyle from './global/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ProfileProvider } from './contexts/ProfileContext';
 
 import { clientConfig } from './configurations/open-id'
 import { AuthenticationProvider, withOidcSecure, InMemoryWebStorage } from '@axa-fr/react-oidc-context';
+import ModalProvider from './contexts/ModalContext';
 
 const App = () => (
   <AuthenticationProvider
@@ -21,7 +21,7 @@ const App = () => (
     isEnabled={true}
     authenticating={Redirecting}
   >
-    <ProfileProvider>
+    <ModalProvider>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={withOidcSecure(Home)} />
@@ -32,7 +32,7 @@ const App = () => (
         </Switch>
       </BrowserRouter>
       <GlobalStyle />
-    </ProfileProvider >
+    </ModalProvider>
   </AuthenticationProvider>
 );
 
