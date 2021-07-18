@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import { ModalContext } from '../../../contexts/ModalContext';
-import ChatIcon from '@material-ui/icons/Chat';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import {
   Modal,
   ModalBody,
@@ -9,8 +9,9 @@ import {
   LinkButton
 } from './styles';
 import ModalHeader from '../ModalHeader/ModalHeader';
+import Security from '@material-ui/icons/Security';
 
-const MessagesModal = () => {
+const AccountModal = () => {
   const { isOpen, modalType, closeModal } = useContext(ModalContext);
 
   function handleModalClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -24,14 +25,18 @@ const MessagesModal = () => {
   return ReactDOM.createPortal(
     <>
       {
-        isOpen && modalType === "messages" &&
+        isOpen && modalType === "account" &&
         <ModalEffect onClick={closeModal}>
           <Modal onClick={e => handleModalClick(e)}>
-            <ModalHeader headerTitle="Messages" />
+            <ModalHeader headerTitle="Account" />
             <ModalBody>
-              <LinkButton to="/messages" onClick={() => handleLinkClick()}>
-                <ChatIcon />
-                <span>Messages</span>
+              <LinkButton to="/account/personal" onClick={() => handleLinkClick()}>
+                <AccountBoxIcon />
+                <span>Personal</span>
+              </LinkButton>
+              <LinkButton to="/account/security" onClick={() => handleLinkClick()}>
+                <Security />
+                <span>Security</span>
               </LinkButton>
             </ModalBody>
           </Modal>
@@ -42,4 +47,4 @@ const MessagesModal = () => {
   )
 }
 
-export default MessagesModal
+export default AccountModal

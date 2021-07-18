@@ -10,6 +10,7 @@ import {
 import MessagesModal from '../Modals/Messages/Messages';
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
+import AccountModal from '../Modals/Account/Account';
 
 const AppNavbar = () => {
   const { openModal } = useContext(ModalContext);
@@ -21,6 +22,7 @@ const AppNavbar = () => {
   return (
     <>
       <MessagesModal />
+      <AccountModal />
       <Navbar>
         <Brand>ICar</Brand>
         <ButtonsDiv>
