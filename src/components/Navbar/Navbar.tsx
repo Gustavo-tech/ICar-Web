@@ -11,6 +11,7 @@ import MessagesModal from '../Modals/Messages/Messages';
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
 import AccountModal from '../Modals/Account/Account';
+import CarsModal from '../Modals/Cars/Cars';
 
 const AppNavbar = () => {
   const { openModal } = useContext(ModalContext);
@@ -23,6 +24,7 @@ const AppNavbar = () => {
     <>
       <MessagesModal />
       <AccountModal />
+      <CarsModal />
       <Navbar>
         <Brand>ICar</Brand>
         <ButtonsDiv>
