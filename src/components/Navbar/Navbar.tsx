@@ -1,34 +1,46 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import Dropdown from 'react-bootstrap/Dropdown';
+import EmailIcon from '@material-ui/icons/Email';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {
-  Nav,
-  LogoWrapper,
-  Logo,
-  NavItems,
-  StyledToogle
+  Brand,
+  Button,
+  ButtonsDiv,
+  Navbar
 } from './styles';
+import MessagesModal from '../Modals/Messages/Messages';
+import { useContext } from 'react';
+import { ModalContext } from '../../contexts/ModalContext';
+import AccountModal from '../Modals/Account/Account';
+import CarsModal from '../Modals/Cars/Cars';
 
-const Navbar = () => {
+const AppNavbar = () => {
+  const { openModal } = useContext(ModalContext);
+
+  function openNavigationModal(type: string) {
+    openModal(type)
+  }
+
   return (
-    <Nav>
-      <LogoWrapper>
-        <Logo>ICar</Logo>
-      </LogoWrapper>
-      <NavItems>
-        <Dropdown>
-          <StyledToogle>Menu</StyledToogle>
-          <Dropdown.Menu>
-            <Dropdown.Item as={NavLink} to='/account'>Account</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to='/account/cars'>Cars</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to='/account/messages'>Messages</Dropdown.Item>
-            <Dropdown.Item as={NavLink} to='/account/news'>News</Dropdown.Item>
-            <Dropdown.Item>Logout</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </NavItems>
-    </Nav >
+    <>
+      <MessagesModal />
+      <AccountModal />
+      <CarsModal />
+      <Navbar>
+        <Brand>ICar</Brand>
+        <ButtonsDiv>
+          <Button onClick={() => openNavigationModal('messages')}>
+            <EmailIcon />
+          </Button>
+          <Button onClick={() => openNavigationModal('cars')}>
+            <DriveEtaIcon />
+          </Button>
+          <Button onClick={() => openNavigationModal('account')}>
+            <AccountCircleIcon />
+          </Button>
+        </ButtonsDiv>
+      </Navbar>
+    </>
   )
 }
 
-export default Navbar;
+export default AppNavbar;

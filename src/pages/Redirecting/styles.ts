@@ -6,7 +6,7 @@ export const Page = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--gray-background);
+  background-color: var(--black);
 `
 
 export const Content = styled.main`
@@ -29,7 +29,6 @@ export const Content = styled.main`
 
 export const Title = styled.h2`
   text-align: center;
-  /* color: var(--red); */
 `
 
 export const Description = styled.p`
