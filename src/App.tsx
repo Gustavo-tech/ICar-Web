@@ -13,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { clientConfig } from './configurations/open-id'
 import { AuthenticationProvider, withOidcSecure, InMemoryWebStorage } from '@axa-fr/react-oidc-context';
 import ModalProvider from './contexts/ModalContext';
+import Authenticating from './pages/Authenticating/Authenticating';
 
 const App = () => (
   <AuthenticationProvider
@@ -20,6 +21,7 @@ const App = () => (
     UserStore={InMemoryWebStorage}
     isEnabled={true}
     authenticating={Redirecting}
+    callbackComponentOverride={Authenticating}
   >
     <ModalProvider>
       <BrowserRouter>

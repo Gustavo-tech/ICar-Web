@@ -17,22 +17,24 @@ export const SidebarOption = styled(NavLink)`
   align-items: center;
   width: 100%;
   height: 3rem;
+  text-decoration: none !important;
+  background-color: var(--red);
 
   &:hover {
-    background-color: rgba(0,0,0,0.039);
+    background-color: var(--black);
   }
 
   & > * {
-    color: var(--black);
-    fill: var(--black);
+    color: var(--white);
+    fill: var(--white);
   }
 
   &.active {
-    background-color: #e8f0fe;
+    background-color: var(--black);
 
     & > * {
-      fill: var(--red);
-      color: var(--red);
+      fill: var(--white);
+      color: var(--white);
     }
   }
 `
