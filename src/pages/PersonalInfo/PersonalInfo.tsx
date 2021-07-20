@@ -22,7 +22,7 @@ const PersonalInfo = () => {
   const email = profile.email;
   useEffect(() => {
     getUserInfo('Bearer ' + access_token, email, (data) => {
-      setAccountCreationDate(data.accountCreationDate);
+      setAccountCreationDate(new Date(data.accountCreationDate).toDateString());
       setCpf(data.cpf);
     })
   }, [])
