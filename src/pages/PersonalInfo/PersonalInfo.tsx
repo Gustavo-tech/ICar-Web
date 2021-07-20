@@ -1,14 +1,13 @@
-import React from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Navbar from '../../components/Navbar/Navbar';
 import SidebarSettings from '../../components/SidebarSettings/SidebarSettings';
+import Form from 'react-bootstrap/Form';
 import {
   Page,
-  HeaderInfo,
-  PageDescription,
-  InfoListGroup,
-  InfoWrapper,
+  PageTitle,
+  Description
 } from './styles';
+import { Button, Container } from '@material-ui/core';
+import { Col, Row } from 'react-bootstrap';
 
 const PersonalInfo = () => {
   return (
@@ -16,14 +15,55 @@ const PersonalInfo = () => {
       <Navbar />
       <Page>
         <SidebarSettings />
-        <InfoWrapper>
-          <HeaderInfo>Personal info</HeaderInfo>
-          <PageDescription>Your basic information line name, email and account creation date.</PageDescription>
-          <InfoListGroup>
-            <ListGroup.Item>Name: </ListGroup.Item>
-            <ListGroup.Item>Account creation date: </ListGroup.Item>
-          </InfoListGroup>
-        </InfoWrapper>
+        <div>
+          <PageTitle>Account information</PageTitle>
+          <Description>Your account basic information</Description>
+          <Container
+            style={{
+              backgroundColor: 'var(--red)',
+              padding: '2%',
+              width: '80%',
+              borderRadius: '12px'
+            }}
+          >
+            <Row>
+              <Col>
+                <Form>
+                  <Form.Group>
+                    <Form.Label style={{ color: 'var(--white)' }}>Email</Form.Label>
+                    <Form.Control type="email" />
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label style={{ color: 'var(--white)' }}>Email</Form.Label>
+                    <Form.Control type="email" />
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label style={{ color: 'var(--white)' }}>Email</Form.Label>
+                    <Form.Control type="email" />
+                  </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label style={{ color: 'var(--white)' }}>Email</Form.Label>
+                    <Form.Control type="email" />
+                  </Form.Group>
+
+                  <Button
+                    style={{
+                      backgroundColor: 'var(--black)',
+                      color: 'var(--white)',
+                      float: 'right'
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+          </Container>
+
+        </div>
       </Page>
     </>
   )

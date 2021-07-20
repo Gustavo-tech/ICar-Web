@@ -7,7 +7,7 @@ export const SidebarSettingsDiv = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 2%;
+  background-color: var(--black);
 `
 
 export const SidebarOption = styled(NavLink)`
@@ -18,10 +18,10 @@ export const SidebarOption = styled(NavLink)`
   width: 100%;
   height: 3rem;
   text-decoration: none !important;
-  background-color: var(--red);
+  background-color: var(--black);
 
   &:hover {
-    background-color: var(--black);
+    background-color: var(--red);
   }
 
   & > * {
@@ -30,7 +30,7 @@ export const SidebarOption = styled(NavLink)`
   }
 
   &.active {
-    background-color: var(--black);
+    background-color: var(--red);
 
     & > * {
       fill: var(--white);
