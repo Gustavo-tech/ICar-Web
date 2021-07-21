@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Navbar = styled.nav`
-  width: 100vw;
+  width: 100%;
   height: 10vh;
   background-color: var(--red);
   display: flex;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Form from 'react-bootstrap/Form'
 
 export const PageTitle = styled.h2`
   text-align: center;
@@ -12,7 +11,7 @@ export const Description = styled.p`
 `
 
 export const Page = styled.div`
-  padding-top: 3%;
+  padding: 2% 0;
   display: grid;
   grid-template-columns: 20% 80%;
   background-color: var(--white);

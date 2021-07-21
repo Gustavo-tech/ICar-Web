@@ -51,6 +51,11 @@ const PersonalInfo = () => {
                 </Form.Group>
 
                 <Form.Group>
+                  <Form.Label style={{ color: 'var(--white)' }}>Phone</Form.Label>
+                  <Form.Control disabled value={profile.phone_number} />
+                </Form.Group>
+
+                <Form.Group>
                   <Form.Label style={{ color: 'var(--white)' }}>Email</Form.Label>
                   <Form.Control disabled value={profile.email} />
                 </Form.Group>
