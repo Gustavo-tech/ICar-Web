@@ -10,6 +10,8 @@ import {
 } from './styles';
 import ModalHeader from '../ModalHeader/ModalHeader';
 import Security from '@material-ui/icons/Security';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { serverUrl } from '../../../constants/constants';
 
 const AccountModal = () => {
   const { isOpen, modalType, closeModal } = useContext(ModalContext);
@@ -37,6 +39,10 @@ const AccountModal = () => {
               <LinkButton to="/account/security" onClick={() => handleLinkClick()}>
                 <Security />
                 <span>Security</span>
+              </LinkButton>
+              <LinkButton to={serverUrl + "auth/logout"} onClick={() => window.location.replace(serverUrl + "/auth/logout")}>
+                <ExitToAppIcon />
+                <span>Logout</span>
               </LinkButton>
             </ModalBody>
           </Modal>

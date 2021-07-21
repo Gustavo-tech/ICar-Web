@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import NotFound from './pages/NotFound/NotFound';
 import Home from './pages/Home/Home';
-import Account from './pages/Account/Account';
 import PersonalInfo from './pages/PersonalInfo/PersonalInfo';
 import Security from './pages/Security/Security';
 import Redirecting from './pages/Redirecting/Redirecting';
@@ -13,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { clientConfig } from './configurations/open-id'
 import { AuthenticationProvider, withOidcSecure, InMemoryWebStorage } from '@axa-fr/react-oidc-context';
 import ModalProvider from './contexts/ModalContext';
+import Authenticating from './pages/Authenticating/Authenticating';
 
 const App = () => (
   <AuthenticationProvider
@@ -20,12 +20,12 @@ const App = () => (
     UserStore={InMemoryWebStorage}
     isEnabled={true}
     authenticating={Redirecting}
+    callbackComponentOverride={Authenticating}
   >
     <ModalProvider>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={withOidcSecure(Home)} />
-          <Route exact path='/account' component={withOidcSecure(Account)} />
           <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
           <Route exact path='/account/security' component={withOidcSecure(Security)} />
           <Route exact path='*' component={NotFound} />
