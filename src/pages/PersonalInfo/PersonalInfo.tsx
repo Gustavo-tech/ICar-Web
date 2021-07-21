@@ -38,7 +38,7 @@ const PersonalInfo = () => {
   ) : (
     <div>
       <PageTitle>Account information</PageTitle>
-      <Description>Your account basic information</Description>
+      <Description>Your basic account information</Description>
       <Container
         style={{
           backgroundColor: 'var(--red)',

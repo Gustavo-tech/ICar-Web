@@ -26,7 +26,7 @@ const AppNavbar = () => {
       <AccountModal />
       <CarsModal />
       <Navbar>
-        <Brand>ICar</Brand>
+        <Brand to="/">ICar</Brand>
         <ButtonsDiv>
           <Button onClick={() => openNavigationModal('messages')}>
             <EmailIcon />
