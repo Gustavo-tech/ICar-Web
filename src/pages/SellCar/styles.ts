@@ -12,7 +12,7 @@ export const Page = styled.div`
 export const FormContainer = styled.section`
   background-color: white;
   border-radius: 12px;
-  padding: 3%;
+  padding: 2%;
   width: 80%;
   height: 100%;
 `
