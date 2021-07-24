@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 import {
   SidebarSettingsDiv,
   SidebarOption,
   OptionDiv,
   IconDiv
 } from './styles'
-import { AccountCircle } from '@material-ui/icons';
-import SecurityIcon from '@material-ui/icons/Security';
+import { AccountCircle } from '@material-ui/icons'
+import SecurityIcon from '@material-ui/icons/Security'
 
 const SidebarSettings = () => {
   return (
@@ -32,4 +32,4 @@ const SidebarSettings = () => {
   )
 }
 
-export default SidebarSettings;
+export default SidebarSettings

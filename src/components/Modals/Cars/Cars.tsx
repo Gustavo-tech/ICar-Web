@@ -1,20 +1,19 @@
-import React, { useContext } from 'react';
-import ReactDOM from 'react-dom';
-import { ModalContext } from '../../../contexts/ModalContext';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import React, { useContext } from 'react'
+import ReactDOM from 'react-dom'
+import { ModalContext } from '../../../contexts/ModalContext'
 import {
   Modal,
   ModalBody,
   ModalEffect,
   LinkButton
-} from './styles';
-import ModalHeader from '../ModalHeader/ModalHeader';
-import PaymentIcon from '@material-ui/icons/Payment';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+} from './styles'
+import ModalHeader from '../ModalHeader/ModalHeader'
+import PaymentIcon from '@material-ui/icons/Payment'
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 
 const CarsModal = () => {
-  const { isOpen, modalType, closeModal } = useContext(ModalContext);
+  const { isOpen, modalType, closeModal } = useContext(ModalContext)
 
   function handleModalClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     event.stopPropagation()

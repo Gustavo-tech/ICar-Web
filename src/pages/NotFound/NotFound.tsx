@@ -1,5 +1,5 @@
-import React from 'react';
-import { StatusCode } from './styles';
+import React from 'react'
+import { StatusCode } from './styles'
 
 const NotFound = () => {
   return (

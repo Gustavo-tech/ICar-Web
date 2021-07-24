@@ -16,17 +16,17 @@ interface ModalProvider {
 }
 
 const ModalProvider = ({ children }: ModalProvider) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [modalType, setModalType] = useState('');
+  const [isOpen, setIsOpen] = useState(false)
+  const [modalType, setModalType] = useState('')
 
   function openModal(type: string) {
-    setIsOpen(true);
-    setModalType(type);
+    setIsOpen(true)
+    setModalType(type)
   }
 
   function closeModal() {
-    setIsOpen(false);
-    setModalType('');
+    setIsOpen(false)
+    setModalType('')
   }
 
   return (
@@ -41,4 +41,4 @@ const ModalProvider = ({ children }: ModalProvider) => {
   )
 }
 
-export default ModalProvider;
+export default ModalProvider

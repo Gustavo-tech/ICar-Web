@@ -30,21 +30,21 @@ const SellCar = () => {
   const [city, setCity] = useState('')
 
   function onAddPictureClick() {
-    const inputElement = document.getElementById('add-picture-input');
+    const inputElement = document.getElementById('add-picture-input')
     inputElement?.click()
   }
 
   function onPictureSelected(event: React.ChangeEvent<HTMLInputElement>) {
-    const inputElement = event.target;
-    const file: File = inputElement.files![0];
+    const inputElement = event.target
+    const file: File = inputElement.files![0]
 
-    let fr: FileReader = new FileReader();
+    let fr: FileReader = new FileReader()
     fr.onload = () => {
-      let newCarPics = [...carPictures];
-      newCarPics.push(fr.result?.toString()!);
-      setCarPictures(newCarPics);
+      let newCarPics = [...carPictures]
+      newCarPics.push(fr.result?.toString()!)
+      setCarPictures(newCarPics)
     }
-    fr.readAsDataURL(file);
+    fr.readAsDataURL(file)
   }
 
   return (

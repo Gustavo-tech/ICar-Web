@@ -1,33 +1,33 @@
-import Navbar from '../../components/Navbar/Navbar';
-import SidebarSettings from '../../components/SidebarSettings/SidebarSettings';
-import Form from 'react-bootstrap/Form';
+import Navbar from '../../components/Navbar/Navbar'
+import SidebarSettings from '../../components/SidebarSettings/SidebarSettings'
+import Form from 'react-bootstrap/Form'
 import {
   Page,
   PageTitle,
   Description,
   SpinnerDiv
-} from './styles';
-import { Button, Container } from '@material-ui/core';
-import { Col, Row, Spinner } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import { getUserInfo } from '../../client/account/get';
-import { useReactOidc } from '@axa-fr/react-oidc-context';
+} from './styles'
+import { Button, Container } from '@material-ui/core'
+import { Col, Row, Spinner } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { getUserInfo } from '../../client/account/get'
+import { useReactOidc } from '@axa-fr/react-oidc-context'
 
 const PersonalInfo = () => {
-  const { oidcUser } = useReactOidc();
-  const { profile, access_token } = oidcUser;
+  const { oidcUser } = useReactOidc()
+  const { profile, access_token } = oidcUser
 
-  const [accountCreationDate, setAccountCreationDate] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [accountCreationDate, setAccountCreationDate] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const email = profile.email;
+  const email = profile.email
   useEffect(() => {
     setLoading(true)
     getUserInfo('Bearer ' + access_token, email, (data) => {
-      setAccountCreationDate(new Date(data.accountCreationDate).toDateString());
-      setCpf(data.cpf);
-      setLoading(false);
+      setAccountCreationDate(new Date(data.accountCreationDate).toDateString())
+      setCpf(data.cpf)
+      setLoading(false)
     })
   }, [])
 
@@ -100,4 +100,4 @@ const PersonalInfo = () => {
   )
 }
 
-export default PersonalInfo;
+export default PersonalInfo
