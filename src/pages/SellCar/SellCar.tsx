@@ -8,6 +8,7 @@ import {
   PicturesWrapper,
   SubmitButton
 } from './styles';
+import { Col, Container, Form, Row } from 'react-bootstrap';
 
 const SellCar = () => {
   const [carPictures, setCarPictures] = useState<string[]>([])
@@ -35,7 +36,7 @@ const SellCar = () => {
       <AppNavbar />
       <Page>
         <FormContainer>
-          <form>
+          <Form>
             <input
               id="add-picture-input"
               type="file"
@@ -55,8 +56,129 @@ const SellCar = () => {
               </AddPictureButton>
             </PicturesWrapper>
 
+            <Container style={{ margin: '4% 0' }}>
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Car Plate</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Maker</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Model</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Make Date</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Maked Date</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Kilometers Traveled</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Price</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Accepts Change</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Ipva Is Paid</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Is Licensed</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Is Armored</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Message</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Color</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>Type of exchange</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Label>City</Form.Label>
+                    <Form.Control />
+                  </Form.Group>
+                </Col>
+              </Row>
+            </Container>
+
             <SubmitButton type="submit">Submit</SubmitButton>
-          </form>
+          </Form>
         </FormContainer>
       </Page>
     </>
