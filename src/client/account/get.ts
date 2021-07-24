@@ -1,11 +1,11 @@
-import axios from "axios";
-import { apiUrl } from "../../constants/constants";
+import axios from "axios"
+import { apiUrl } from "../../constants/constants"
 
 interface userInfoResponse {
-  email: string;
-  cpf: string;
-  accountCreationDate: string;
-  userName: string;
+  email: string
+  cpf: string
+  accountCreationDate: string
+  userName: string
 }
 
 export function getUserInfo(token: string, email?: string, callback?: (data: userInfoResponse) => void): void {

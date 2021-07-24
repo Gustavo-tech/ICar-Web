@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -14,6 +14,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     background-color: var(--white);
   }
+
+  button {
+    border: none;
+  }
 `
 
-export default GlobalStyle;
+export default GlobalStyle

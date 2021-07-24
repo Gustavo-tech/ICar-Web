@@ -1,12 +1,11 @@
-import React from 'react';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-
+import React from 'react'
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount'
 import {
   Content,
   Description,
   Page,
   Title
-} from './styles';
+} from './styles'
 
 const Authenticating = () => {
   return (

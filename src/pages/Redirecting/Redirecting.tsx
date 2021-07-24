@@ -1,12 +1,12 @@
-import React from 'react';
-import DirectionsIcon from '@material-ui/icons/Directions';
+import React from 'react'
+import DirectionsIcon from '@material-ui/icons/Directions'
 
 import {
   Content,
   Description,
   Page,
   Title
-} from './styles';
+} from './styles'
 
 const Redirecting = () => {
   return (
