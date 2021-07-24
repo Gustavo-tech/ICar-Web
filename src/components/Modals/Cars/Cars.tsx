@@ -36,7 +36,7 @@ const CarsModal = () => {
                 <DashboardIcon />
                 <span>My cars</span>
               </LinkButton>
-              <LinkButton to="/account/security" onClick={() => handleLinkClick()}>
+              <LinkButton to="/car/sell" onClick={() => handleLinkClick()}>
                 <MonetizationOnIcon />
                 <span>Sell</span>
               </LinkButton>

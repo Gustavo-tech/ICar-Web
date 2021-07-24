@@ -14,6 +14,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     background-color: var(--white);
   }
+
+  button {
+    border: none;
+  }
 `
 
 export default GlobalStyle;
