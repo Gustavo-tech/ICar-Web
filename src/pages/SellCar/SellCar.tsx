@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
-import AppNavbar from '../../components/Navbar/Navbar'
 import AddIcon from '@material-ui/icons/Add'
+import React, { useState } from 'react'
+import { Col, Container, Form, Row } from 'react-bootstrap'
+import AppNavbar from '../../components/Navbar/Navbar'
+import { capitalizeText } from '../../utilities/string-utilities'
 import {
   AddPictureButton,
   FormContainer,
@@ -8,10 +10,19 @@ import {
   PicturesWrapper,
   SubmitButton
 } from './styles'
-import { Col, Container, Form, Row } from 'react-bootstrap'
 
 const SellCar = () => {
   const [carPictures, setCarPictures] = useState<string[]>([])
+
+  const [plateIsInvalid, setPlateIsInvalid] = useState(false)
+  const [makerIsInvalid, setMakerIsInvalid] = useState(false)
+  const [modelIsInvalid, setModelIsInvalid] = useState(false)
+  const [cityIsInvalid, setCityIsInvalid] = useState(false)
+
+  const [plateIsValid, setPlateIsValid] = useState(false)
+  const [makerIsValid, setMakerIsValid] = useState(false)
+  const [modelIsValid, setModelIsValid] = useState(false)
+  const [cityIsValid, setCityIsValid] = useState(false)
 
   const [plate, setPlate] = useState('')
   const [maker, setMaker] = useState('')
@@ -20,13 +31,14 @@ const SellCar = () => {
   const [makedDate, setMakedDate] = useState(new Date().getFullYear() + 1)
   const [kilometersTraveled, setKilometersTraveled] = useState(0.0)
   const [price, setPrice] = useState(1000.00)
-  const [acceptsChange, setAcceptsChange] = useState('')
-  const [ipvaIsPaid, setipvaIsPaid] = useState('')
-  const [isLicensed, setisLicensed] = useState('')
-  const [isArmored, setIsArmored] = useState('')
+  const [acceptsChange, setAcceptsChange] = useState(false)
+  const [ipvaIsPaid, setipvaIsPaid] = useState(false)
+  const [isLicensed, setisLicensed] = useState(false)
+  const [isArmored, setIsArmored] = useState(false)
   const [message, setMessage] = useState('')
   const [color, setColor] = useState('')
   const [typeOfExchange, setTypeOfExchange] = useState('')
+  const [typeOfGasoline, setTypeOfGasoline] = useState('flex')
   const [city, setCity] = useState('')
 
   function onAddPictureClick() {
@@ -45,6 +57,36 @@ const SellCar = () => {
       setCarPictures(newCarPics)
     }
     fr.readAsDataURL(file)
+  }
+
+  function handlePlateChange(value: string): void {
+    value = value.toUpperCase()
+    setPlate(value)
+
+    let regExp = new RegExp('[A-Z]{3}[-][0-9]{4}')
+
+    if (regExp.test(value)) {
+      setPlateIsValid(true)
+      setPlateIsInvalid(false)
+    }
+    else {
+      setPlateIsValid(false)
+      setPlateIsInvalid(true)
+    }
+  }
+
+  function handleNameChange(value: string, setValue: (value: string) => void, minimumLength: Number,
+    trueFunction: () => void, falseFunction: () => void): void {
+    value = capitalizeText(value)
+    setValue(value)
+
+    if (value.length >= minimumLength) {
+      trueFunction()
+    }
+
+    else {
+      falseFunction()
+    }
   }
 
   return (
@@ -80,7 +122,9 @@ const SellCar = () => {
                     <Form.Control
                       placeholder="Type the plate of your car using the XXX-0000 format"
                       value={plate}
-                      onChange={e => setPlate(e.target.value)}
+                      isValid={plateIsValid}
+                      isInvalid={plateIsInvalid}
+                      onChange={e => handlePlateChange(e.target.value)}
                     />
                   </Form.Group>
                 </Col>
@@ -91,9 +135,17 @@ const SellCar = () => {
                   <Form.Group>
                     <Form.Label>Maker</Form.Label>
                     <Form.Control
+                      isValid={makerIsValid}
+                      isInvalid={makerIsInvalid}
                       placeholder="Type the maker of your car"
                       value={maker}
-                      onChange={e => setMaker(e.target.value)}
+                      onChange={e => handleNameChange(e.target.value, (value) => setMaker(value), 3, () => {
+                        setMakerIsValid(true)
+                        setMakerIsInvalid(false)
+                      }, () => {
+                        setMakerIsValid(false)
+                        setMakerIsInvalid(true)
+                      })}
                     />
                   </Form.Group>
                 </Col>
@@ -102,9 +154,18 @@ const SellCar = () => {
                   <Form.Group>
                     <Form.Label>Model</Form.Label>
                     <Form.Control
+                      isValid={modelIsValid}
+                      isInvalid={modelIsInvalid}
                       placeholder="Type the model of your car"
                       value={model}
-                      onChange={e => setModel(e.target.value)}
+                      onChange={e => handleNameChange(e.target.value, (value) => setModel(value), 2,
+                        () => {
+                          setModelIsValid(true)
+                          setModelIsInvalid(false)
+                        }, () => {
+                          setModelIsValid(false)
+                          setModelIsInvalid(true)
+                        })}
                     />
                   </Form.Group>
                 </Col>
@@ -190,10 +251,35 @@ const SellCar = () => {
 
                 <Col>
                   <Form.Group>
+                    <Form.Label>Gasoline type</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={typeOfGasoline}
+                      onChange={e => setTypeOfGasoline(e.target.value)}
+                    >
+                      <option>Flex</option>
+                      <option>Gasoline</option>
+                      <option>Diesel</option>
+                      <option>Eletric</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
                     <Form.Label>City</Form.Label>
                     <Form.Control
                       value={city}
-                      onChange={e => setCity(e.target.value)}
+                      isValid={cityIsValid}
+                      isInvalid={cityIsInvalid}
+                      onChange={e => handleNameChange(e.target.value, (value) => setCity(value), 2,
+                        () => {
+                          setCityIsValid(true)
+                          setCityIsInvalid(false)
+                        }, () => {
+                          setCityIsValid(false)
+                          setCityIsInvalid(true)
+                        })}
                     />
                   </Form.Group>
                 </Col>
@@ -218,8 +304,9 @@ const SellCar = () => {
                 <Col>
                   <Form.Group>
                     <Form.Check
+                      checked={acceptsChange}
                       label="I Accept Change"
-                      onChange={e => setAcceptsChange(e.target.value)}
+                      onChange={e => setAcceptsChange(e.target.checked)}
                     />
                   </Form.Group>
                 </Col>
@@ -227,8 +314,9 @@ const SellCar = () => {
                 <Col>
                   <Form.Group>
                     <Form.Check
+                      checked={ipvaIsPaid}
                       label="Ipva Is Paid"
-                      onChange={e => setipvaIsPaid(e.target.value)}
+                      onChange={e => setipvaIsPaid(e.target.checked)}
                     />
                   </Form.Group>
                 </Col>
@@ -236,8 +324,9 @@ const SellCar = () => {
                 <Col>
                   <Form.Group>
                     <Form.Check
+                      checked={isLicensed}
                       label="The Car Is Licensed"
-                      onChange={e => setisLicensed(e.target.value)}
+                      onChange={e => setisLicensed(e.target.checked)}
                     />
                   </Form.Group>
                 </Col>
@@ -245,8 +334,9 @@ const SellCar = () => {
                 <Col>
                   <Form.Group>
                     <Form.Check
+                      checked={isArmored}
                       label="The Car Is Armored"
-                      onChange={e => setIsArmored(e.target.value)}
+                      onChange={e => setIsArmored(e.target.checked)}
                     />
                   </Form.Group>
                 </Col>
