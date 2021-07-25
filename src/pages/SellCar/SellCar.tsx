@@ -16,10 +16,10 @@ const SellCar = () => {
   const [plate, setPlate] = useState('')
   const [maker, setMaker] = useState('')
   const [model, setModel] = useState('')
-  const [makeDate, setMakeDate] = useState('')
-  const [makedDate, setMakedDate] = useState('')
-  const [kilometersTraveled, setKilometersTraveled] = useState('')
-  const [price, setPrice] = useState('')
+  const [makeDate, setMakeDate] = useState(new Date().getFullYear())
+  const [makedDate, setMakedDate] = useState(new Date().getFullYear() + 1)
+  const [kilometersTraveled, setKilometersTraveled] = useState(0.0)
+  const [price, setPrice] = useState(1000.00)
   const [acceptsChange, setAcceptsChange] = useState('')
   const [ipvaIsPaid, setipvaIsPaid] = useState('')
   const [isLicensed, setisLicensed] = useState('')
@@ -77,7 +77,11 @@ const SellCar = () => {
                 <Col>
                   <Form.Group>
                     <Form.Label>Car Plate</Form.Label>
-                    <Form.Control onChange={e => setPlate(e.target.value)} />
+                    <Form.Control
+                      placeholder="Type the plate of your car using the XXX-0000 format"
+                      value={plate}
+                      onChange={e => setPlate(e.target.value)}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -86,14 +90,22 @@ const SellCar = () => {
                 <Col>
                   <Form.Group>
                     <Form.Label>Maker</Form.Label>
-                    <Form.Control onChange={e => setMaker(e.target.value)} />
+                    <Form.Control
+                      placeholder="Type the maker of your car"
+                      value={maker}
+                      onChange={e => setMaker(e.target.value)}
+                    />
                   </Form.Group>
                 </Col>
 
                 <Col>
                   <Form.Group>
                     <Form.Label>Model</Form.Label>
-                    <Form.Control onChange={e => setModel(e.target.value)} />
+                    <Form.Control
+                      placeholder="Type the model of your car"
+                      value={model}
+                      onChange={e => setModel(e.target.value)}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -102,14 +114,24 @@ const SellCar = () => {
                 <Col>
                   <Form.Group>
                     <Form.Label>Make Date</Form.Label>
-                    <Form.Control onChange={e => setMakeDate(e.target.value)} />
+                    <Form.Control
+                      value={makeDate}
+                      placeholder="Type the started make date of your car"
+                      type="number"
+                      onChange={e => setMakeDate(Number.parseInt(e.target.value))}
+                    />
                   </Form.Group>
                 </Col>
 
                 <Col>
                   <Form.Group>
                     <Form.Label>Maked Date</Form.Label>
-                    <Form.Control onChange={e => setMakedDate(e.target.value)} />
+                    <Form.Control
+                      value={makedDate}
+                      type="number"
+                      placeholder="Type the end make date of your car"
+                      onChange={e => setMakedDate(Number.parseInt(e.target.value))}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -118,14 +140,24 @@ const SellCar = () => {
                 <Col>
                   <Form.Group>
                     <Form.Label>Kilometers Traveled</Form.Label>
-                    <Form.Control onChange={e => setKilometersTraveled(e.target.value)} />
+                    <Form.Control
+                      value={kilometersTraveled}
+                      placeholder="Type the kilometers traveled of your car"
+                      type="number"
+                      onChange={e => setKilometersTraveled(Number.parseFloat(e.target.value))}
+                    />
                   </Form.Group>
                 </Col>
 
                 <Col>
                   <Form.Group>
                     <Form.Label>Price</Form.Label>
-                    <Form.Control onChange={e => setPrice(e.target.value)} />
+                    <Form.Control
+                      value={price}
+                      placeholder="Type the price of your car"
+                      type="number"
+                      onChange={e => setPrice(Number.parseFloat(e.target.value))}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -133,29 +165,36 @@ const SellCar = () => {
               <Row>
                 <Col>
                   <Form.Group>
-                    <Form.Label>Accepts Change</Form.Label>
-                    <Form.Control onChange={e => setAcceptsChange(e.target.value)} />
+                    <Form.Label>Color</Form.Label>
+                    <Form.Control
+                      value={color}
+                      type="color"
+                      onChange={e => setColor(e.target.value)}
+                    />
                   </Form.Group>
                 </Col>
 
                 <Col>
                   <Form.Group>
-                    <Form.Label>Ipva Is Paid</Form.Label>
-                    <Form.Control onChange={e => setipvaIsPaid(e.target.value)} />
+                    <Form.Label>Type Of Exchange</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={typeOfExchange}
+                      onChange={e => setTypeOfExchange(e.target.value)}
+                    >
+                      <option>Automatic</option>
+                      <option>Manual</option>
+                    </Form.Control>
                   </Form.Group>
                 </Col>
 
                 <Col>
                   <Form.Group>
-                    <Form.Label>Is Licensed</Form.Label>
-                    <Form.Control onChange={e => setisLicensed(e.target.value)} />
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Is Armored</Form.Label>
-                    <Form.Control onChange={e => setIsArmored(e.target.value)} />
+                    <Form.Label>City</Form.Label>
+                    <Form.Control
+                      value={city}
+                      onChange={e => setCity(e.target.value)}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -164,14 +203,13 @@ const SellCar = () => {
                 <Col>
                   <Form.Group>
                     <Form.Label>Message</Form.Label>
-                    <Form.Control onChange={e => setMessage(e.target.value)} />
-                  </Form.Group>
-                </Col>
-
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Color</Form.Label>
-                    <Form.Control onChange={e => setColor(e.target.value)} />
+                    <Form.Control
+                      value={message}
+                      as="textarea"
+                      rows={7}
+                      placeholder="Type a message for this car"
+                      onChange={e => setMessage(e.target.value)}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -179,15 +217,37 @@ const SellCar = () => {
               <Row>
                 <Col>
                   <Form.Group>
-                    <Form.Label>Type Of Exchange</Form.Label>
-                    <Form.Control onChange={e => setTypeOfExchange(e.target.value)} />
+                    <Form.Check
+                      label="I Accept Change"
+                      onChange={e => setAcceptsChange(e.target.value)}
+                    />
                   </Form.Group>
                 </Col>
 
                 <Col>
                   <Form.Group>
-                    <Form.Label>City</Form.Label>
-                    <Form.Control onChange={e => setCity(e.target.value)} />
+                    <Form.Check
+                      label="Ipva Is Paid"
+                      onChange={e => setipvaIsPaid(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Check
+                      label="The Car Is Licensed"
+                      onChange={e => setisLicensed(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+
+                <Col>
+                  <Form.Group>
+                    <Form.Check
+                      label="The Car Is Armored"
+                      onChange={e => setIsArmored(e.target.value)}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
