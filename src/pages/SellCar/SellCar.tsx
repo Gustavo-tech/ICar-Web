@@ -37,7 +37,7 @@ const SellCar = () => {
   const [isArmored, setIsArmored] = useState(false)
   const [message, setMessage] = useState('')
   const [color, setColor] = useState('')
-  const [typeOfExchange, setTypeOfExchange] = useState('')
+  const [typeOfExchange, setTypeOfExchange] = useState('Automatic')
   const [typeOfGasoline, setTypeOfGasoline] = useState('flex')
   const [city, setCity] = useState('')
 
@@ -125,6 +125,7 @@ const SellCar = () => {
                       isValid={plateIsValid}
                       isInvalid={plateIsInvalid}
                       onChange={e => handlePlateChange(e.target.value)}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -146,6 +147,7 @@ const SellCar = () => {
                         setMakerIsValid(false)
                         setMakerIsInvalid(true)
                       })}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -166,6 +168,7 @@ const SellCar = () => {
                           setModelIsValid(false)
                           setModelIsInvalid(true)
                         })}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -177,9 +180,12 @@ const SellCar = () => {
                     <Form.Label>Make Date</Form.Label>
                     <Form.Control
                       value={makeDate}
+                      min={1942}
+                      max={new Date().getFullYear() + 1}
                       placeholder="Type the started make date of your car"
                       type="number"
                       onChange={e => setMakeDate(Number.parseInt(e.target.value))}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -190,8 +196,11 @@ const SellCar = () => {
                     <Form.Control
                       value={makedDate}
                       type="number"
+                      min={1942}
+                      max={new Date().getFullYear() + 1}
                       placeholder="Type the end make date of your car"
                       onChange={e => setMakedDate(Number.parseInt(e.target.value))}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -206,6 +215,7 @@ const SellCar = () => {
                       placeholder="Type the kilometers traveled of your car"
                       type="number"
                       onChange={e => setKilometersTraveled(Number.parseFloat(e.target.value))}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -217,7 +227,9 @@ const SellCar = () => {
                       value={price}
                       placeholder="Type the price of your car"
                       type="number"
+                      min={1000}
                       onChange={e => setPrice(Number.parseFloat(e.target.value))}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -231,6 +243,7 @@ const SellCar = () => {
                       value={color}
                       type="color"
                       onChange={e => setColor(e.target.value)}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -280,6 +293,7 @@ const SellCar = () => {
                           setCityIsValid(false)
                           setCityIsInvalid(true)
                         })}
+                      required
                     />
                   </Form.Group>
                 </Col>
@@ -293,7 +307,7 @@ const SellCar = () => {
                       value={message}
                       as="textarea"
                       rows={7}
-                      placeholder="Type a message for this car"
+                      placeholder="Type a message about this car"
                       onChange={e => setMessage(e.target.value)}
                     />
                   </Form.Group>
