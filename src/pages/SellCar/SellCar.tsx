@@ -1,6 +1,8 @@
+import { useReactOidc } from '@axa-fr/react-oidc-context'
 import AddIcon from '@material-ui/icons/Add'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Form, Row } from 'react-bootstrap'
+import { addCar } from '../../client/car/post'
 import AppNavbar from '../../components/Navbar/Navbar'
 import { capitalizeText } from '../../utilities/string-utilities'
 import {
@@ -12,7 +14,9 @@ import {
 } from './styles'
 
 const SellCar = () => {
-  const [carPictures, setCarPictures] = useState<string[]>([])
+
+  const { oidcUser } = useReactOidc()
+  const { access_token, profile } = oidcUser
 
   const [plateIsInvalid, setPlateIsInvalid] = useState(false)
   const [makerIsInvalid, setMakerIsInvalid] = useState(false)
@@ -24,6 +28,7 @@ const SellCar = () => {
   const [modelIsValid, setModelIsValid] = useState(false)
   const [cityIsValid, setCityIsValid] = useState(false)
 
+  const [pictures, setPictures] = useState<string[]>([])
   const [plate, setPlate] = useState('')
   const [maker, setMaker] = useState('')
   const [model, setModel] = useState('')
@@ -36,9 +41,9 @@ const SellCar = () => {
   const [isLicensed, setisLicensed] = useState(false)
   const [isArmored, setIsArmored] = useState(false)
   const [message, setMessage] = useState('')
-  const [color, setColor] = useState('')
-  const [typeOfExchange, setTypeOfExchange] = useState('Automatic')
-  const [typeOfGasoline, setTypeOfGasoline] = useState('flex')
+  const [color, setColor] = useState('#000000')
+  const [exchangeType, setExchangeType] = useState('Automatic')
+  const [gasolineType, setGasolineType] = useState('flex')
   const [city, setCity] = useState('')
 
   function onAddPictureClick() {
@@ -52,9 +57,9 @@ const SellCar = () => {
 
     let fr: FileReader = new FileReader()
     fr.onload = () => {
-      let newCarPics = [...carPictures]
+      let newCarPics = [...pictures]
       newCarPics.push(fr.result?.toString()!)
-      setCarPictures(newCarPics)
+      setPictures(newCarPics)
     }
     fr.readAsDataURL(file)
   }
@@ -89,12 +94,37 @@ const SellCar = () => {
     }
   }
 
+  function handleSubmit(event: React.FormEvent<HTMLElement>) {
+    event.preventDefault()
+    const userEmail = profile.email!
+    addCar(access_token, {
+      pictures,
+      plate,
+      maker,
+      model,
+      makeDate,
+      makedDate,
+      price,
+      kilometersTraveled,
+      acceptsChange,
+      ipvaIsPaid,
+      isLicensed,
+      isArmored,
+      message,
+      color,
+      exchangeType,
+      gasolineType,
+      city,
+      userEmail
+    })
+  }
+
   return (
     <>
       <AppNavbar />
       <Page>
         <FormContainer>
-          <Form>
+          <Form onSubmit={(event) => handleSubmit(event)}>
             <input
               id="add-picture-input"
               type="file"
@@ -104,7 +134,7 @@ const SellCar = () => {
 
             <PicturesWrapper>
               {
-                carPictures.map((item) => (
+                pictures.map((item) => (
                   <img src={item} key={item} style={{ margin: '0 10px' }} />
                 ))
               }
@@ -253,8 +283,8 @@ const SellCar = () => {
                     <Form.Label>Type Of Exchange</Form.Label>
                     <Form.Control
                       as="select"
-                      value={typeOfExchange}
-                      onChange={e => setTypeOfExchange(e.target.value)}
+                      value={exchangeType}
+                      onChange={e => setExchangeType(e.target.value)}
                     >
                       <option>Automatic</option>
                       <option>Manual</option>
@@ -267,8 +297,8 @@ const SellCar = () => {
                     <Form.Label>Gasoline type</Form.Label>
                     <Form.Control
                       as="select"
-                      value={typeOfGasoline}
-                      onChange={e => setTypeOfGasoline(e.target.value)}
+                      value={gasolineType}
+                      onChange={e => setGasolineType(e.target.value)}
                     >
                       <option>Flex</option>
                       <option>Gasoline</option>
