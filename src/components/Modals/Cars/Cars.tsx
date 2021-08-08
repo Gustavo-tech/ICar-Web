@@ -31,7 +31,7 @@ const CarsModal = () => {
           <Modal onClick={e => handleModalClick(e)}>
             <ModalHeader headerTitle="Cars" />
             <ModalBody>
-              <LinkButton to="/cars/mycars" onClick={() => handleLinkClick()}>
+              <LinkButton to="/mycars" onClick={() => handleLinkClick()}>
                 <DashboardIcon />
                 <span>My cars</span>
               </LinkButton>
