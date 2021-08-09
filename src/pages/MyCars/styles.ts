@@ -19,6 +19,7 @@ export const ContentGrid = styled.div`
 
 export const CardsWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   height: 100%;
   padding: 0 6%;

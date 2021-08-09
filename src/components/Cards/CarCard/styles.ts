@@ -5,6 +5,7 @@ export const Card = styled.div`
   border: 1px solid #C7C7C7;
   width: 29%;
   height: 80%;
+  margin: 0 20px 20px 20px;
 `
 
 export const Picture = styled.img`
@@ -50,6 +51,7 @@ export const ColorMark = styled.div`
   border-right: 1px solid #B0B0B0;
   width: 14%;
   margin-left: 10%;
+  background-color: ${props => props.color};
 `
 
 export const InfoSpan = styled.span`
@@ -57,6 +59,7 @@ export const InfoSpan = styled.span`
   font-weight: normal;
   font-size: 18px;
   line-height: 21px;
+  margin: 1% 0;
 `
 
 export const CardBody = styled.div`
@@ -69,5 +72,5 @@ export const CardBody = styled.div`
 
 export const CardFooter = styled.footer`
   width: 100%;
-  padding: 10% 7%;
+  padding: 8% 7%;
 `

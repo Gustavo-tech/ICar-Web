@@ -13,6 +13,18 @@ import {
   Picture
 } from './styles'
 
+interface CardProps {
+  maker: string,
+  model: string,
+  kilometersTraveled: number,
+  city: string,
+  makeDate: number,
+  makedDate: number,
+  pictures: string[],
+  color: string,
+  price: number
+}
+
 const CarCard = ({
   maker,
   model,
@@ -21,8 +33,9 @@ const CarCard = ({
   makeDate,
   makedDate,
   pictures,
+  color,
   price
-}: Car) => {
+}: CardProps) => {
   return (
     <Card>
       <Picture src={pictures ? pictures[0] : "https://via.placeholder.com/150"} />
@@ -31,7 +44,7 @@ const CarCard = ({
           <MakerSpan>{maker}</MakerSpan>
           <ModelSpan>{model}</ModelSpan>
         </NameWrapper>
-        <ColorMark />
+        <ColorMark color={color} />
       </NameDiv>
       <CardBody>
         <InfoSpan>Kilometers: {kilometersTraveled}</InfoSpan>

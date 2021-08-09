@@ -48,6 +48,7 @@ const MyCars = () => {
                 kilometersTraveled={car.kilometersTraveled}
                 makeDate={car.makedDate}
                 makedDate={car.makedDate}
+                color={car.color}
                 price={car.price}
                 city={car.city}
                 pictures={car.pictures}
