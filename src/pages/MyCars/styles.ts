@@ -16,3 +16,10 @@ export const ContentGrid = styled.div`
   grid-template-columns: 20% 80%;
   grid-template-rows: 82vh;
 `
+
+export const CardsWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 0 6%;
+`

@@ -1,5 +1,5 @@
 import Navbar from '../../components/Navbar/Navbar'
-import SidebarSettings from '../../components/SidebarSettings/SidebarSettings'
+import SidebarSettings from '../../components/Sidebars/SidebarSettings/SidebarSettings'
 import Form from 'react-bootstrap/Form'
 import {
   Page,

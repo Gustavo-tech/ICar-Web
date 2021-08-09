@@ -2,12 +2,15 @@ import { useReactOidc } from '@axa-fr/react-oidc-context'
 import React, { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { getUserCars } from '../../client/car/get'
-import FilterSidebar from '../../components/Modals/FilterSidebar/FilterSidebar'
+import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
 import AppNavbar from '../../components/Navbar/Navbar'
 import {
+  CardsWrapper,
   CenteredContent,
   ContentGrid
 } from './styles'
+import Car from '../../models/car'
+import CarCard from '../../components/Cards/CarCard/CarCard'
 
 const MyCars = () => {
   const [cars, setCars] = useState([])
@@ -35,7 +38,23 @@ const MyCars = () => {
     mainContent =
       <ContentGrid>
         <FilterSidebar />
-        <h2>Hello</h2>
+        <CardsWrapper>
+          {
+            cars.map((car: Car) => (
+              <CarCard
+                key={car.plate}
+                maker={car.maker}
+                model={car.model}
+                kilometersTraveled={car.kilometersTraveled}
+                makeDate={car.makedDate}
+                makedDate={car.makedDate}
+                price={car.price}
+                city={car.city}
+                pictures={car.pictures}
+              />
+            ))
+          }
+        </CardsWrapper>
       </ContentGrid>
   }
 
