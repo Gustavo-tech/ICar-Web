@@ -4,8 +4,13 @@ export const Card = styled.div`
   background-color: white;
   border: 1px solid #C7C7C7;
   width: 29%;
-  height: 80%;
+  height: 78%;
   margin: 0 20px 20px 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #EAE9E9;
+  }
 `
 
 export const Picture = styled.img`
@@ -31,7 +36,7 @@ export const MakerSpan = styled.span`
   font-family: 'Crimson Text', serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 29px;
+  font-size: 22px;
   line-height: 40px;
 `
 
@@ -39,19 +44,9 @@ export const ModelSpan = styled.span`
   font-family: 'Crimson Text', serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 29px;
+  font-size: 22px;
   line-height: 20px;
   color: var(--red);
-`
-
-export const ColorMark = styled.div`
-  height: 60%;
-  border-bottom: 1px solid #B0B0B0;
-  border-left: 1px solid #B0B0B0;
-  border-right: 1px solid #B0B0B0;
-  width: 14%;
-  margin-left: 10%;
-  background-color: ${props => props.color};
 `
 
 export const InfoSpan = styled.span`
@@ -64,7 +59,7 @@ export const InfoSpan = styled.span`
 
 export const CardBody = styled.div`
   display: flex;
-  padding: 3% 12%;
+  padding: 5% 7%;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
@@ -72,5 +67,5 @@ export const CardBody = styled.div`
 
 export const CardFooter = styled.footer`
   width: 100%;
-  padding: 8% 7%;
+  padding: 4% 7%;
 `

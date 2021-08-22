@@ -9,12 +9,10 @@ export const CenteredContent = styled.div`
 `
 
 export const ContentGrid = styled.div`
-  display: grid;
+  display: flex;
   margin-top: 4%;
   width: 100%;
   height: 100%;
-  grid-template-columns: 20% 80%;
-  grid-template-rows: 82vh;
 `
 
 export const CardsWrapper = styled.div`
