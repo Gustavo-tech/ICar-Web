@@ -13,7 +13,8 @@ import Car from '../../models/car'
 import CarCard from '../../components/Cards/CarCard/CarCard'
 
 const MyCars = () => {
-  const [cars, setCars] = useState([])
+  const [cars, setCars] = useState<Car[]>([])
+  const [carsAux, setCarsAux] = useState<Car[]>([])
   const [loading, setLoading] = useState(true)
 
   const { oidcUser } = useReactOidc()
@@ -23,6 +24,7 @@ const MyCars = () => {
   useEffect(() => {
     getUserCars('Bearer ' + access_token, email!, (response) => {
       setCars(response.data)
+      setCarsAux(response.data)
       setLoading(false)
     })
   }, [])
@@ -37,7 +39,11 @@ const MyCars = () => {
   else if (cars.length > 0) {
     mainContent =
       <ContentGrid>
-        <FilterSidebar />
+        <FilterSidebar
+          cars={cars}
+          carsAux={carsAux}
+          setCars={(cars) => setCars(cars)}
+        />
         <CardsWrapper>
           {
             cars.map((car: Car) => (

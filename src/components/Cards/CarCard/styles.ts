@@ -36,6 +36,7 @@ export const MakerSpan = styled.span`
   font-family: 'Crimson Text', serif;
   font-style: normal;
   font-weight: normal;
+  font-weight: 600;
   font-size: 22px;
   line-height: 40px;
 `
@@ -44,6 +45,7 @@ export const ModelSpan = styled.span`
   font-family: 'Crimson Text', serif;
   font-style: normal;
   font-weight: normal;
+  font-weight: 700;
   font-size: 22px;
   line-height: 20px;
   color: var(--red);
@@ -52,7 +54,7 @@ export const ModelSpan = styled.span`
 export const InfoSpan = styled.span`
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 21px;
   margin: 1% 0;
 `
