@@ -1,10 +1,12 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import AddIcon from '@material-ui/icons/Add'
 import React, { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { Col, Container, Form, Row } from 'react-bootstrap'
 import { addCar } from '../../client/car/post'
 import ConfirmationModal from '../../components/Modals/Confirmation/Confirmation'
 import AppNavbar from '../../components/Navbar/Navbar'
+import { ModalContext } from '../../contexts/ModalContext'
 import { capitalizeText } from '../../utilities/string-utilities'
 import {
   AddPictureButton,
@@ -16,6 +18,7 @@ import {
 
 const SellCar = () => {
 
+  const { openModal } = useContext(ModalContext)
   const { oidcUser } = useReactOidc()
   const { access_token, profile } = oidcUser
 
@@ -46,6 +49,8 @@ const SellCar = () => {
   const [exchangeType, setExchangeType] = useState('Automatic')
   const [gasolineType, setGasolineType] = useState('flex')
   const [city, setCity] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [savedSuccessfully, setSavedSuccessfully] = useState(false)
 
   function onAddPictureClick() {
     const inputElement = document.getElementById('add-picture-input')
@@ -117,282 +122,296 @@ const SellCar = () => {
       gasolineType,
       city,
       userEmail
+    }, (response) => {
+      setSavedSuccessfully(response.status === 200)
+      openModal("confirm")
+      setShowModal(true)
     })
   }
 
   return (
     <>
       <AppNavbar />
-      <ConfirmationModal title="success" text="Your car is in our catalog now!" success={false} />
-      <Page>
-        <FormContainer>
-          <Form onSubmit={(event) => handleSubmit(event)}>
-            <input
-              id="add-picture-input"
-              type="file"
-              style={{ visibility: 'hidden' }}
-              onChange={event => onPictureSelected(event)}
-            />
+      {showModal &&
+        <ConfirmationModal
+          title={savedSuccessfully ? "Success" : "Error"}
+          text={savedSuccessfully ?
+            "Your car is in our catalog now!" :
+            "Some error happened while registering your car"}
+          success={savedSuccessfully}
+          onConfirm={() => setShowModal(false)}
+        />}
 
-            <PicturesWrapper>
-              {
-                pictures.map((item) => (
-                  <img src={item} key={item} style={{ margin: '0 10px' }} />
-                ))
-              }
-              <AddPictureButton onClick={onAddPictureClick} type="button">
-                <AddIcon />
-                <span>Add Picture</span>
-              </AddPictureButton>
-            </PicturesWrapper>
+      {!showModal &&
+        <Page>
+          <FormContainer>
+            <Form onSubmit={(event) => handleSubmit(event)}>
+              <input
+                id="add-picture-input"
+                type="file"
+                style={{ visibility: 'hidden' }}
+                onChange={event => onPictureSelected(event)}
+              />
 
-            <Container style={{ margin: '4% 0' }}>
-              <Row>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Car Plate</Form.Label>
-                    <Form.Control
-                      placeholder="Type the plate of your car using the XXX-0000 format"
-                      value={plate}
-                      isValid={plateIsValid}
-                      isInvalid={plateIsInvalid}
-                      onChange={e => handlePlateChange(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+              <PicturesWrapper>
+                {
+                  pictures.map((item) => (
+                    <img src={item} key={item} style={{ margin: '0 10px' }} />
+                  ))
+                }
+                <AddPictureButton onClick={onAddPictureClick} type="button">
+                  <AddIcon />
+                  <span>Add Picture</span>
+                </AddPictureButton>
+              </PicturesWrapper>
 
-              <Row>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Maker</Form.Label>
-                    <Form.Control
-                      isValid={makerIsValid}
-                      isInvalid={makerIsInvalid}
-                      placeholder="Type the maker of your car"
-                      value={maker}
-                      onChange={e => handleNameChange(e.target.value, (value) => setMaker(value), 3, () => {
-                        setMakerIsValid(true)
-                        setMakerIsInvalid(false)
-                      }, () => {
-                        setMakerIsValid(false)
-                        setMakerIsInvalid(true)
-                      })}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
+              <Container style={{ margin: '4% 0' }}>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Car Plate</Form.Label>
+                      <Form.Control
+                        placeholder="Type the plate of your car using the XXX-0000 format"
+                        value={plate}
+                        isValid={plateIsValid}
+                        isInvalid={plateIsInvalid}
+                        onChange={e => handlePlateChange(e.target.value)}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Model</Form.Label>
-                    <Form.Control
-                      isValid={modelIsValid}
-                      isInvalid={modelIsInvalid}
-                      placeholder="Type the model of your car"
-                      value={model}
-                      onChange={e => handleNameChange(e.target.value, (value) => setModel(value), 2,
-                        () => {
-                          setModelIsValid(true)
-                          setModelIsInvalid(false)
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Maker</Form.Label>
+                      <Form.Control
+                        isValid={makerIsValid}
+                        isInvalid={makerIsInvalid}
+                        placeholder="Type the maker of your car"
+                        value={maker}
+                        onChange={e => handleNameChange(e.target.value, (value) => setMaker(value), 3, () => {
+                          setMakerIsValid(true)
+                          setMakerIsInvalid(false)
                         }, () => {
-                          setModelIsValid(false)
-                          setModelIsInvalid(true)
+                          setMakerIsValid(false)
+                          setMakerIsInvalid(true)
                         })}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
 
-              <Row>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Make Date</Form.Label>
-                    <Form.Control
-                      value={makeDate}
-                      min={1942}
-                      max={new Date().getFullYear() + 1}
-                      placeholder="Type the started make date of your car"
-                      type="number"
-                      onChange={e => setMakeDate(Number.parseInt(e.target.value))}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Model</Form.Label>
+                      <Form.Control
+                        isValid={modelIsValid}
+                        isInvalid={modelIsInvalid}
+                        placeholder="Type the model of your car"
+                        value={model}
+                        onChange={e => handleNameChange(e.target.value, (value) => setModel(value), 2,
+                          () => {
+                            setModelIsValid(true)
+                            setModelIsInvalid(false)
+                          }, () => {
+                            setModelIsValid(false)
+                            setModelIsInvalid(true)
+                          })}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Maked Date</Form.Label>
-                    <Form.Control
-                      value={makedDate}
-                      type="number"
-                      min={1942}
-                      max={new Date().getFullYear() + 1}
-                      placeholder="Type the end make date of your car"
-                      onChange={e => setMakedDate(Number.parseInt(e.target.value))}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Make Date</Form.Label>
+                      <Form.Control
+                        value={makeDate}
+                        min={1942}
+                        max={new Date().getFullYear() + 1}
+                        placeholder="Type the started make date of your car"
+                        type="number"
+                        onChange={e => setMakeDate(Number.parseInt(e.target.value))}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
 
-              <Row>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Kilometers Traveled</Form.Label>
-                    <Form.Control
-                      value={kilometersTraveled}
-                      placeholder="Type the kilometers traveled of your car"
-                      type="number"
-                      onChange={e => setKilometersTraveled(Number.parseFloat(e.target.value))}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Maked Date</Form.Label>
+                      <Form.Control
+                        value={makedDate}
+                        type="number"
+                        min={1942}
+                        max={new Date().getFullYear() + 1}
+                        placeholder="Type the end make date of your car"
+                        onChange={e => setMakedDate(Number.parseInt(e.target.value))}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Price</Form.Label>
-                    <Form.Control
-                      value={price}
-                      placeholder="Type the price of your car"
-                      type="number"
-                      min={1000}
-                      onChange={e => setPrice(Number.parseFloat(e.target.value))}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Kilometers Traveled</Form.Label>
+                      <Form.Control
+                        value={kilometersTraveled}
+                        placeholder="Type the kilometers traveled of your car"
+                        type="number"
+                        onChange={e => setKilometersTraveled(Number.parseFloat(e.target.value))}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
 
-              <Row>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Color</Form.Label>
-                    <Form.Control
-                      value={color}
-                      type="color"
-                      onChange={e => setColor(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Price</Form.Label>
+                      <Form.Control
+                        value={price}
+                        placeholder="Type the price of your car"
+                        type="number"
+                        min={1000}
+                        onChange={e => setPrice(Number.parseFloat(e.target.value))}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Type Of Exchange</Form.Label>
-                    <Form.Control
-                      as="select"
-                      value={exchangeType}
-                      onChange={e => setExchangeType(e.target.value)}
-                    >
-                      <option>Automatic</option>
-                      <option>Manual</option>
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Color</Form.Label>
+                      <Form.Control
+                        value={color}
+                        type="color"
+                        onChange={e => setColor(e.target.value)}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
 
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Gasoline type</Form.Label>
-                    <Form.Control
-                      as="select"
-                      value={gasolineType}
-                      onChange={e => setGasolineType(e.target.value)}
-                    >
-                      <option>Flex</option>
-                      <option>Gasoline</option>
-                      <option>Diesel</option>
-                      <option>Eletric</option>
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Type Of Exchange</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={exchangeType}
+                        onChange={e => setExchangeType(e.target.value)}
+                      >
+                        <option>Automatic</option>
+                        <option>Manual</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
 
-                <Col>
-                  <Form.Group>
-                    <Form.Label>City</Form.Label>
-                    <Form.Control
-                      value={city}
-                      isValid={cityIsValid}
-                      isInvalid={cityIsInvalid}
-                      onChange={e => handleNameChange(e.target.value, (value) => setCity(value), 2,
-                        () => {
-                          setCityIsValid(true)
-                          setCityIsInvalid(false)
-                        }, () => {
-                          setCityIsValid(false)
-                          setCityIsInvalid(true)
-                        })}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Gasoline type</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={gasolineType}
+                        onChange={e => setGasolineType(e.target.value)}
+                      >
+                        <option>Flex</option>
+                        <option>Gasoline</option>
+                        <option>Diesel</option>
+                        <option>Eletric</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
 
-              <Row>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Message</Form.Label>
-                    <Form.Control
-                      value={message}
-                      as="textarea"
-                      rows={7}
-                      placeholder="Type a message about this car"
-                      onChange={e => setMessage(e.target.value)}
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>City</Form.Label>
+                      <Form.Control
+                        value={city}
+                        isValid={cityIsValid}
+                        isInvalid={cityIsInvalid}
+                        onChange={e => handleNameChange(e.target.value, (value) => setCity(value), 2,
+                          () => {
+                            setCityIsValid(true)
+                            setCityIsInvalid(false)
+                          }, () => {
+                            setCityIsValid(false)
+                            setCityIsInvalid(true)
+                          })}
+                        required
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-              <Row>
-                <Col>
-                  <Form.Group>
-                    <Form.Check
-                      checked={acceptsChange}
-                      label="I Accept Change"
-                      onChange={e => setAcceptsChange(e.target.checked)}
-                    />
-                  </Form.Group>
-                </Col>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Message</Form.Label>
+                      <Form.Control
+                        value={message}
+                        as="textarea"
+                        rows={7}
+                        placeholder="Type a message about this car"
+                        onChange={e => setMessage(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
 
-                <Col>
-                  <Form.Group>
-                    <Form.Check
-                      checked={ipvaIsPaid}
-                      label="Ipva Is Paid"
-                      onChange={e => setipvaIsPaid(e.target.checked)}
-                    />
-                  </Form.Group>
-                </Col>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Check
+                        checked={acceptsChange}
+                        label="I Accept Change"
+                        onChange={e => setAcceptsChange(e.target.checked)}
+                      />
+                    </Form.Group>
+                  </Col>
 
-                <Col>
-                  <Form.Group>
-                    <Form.Check
-                      checked={isLicensed}
-                      label="The Car Is Licensed"
-                      onChange={e => setisLicensed(e.target.checked)}
-                    />
-                  </Form.Group>
-                </Col>
+                  <Col>
+                    <Form.Group>
+                      <Form.Check
+                        checked={ipvaIsPaid}
+                        label="Ipva Is Paid"
+                        onChange={e => setipvaIsPaid(e.target.checked)}
+                      />
+                    </Form.Group>
+                  </Col>
 
-                <Col>
-                  <Form.Group>
-                    <Form.Check
-                      checked={isArmored}
-                      label="The Car Is Armored"
-                      onChange={e => setIsArmored(e.target.checked)}
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-            </Container>
+                  <Col>
+                    <Form.Group>
+                      <Form.Check
+                        checked={isLicensed}
+                        label="The Car Is Licensed"
+                        onChange={e => setisLicensed(e.target.checked)}
+                      />
+                    </Form.Group>
+                  </Col>
 
-            <SubmitButton type="submit">Submit</SubmitButton>
-          </Form>
-        </FormContainer>
-      </Page>
+                  <Col>
+                    <Form.Group>
+                      <Form.Check
+                        checked={isArmored}
+                        label="The Car Is Armored"
+                        onChange={e => setIsArmored(e.target.checked)}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </Container>
+
+              <SubmitButton type="submit">Submit</SubmitButton>
+            </Form>
+          </FormContainer>
+        </Page>}
     </>
   )
 }

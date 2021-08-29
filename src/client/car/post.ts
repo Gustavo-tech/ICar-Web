@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { apiUrl } from '../../constants/constants';
 
 interface newCar {
@@ -22,7 +22,7 @@ interface newCar {
   userEmail: string;
 }
 
-export function addCar(authToken: string, data: newCar, callback?: (result: any) => any): void {
+export function addCar(authToken: string, data: newCar, callback?: (result: AxiosResponse<any>) => any): void {
   axios.post(`${apiUrl}/car/create`, data, {
     headers: {
       "Authorization": 'Bearer ' + authToken,

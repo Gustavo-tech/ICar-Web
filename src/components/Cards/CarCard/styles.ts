@@ -16,6 +16,7 @@ export const Card = styled.div`
 export const Picture = styled.img`
   width: 100%;
   height: 30vh;
+  object-fit: cover;
 `
 
 export const NameDiv = styled.div`
