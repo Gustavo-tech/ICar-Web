@@ -3,6 +3,7 @@ import AddIcon from '@material-ui/icons/Add'
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Form, Row } from 'react-bootstrap'
 import { addCar } from '../../client/car/post'
+import ConfirmationModal from '../../components/Modals/Confirmation/Confirmation'
 import AppNavbar from '../../components/Navbar/Navbar'
 import { capitalizeText } from '../../utilities/string-utilities'
 import {
@@ -122,6 +123,7 @@ const SellCar = () => {
   return (
     <>
       <AppNavbar />
+      <ConfirmationModal title="success" text="Your car is in our catalog now!" success={false} />
       <Page>
         <FormContainer>
           <Form onSubmit={(event) => handleSubmit(event)}>

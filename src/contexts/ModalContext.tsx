@@ -11,11 +11,11 @@ interface ModalContextInterface {
 
 export const ModalContext = createContext({} as ModalContextInterface)
 
-interface ModalProvider {
+interface ModalProviderProps {
   children: ReactNode;
 }
 
-const ModalProvider = ({ children }: ModalProvider) => {
+const ModalProvider = ({ children }: ModalProviderProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [modalType, setModalType] = useState('')
 

@@ -65,7 +65,7 @@ const PersonalInfo = () => {
             </Form.Group>
 
             <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>UserName</Form.Label>
+              <Form.Label style={{ color: 'var(--white)' }}>User</Form.Label>
               <Form.Control disabled value={profile.name} />
             </Form.Group>
 

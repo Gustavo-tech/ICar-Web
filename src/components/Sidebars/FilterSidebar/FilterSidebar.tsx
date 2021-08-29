@@ -60,7 +60,7 @@ const FilterSidebar = ({ cars, carsAux, setCars }: SidebarProps) => {
       return
     }
 
-    let newCars = cars.filter(car => car.maker === maker);
+    let newCars = cars.filter(car => car.model === model);
     setCars(newCars)
   }
 
