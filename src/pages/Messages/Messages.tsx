@@ -1,7 +1,7 @@
 import React from 'react'
 import AppNavbar from '../../components/Navbar/Navbar'
 import TalkSidebar from '../../components/Sidebars/TalkSidebar/TalkSidebar'
-import { Body } from './styles'
+import { Body, TalkHeader, TalkHeaderTitle } from './styles'
 
 const Messages = () => {
   return (
@@ -9,6 +9,9 @@ const Messages = () => {
       <AppNavbar />
       <Body>
         <TalkSidebar />
+        <TalkHeader>
+          <TalkHeaderTitle>ICar</TalkHeaderTitle>
+        </TalkHeader>
       </Body>
     </>
   )
