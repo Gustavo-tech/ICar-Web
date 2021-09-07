@@ -12,7 +12,8 @@ const Sidebar = styled.div`
 
 const NameInput = styled.input`
   width: 100%;
-  height: 30%;
+  height: 10%;
+  padding-left: 4%;
   border-radius: 4px;
   font-family: 'Fira Sans', sans-serif;
 `
