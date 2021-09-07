@@ -7,6 +7,7 @@ export const Card = styled.div`
   height: 78%;
   margin: 0 20px 20px 20px;
   cursor: pointer;
+  transition-duration: 0.5s;
 
   &:hover {
     background-color: #EAE9E9;
@@ -34,7 +35,7 @@ export const NameWrapper = styled.div`
 `
 
 export const MakerSpan = styled.span`
-  font-family: 'Crimson Text', serif;
+  font-family: 'Fira Sans', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-weight: 600;
@@ -43,7 +44,7 @@ export const MakerSpan = styled.span`
 `
 
 export const ModelSpan = styled.span`
-  font-family: 'Crimson Text', serif;
+  font-family: 'Fira Sans', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-weight: 700;

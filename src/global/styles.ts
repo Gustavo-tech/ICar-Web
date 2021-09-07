@@ -15,6 +15,11 @@ const GlobalStyle = createGlobalStyle`
     background-color: var(--white);
   }
 
+  input {
+    outline: none;
+    border: none;
+  }
+
   button {
     border: none;
   }
