@@ -50,3 +50,24 @@ export const LinkButton = styled(Link)`
     color: var(--white);
   }
 `
+
+export const LogoutButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--red);
+  width: 14%;
+  height: 25%;
+  text-decoration: none !important;
+  margin: 0 0.6%;
+
+  &:hover {
+    background-color: var(--black);
+  }
+
+  & > * {
+    fill: white;
+    color: var(--white);
+  }
+`

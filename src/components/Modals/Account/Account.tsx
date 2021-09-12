@@ -6,7 +6,8 @@ import {
   Modal,
   ModalBody,
   ModalEffect,
-  LinkButton
+  LinkButton,
+  LogoutButton
 } from './styles'
 import ModalHeader from '../ModalHeader/ModalHeader'
 import Security from '@material-ui/icons/Security'
@@ -40,10 +41,10 @@ const AccountModal = () => {
                 <Security />
                 <span>Security</span>
               </LinkButton>
-              <LinkButton to={serverUrl + "auth/logout"} onClick={() => window.location.replace(serverUrl + "/auth/logout")}>
+              <LogoutButton onClick={() => window.location.replace(serverUrl + "/auth/logout")}>
                 <ExitToAppIcon />
                 <span>Logout</span>
-              </LinkButton>
+              </LogoutButton>
             </ModalBody>
           </Modal>
         </ModalEffect>

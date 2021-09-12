@@ -61,7 +61,7 @@ export const Message = styled.div<MessageProps>`
   flex-wrap: wrap;
   color: white;
   min-width: 20%;
-  max-width: 50%;
+  max-width: 48%;
   padding: 2%;
   min-height: 14%;
 `

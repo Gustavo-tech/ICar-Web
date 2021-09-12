@@ -29,6 +29,7 @@ const Messages = () => {
           <TalkBody>
             <Message sent={false}>Hello</Message>
             <Message sent={true}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi temporibus totam quis eum maxime optio nulla in, dolorem consectetur eveniet.</Message>
+            <Message sent={false}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi temporibus totam quis eum maxime optio nulla in, dolorem consectetur eveniet.</Message>
             <MessageInputWrapper>
               <MessageInput placeholder="Type your message" />
               <SendIcon />
