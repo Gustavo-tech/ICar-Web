@@ -34,11 +34,60 @@ export const TalkHeaderTitle = styled.h2`
 `
 
 export const TalkBody = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
   background-color: transparent;
   width: 100%;
   height: 87%;
   border: 1px solid #B5B5B5;
   padding: 4%;
+`
+
+interface MessageProps {
+  sent: boolean;
+}
+
+export const Message = styled.div<MessageProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.sent ? 'var(--red)' : 'var(--gray)'};
+  justify-self: ${props => props.sent ? 'flex-start' : 'flex-end'};
+  align-self: ${props => props.sent ? 'flex-end' : 'flex-start'};;
+  margin-bottom: 4%;
+  flex-wrap: wrap;
+  color: white;
+  min-width: 20%;
+  max-width: 50%;
+  padding: 2%;
+  min-height: 14%;
+`
+
+export const MessageInputWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  width: 95%;
+  height: 10%;
+  background-color: white;
+  padding: 0.7% 3%;
+
+  & > svg {
+    fill: red;
+    width: 7%;
+    cursor: pointer;
+  }
+`
+
+export const MessageInput = styled.input`
+  width: 90%;
+  height: 80%;
+  border-bottom: 1px solid black;
 `
 
 export const DetailsWrapper = styled.div`
@@ -67,21 +116,4 @@ export const NickName = styled.h3`
   text-align: center;
   font-family: 'Satisfy', cursive;
   font-size: 4vh;
-`
-
-interface MessageProps {
-  sent: boolean;
-}
-
-export const Message = styled.div<MessageProps>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${props => props.sent ? 'var(--red)' : 'var(--gray)'};
-  justify-self: ${props => props.sent ? 'flex-start' : 'flex-end'};
-  margin-bottom: 4%;
-  flex-wrap: wrap;
-  color: white;
-  width: 20%;
-  height: 17%;
 `
