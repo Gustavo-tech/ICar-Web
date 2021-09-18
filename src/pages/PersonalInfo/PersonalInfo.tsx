@@ -10,7 +10,7 @@ import {
 import { Button, Container } from '@material-ui/core'
 import { Col, Row, Spinner } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
-import { getUserInfo } from '../../client/account/get'
+import { getUserInfo } from '../../api/account/get'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 
 const PersonalInfo = () => {

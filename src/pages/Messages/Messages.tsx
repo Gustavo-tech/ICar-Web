@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { getTalks } from '../../api/account/get'
+import { UIContext } from '../../contexts/UIContext'
 import AppNavbar from '../../components/Navbar/Navbar'
 import TalkSidebar from '../../components/Sidebars/TalkSidebar/TalkSidebar'
 import SendIcon from '@material-ui/icons/Send';
@@ -15,8 +17,25 @@ import {
   TalkWrapper,
   UserPic
 } from './styles'
+import { useReactOidc } from '@axa-fr/react-oidc-context'
+import { talkResponse } from '../../api/response-types/account'
 
 const Messages = () => {
+
+  const { isLoading, setIsLoading } = useContext(UIContext);
+  const { oidcUser } = useReactOidc()
+  const { access_token, profile } = oidcUser
+  const email = profile.email
+
+  const [talks, setTalks] = useState<talkResponse[]>([])
+
+  useEffect(() => {
+    setIsLoading(true)
+    getTalks(access_token, email, (data) => {
+      setTalks(data)
+    })
+  }, [])
+
   return (
     <>
       <AppNavbar />

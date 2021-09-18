@@ -1,7 +1,7 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import React, { useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
-import { getUserCars } from '../../client/car/get'
+import { getUserCars } from '../../api/car/get'
 import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
 import AppNavbar from '../../components/Navbar/Navbar'
 import {
