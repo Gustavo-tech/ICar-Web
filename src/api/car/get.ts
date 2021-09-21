@@ -1,5 +1,7 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { apiUrl } from '../../constants/constants'
+import Car from '../../models/car'
+import CarSearchModel from '../search-models/car'
 
 export function getUserCars(authToken: string, userEmail: string,
   callbackFunction: (response: any) => any): void {
@@ -15,3 +17,18 @@ export function getUserCars(authToken: string, userEmail: string,
       }
     })
 }
+
+export const getSellingCars = (authToken: string, search: CarSearchModel) =>
+  axios.get(`${apiUrl}/cars/selling`, {
+    headers: {
+      'Authorization': 'Bearer ' + authToken,
+      'Content-Type': 'application/json'
+    },
+    data: {
+      model: search.model,
+      maker: search.maker,
+      minPrice: search.minPrice,
+      maxPrice: search.maxPrice,
+      maxKilometers: search.maxKilometers
+    }
+  })
