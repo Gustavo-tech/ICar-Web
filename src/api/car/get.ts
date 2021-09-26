@@ -24,11 +24,5 @@ export const getSellingCars = (authToken: string, search: CarSearchModel) =>
       'Authorization': 'Bearer ' + authToken,
       'Content-Type': 'application/json'
     },
-    data: {
-      model: search.model,
-      maker: search.maker,
-      minPrice: search.minPrice,
-      maxPrice: search.maxPrice,
-      maxKilometers: search.maxKilometers
-    }
+    params: search
   })

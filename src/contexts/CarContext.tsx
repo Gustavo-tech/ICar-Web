@@ -19,7 +19,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
   async function fetchCars(token: string, search: CarSearchModel) {
     const resp = await getSellingCars(token, search)
-    console.log(resp)
+    const { data } = resp
+    setCars(data)
   }
 
   return (
