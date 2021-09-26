@@ -1,6 +1,5 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { apiUrl } from '../../constants/constants'
-import Car from '../../models/car'
 import CarSearchModel from '../search-models/car'
 
 export function getUserCars(authToken: string, userEmail: string,

@@ -23,7 +23,7 @@ interface newCar {
 }
 
 export function addCar(authToken: string, data: newCar, callback?: (result: AxiosResponse<any>) => any): void {
-  axios.post(`${apiUrl}/car/create`, data, {
+  axios.post(`${apiUrl}/cars/create`, data, {
     headers: {
       "Authorization": 'Bearer ' + authToken,
       "Content-Type": "application/json"

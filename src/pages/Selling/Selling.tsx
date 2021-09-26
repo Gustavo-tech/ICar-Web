@@ -1,19 +1,19 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
+import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart'
 import React, { useContext, useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
-import { getUserCars } from '../../api/car/get'
-import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
+import CarSearchModel from '../../api/search-models/car'
+import CarCard from '../../components/Cards/CarCard/CarCard'
 import AppNavbar from '../../components/Navbar/Navbar'
+import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
+import { CarContext } from '../../contexts/CarContext'
+import { UIContext } from '../../contexts/UIContext'
+import Car from '../../models/car'
 import {
   CardsWrapper,
   CenteredContent,
   ContentGrid
 } from './styles'
-import Car from '../../models/car'
-import CarCard from '../../components/Cards/CarCard/CarCard'
-import { UIContext } from '../../contexts/UIContext'
-import { CarContext } from '../../contexts/CarContext'
-import CarSearchModel from '../../api/search-models/car'
 
 const SellingCars = () => {
   const [cars, setCars] = useState<Car[]>([])
@@ -69,7 +69,8 @@ const SellingCars = () => {
   else {
     mainContent =
       <CenteredContent>
-        <h2>Ops..</h2>
+        <RemoveShoppingCartIcon />
+        <h3>Ops... looks like we haven't a selling car yet</h3>
       </CenteredContent>
   }
 

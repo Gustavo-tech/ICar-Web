@@ -18,9 +18,13 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [cars, setCars] = useState<Car[]>([])
 
   async function fetchCars(token: string, search: CarSearchModel) {
-    const resp = await getSellingCars(token, search)
-    const { data } = resp
-    setCars(data)
+    try {
+      const resp = await getSellingCars(token, search)
+      const { data } = resp
+      setCars(data)
+    } catch (e) {
+      setCars([])
+    }
   }
 
   return (
