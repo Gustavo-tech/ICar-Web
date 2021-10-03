@@ -39,16 +39,13 @@ const MyCars = () => {
   else if (cars.length > 0) {
     mainContent =
       <ContentGrid>
-        <FilterSidebar
-          cars={cars}
-          carsAux={carsAux}
-          setCars={(cars) => setCars(cars)}
-        />
+        <FilterSidebar />
         <CardsWrapper>
           {
             cars.map((car: Car) => (
               <CarCard
                 key={car.plate}
+                id={car.id}
                 maker={car.maker}
                 model={car.model}
                 kilometersTraveled={car.kilometersTraveled}

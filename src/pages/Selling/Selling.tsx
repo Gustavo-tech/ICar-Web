@@ -16,15 +16,12 @@ import {
 } from './styles'
 
 const SellingCars = () => {
-  const [cars, setCars] = useState<Car[]>([])
-  const [carsAux, setCarsAux] = useState<Car[]>([])
   const [searchModel, setSearchModel] = useState<CarSearchModel>(new CarSearchModel())
 
+  const { isLoading } = useContext(UIContext)
+  const { fetchCars, cars } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
-  const { isLoading, setIsLoading } = useContext(UIContext)
-  const { fetchCars } = useContext(CarContext)
-  const { profile, access_token } = oidcUser
-  const { email } = profile
+  const { access_token } = oidcUser
 
   useEffect(() => {
     fetchCars(access_token, searchModel)
@@ -40,16 +37,13 @@ const SellingCars = () => {
   else if (cars.length > 0) {
     mainContent =
       <ContentGrid>
-        <FilterSidebar
-          cars={cars}
-          carsAux={carsAux}
-          setCars={(cars) => setCars(cars)}
-        />
+        <FilterSidebar />
         <CardsWrapper>
           {
             cars.map((car: Car) => (
               <CarCard
                 key={car.plate}
+                id={car.id}
                 maker={car.maker}
                 model={car.model}
                 kilometersTraveled={car.kilometersTraveled}

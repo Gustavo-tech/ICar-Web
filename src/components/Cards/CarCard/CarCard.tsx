@@ -11,6 +11,7 @@ import {
 } from './styles'
 
 interface CardProps {
+  id: number,
   maker: string,
   model: string,
   kilometersTraveled: number,
@@ -23,6 +24,7 @@ interface CardProps {
 }
 
 const CarCard = ({
+  id,
   maker,
   model,
   kilometersTraveled,
@@ -33,7 +35,7 @@ const CarCard = ({
   price
 }: CardProps) => {
   return (
-    <Card>
+    <Card to={`/details/${id}`}>
       <Picture src={pictures ? pictures[0] : "https://via.placeholder.com/150"} />
       <NameWrapper>
         <MakerSpan>{maker}</MakerSpan>
