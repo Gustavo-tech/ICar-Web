@@ -38,7 +38,7 @@ const Messages = () => {
 
   return (
     <>
-      <AppNavbar />
+      <AppNavbar showSearch={false} />
       <Body>
         <TalkSidebar />
         <TalkWrapper>

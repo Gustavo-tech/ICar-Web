@@ -5,7 +5,8 @@ import {
   Brand,
   Button,
   ButtonsDiv,
-  Navbar
+  Navbar,
+  SearchInput
 } from './styles'
 import MessagesModal from '../Modals/Messages/Messages'
 import { useContext } from 'react'
@@ -13,7 +14,11 @@ import { ModalContext } from '../../contexts/ModalContext'
 import AccountModal from '../Modals/Account/Account'
 import CarsModal from '../Modals/Cars/Cars'
 
-const AppNavbar = () => {
+interface AppNavBarProps {
+  showSearch: boolean;
+}
+
+const AppNavbar = ({ showSearch }: AppNavBarProps) => {
   const { openModal } = useContext(ModalContext)
 
   function openNavigationModal(type: string) {
@@ -27,6 +32,9 @@ const AppNavbar = () => {
       <CarsModal />
       <Navbar>
         <Brand to="/">ICar</Brand>
+
+        {showSearch &&
+          <SearchInput placeholder="Search for a car" />}
         <ButtonsDiv>
           <Button onClick={() => openNavigationModal('messages')}>
             <EmailIcon />

@@ -6,7 +6,7 @@ import SidebarSettings from '../../components/Sidebars/SidebarSettings/SidebarSe
 const Security = () => {
   return (
     <>
-      <Navbar />
+      <Navbar showSearch={false} />
       <Page>
         <SidebarSettings />
       </Page>

@@ -16,7 +16,6 @@ import {
 } from './styles'
 
 const SellingCars = () => {
-  const [searchModel, setSearchModel] = useState<CarSearchModel>(new CarSearchModel())
 
   const { isLoading } = useContext(UIContext)
   const { fetchCars, cars } = useContext(CarContext)
@@ -24,7 +23,7 @@ const SellingCars = () => {
   const { access_token } = oidcUser
 
   useEffect(() => {
-    fetchCars(access_token, searchModel)
+    fetchCars(access_token)
   }, [])
 
   let mainContent
@@ -70,7 +69,7 @@ const SellingCars = () => {
 
   return (
     <>
-      <AppNavbar />
+      <AppNavbar showSearch />
       {mainContent}
     </>
   )

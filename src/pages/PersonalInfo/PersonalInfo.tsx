@@ -91,7 +91,7 @@ const PersonalInfo = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar showSearch={false} />
       <Page>
         <SidebarSettings />
         {content}

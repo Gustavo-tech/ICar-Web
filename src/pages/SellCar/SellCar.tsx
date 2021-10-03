@@ -131,7 +131,7 @@ const SellCar = () => {
 
   return (
     <>
-      <AppNavbar />
+      <AppNavbar showSearch={false} />
       {showModal &&
         <ConfirmationModal
           title={savedSuccessfully ? "Success" : "Error"}
