@@ -35,7 +35,7 @@ const CarCard = ({
   price
 }: CardProps) => {
   return (
-    <Card to={`/details/${id}`}>
+    <Card to={`/selling/${id}`}>
       <Picture src={pictures ? pictures[0] : "https://via.placeholder.com/150"} />
       <NameWrapper>
         <MakerSpan>{maker}</MakerSpan>

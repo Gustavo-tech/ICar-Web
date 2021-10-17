@@ -25,3 +25,19 @@ export const getSellingCars = (authToken: string, search: CarSearchModel) =>
     },
     params: search
   })
+
+export function getCarWithId(authToken: string, id: number, callback?: any) {
+  axios.get(`${apiUrl}/cars/selling/${id}`, {
+    headers: {
+      'Authorization': 'Bearer ' + authToken,
+      'Content-Type': 'application/json'
+    }
+  }).then(resp => {
+    if (resp.status === 200) {
+      console.log(resp);
+
+      if (callback)
+        callback(resp.data)
+    }
+  })
+}

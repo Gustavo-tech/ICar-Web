@@ -43,7 +43,7 @@ const App = () => (
               <Route exact path='/account/security' component={withOidcSecure(Security)} />
               <Route exact path='/mycars' component={withOidcSecure(MyCars)} />
               <Route exact path='/selling' component={withOidcSecure(SellingCars)} />
-              <Route exact path='/selling/:plate' component={withOidcSecure(CarDetail)} />
+              <Route exact path='/selling/:id' component={withOidcSecure(CarDetail)} />
               <Route exact path='/messages' component={withOidcSecure(Messages)} />
               <Route exact path='/car/sell' component={withOidcSecure(SellCar)} />
               <Route exact path='*' component={NotFound} />

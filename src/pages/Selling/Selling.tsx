@@ -30,7 +30,9 @@ const SellingCars = () => {
 
   if (isLoading) {
     mainContent =
-      <CenteredContent> <Spinner animation="border" variant="danger" /> </CenteredContent>
+      <CenteredContent>
+        <Spinner animation="border" variant="danger" />
+      </CenteredContent>
   }
 
   else if (cars.length > 0) {
@@ -41,7 +43,7 @@ const SellingCars = () => {
           {
             cars.map((car: Car) => (
               <CarCard
-                key={car.plate}
+                key={car.id}
                 id={car.id}
                 maker={car.maker}
                 model={car.model}
