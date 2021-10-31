@@ -13,8 +13,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     background-color: var(--white);
-    height: 100vh;
-    width: 100vw;
 
     &::-webkit-scrollbar {
       width: 7px;

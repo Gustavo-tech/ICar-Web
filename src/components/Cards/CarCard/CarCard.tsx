@@ -1,16 +1,20 @@
-import React from 'react'
+import Carousel from 'react-bootstrap/Carousel'
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
+import RoomIcon from '@material-ui/icons/Room'
+import DirectionsCarIcon from '@material-ui/icons/DirectionsCar'
 import {
   Card,
   CardBody,
   CardFooter,
-  InfoSpan,
   MakerSpan,
   ModelSpan,
   NameWrapper,
-  Picture
+  Picture,
+  PicturesWrapper,
+  Info
 } from './styles'
 
-interface CardProps {
+type CardProps = {
   id: number,
   maker: string,
   model: string,
@@ -34,17 +38,28 @@ const CarCard = ({
   pictures,
   price
 }: CardProps) => {
+
   return (
     <Card to={`/selling/${id}`}>
-      <Picture src={pictures ? pictures[0] : "https://via.placeholder.com/150"} />
+      <PicturesWrapper>
+        <Carousel>
+          {
+            pictures.map(x => (
+              <Carousel.Item key={x}>
+                <Picture src={x} alt="Car-picture" />
+              </Carousel.Item>
+            ))
+          }
+        </Carousel>
+      </PicturesWrapper>
       <NameWrapper>
         <MakerSpan>{maker}</MakerSpan>
         <ModelSpan>{model}</ModelSpan>
       </NameWrapper>
       <CardBody>
-        <InfoSpan>Kilometers: {kilometersTraveled}</InfoSpan>
-        <InfoSpan>City: {city}</InfoSpan>
-        <InfoSpan>Year: {makeDate}/{makedDate}</InfoSpan>
+        <Info><DirectionsCarIcon /> {kilometersTraveled} KM</Info>
+        <Info><RoomIcon /> {city}</Info>
+        <Info><CalendarTodayIcon /> {makeDate}/{makedDate}</Info>
       </CardBody>
       <CardFooter>
         <h5 style={{ textAlign: 'left' }}>R${price}</h5>

@@ -8,7 +8,7 @@ export const Label = styled.label`
 
 export const Value = styled.span`
   display: block;
-  font-size: 3vh;
+  font-size: 2.8vh;
   font-family: 'Fira Sans', sans-serif;
   font-weight: bold;
 `

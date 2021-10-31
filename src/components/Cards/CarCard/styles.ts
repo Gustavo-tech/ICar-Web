@@ -5,7 +5,7 @@ export const Card = styled(Link)`
   background-color: white;
   border: 1px solid #C7C7C7;
   width: 29%;
-  height: 78%;
+  height: 67%;
   margin: 0 20px 20px 20px;
   cursor: pointer;
   transition-duration: 0.5s;
@@ -23,9 +23,14 @@ export const Card = styled(Link)`
   }
 `
 
+export const PicturesWrapper = styled.div`
+  height: 30%;
+  width: 100%;
+`
+
 export const Picture = styled.img`
   width: 100%;
-  height: 30vh;
+  height: 100%;
   object-fit: cover;
 `
 
@@ -62,12 +67,15 @@ export const ModelSpan = styled.span`
   color: var(--red);
 `
 
-export const InfoSpan = styled.span`
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 21px;
-  margin: 1% 0;
+export const Info = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 0.4vh 0;
+
+  & > svg {
+    transform: scale(0.7);
+  }
 `
 
 export const CardBody = styled.div`

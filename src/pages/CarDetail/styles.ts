@@ -19,9 +19,9 @@ export const InfosDiv = styled.div`
 export const InfoContainer = styled.div`
   background-color: white;
   border-radius: 17px;
-  width: 70%;
+  width: 65%;
   height: 80%;
-  padding: 3%;
+  padding: 3% 7% 3% 3%;
   box-shadow: 5px 5px 29px -4px rgba(0,0,0,0.21);
 `
 
