@@ -5,7 +5,7 @@ export const Card = styled(Link)`
   background-color: white;
   border: 1px solid #C7C7C7;
   width: 29%;
-  height: 67%;
+  height: 60%;
   margin: 0 20px 20px 20px;
   cursor: pointer;
   transition-duration: 0.5s;
@@ -54,7 +54,7 @@ export const MakerSpan = styled.span`
   font-weight: normal;
   font-weight: 600;
   font-size: 22px;
-  line-height: 40px;
+  line-height: 30px;
 `
 
 export const ModelSpan = styled.span`
@@ -80,7 +80,7 @@ export const Info = styled.div`
 
 export const CardBody = styled.div`
   display: flex;
-  padding: 5% 7%;
+  padding: 3% 7%;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
@@ -88,5 +88,5 @@ export const CardBody = styled.div`
 
 export const CardFooter = styled.footer`
   width: 100%;
-  padding: 4% 7%;
+  padding: 2% 7%;
 `
