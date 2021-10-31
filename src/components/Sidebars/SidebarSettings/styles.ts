@@ -3,11 +3,12 @@ import styled from 'styled-components'
 
 export const SidebarSettingsDiv = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  background-color: var(--black);
+  background-color: white;
 `
 
 export const SidebarOption = styled(NavLink)`
@@ -18,15 +19,20 @@ export const SidebarOption = styled(NavLink)`
   width: 100%;
   height: 3rem;
   text-decoration: none !important;
-  background-color: var(--black);
+  background-color: var(--white);
 
   &:hover {
     background-color: var(--red);
+
+    & > * {
+      color: var(--white);
+    fill: var(--white);
+    }
   }
 
   & > * {
-    color: var(--white);
-    fill: var(--white);
+    color: var(--black);
+    fill: var(--black);
   }
 
   &.active {
