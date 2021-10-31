@@ -11,7 +11,7 @@ export const Description = styled.p`
 `
 
 export const Page = styled.div`
-  padding: 2% 0;
+  margin-top: 2%;
   display: grid;
   grid-template-columns: 20% 80%;
   grid-template-rows: 100%;

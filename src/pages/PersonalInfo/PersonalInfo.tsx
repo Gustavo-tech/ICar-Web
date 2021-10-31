@@ -18,7 +18,6 @@ const PersonalInfo = () => {
   const { profile, access_token } = oidcUser
 
   const [accountCreationDate, setAccountCreationDate] = useState('')
-  const [cpf, setCpf] = useState('')
   const [loading, setLoading] = useState(false)
 
   const email = profile.email
@@ -26,7 +25,6 @@ const PersonalInfo = () => {
     setLoading(true)
     getUserInfo('Bearer ' + access_token, email, (data) => {
       setAccountCreationDate(new Date(data.accountCreationDate).toDateString())
-      setCpf(data.cpf)
       setLoading(false)
     })
   }, [])
@@ -49,10 +47,6 @@ const PersonalInfo = () => {
       >
         <Row>
           <Col>
-            <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>CPF</Form.Label>
-              <Form.Control disabled value={cpf} />
-            </Form.Group>
 
             <Form.Group>
               <Form.Label style={{ color: 'var(--white)' }}>Phone</Form.Label>
@@ -91,7 +85,7 @@ const PersonalInfo = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar showSearch={false} />
       <Page>
         <SidebarSettings />
         {content}

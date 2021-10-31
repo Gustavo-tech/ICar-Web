@@ -23,6 +23,13 @@ export const Brand = styled(Link)`
   }
 `
 
+export const SearchInput = styled.input`
+  border-radius: 7px;
+  width: 24%;
+  height: 50%;
+  padding-left: 1%;
+`
+
 export const ButtonsDiv = styled.div`
   display: flex;
   width: 40%;

@@ -4,7 +4,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar showSearch={false} />
     </>
   )
 }

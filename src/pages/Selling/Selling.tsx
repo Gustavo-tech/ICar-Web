@@ -1,37 +1,38 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
-import React, { useEffect, useState } from 'react'
+import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart'
+import React, { useContext, useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
-import { getUserCars } from '../../api/car/get'
-import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
+import CarSearchModel from '../../api/search-models/car'
+import CarCard from '../../components/Cards/CarCard/CarCard'
 import AppNavbar from '../../components/Navbar/Navbar'
+import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
+import { CarContext } from '../../contexts/CarContext'
+import { UIContext } from '../../contexts/UIContext'
+import Car from '../../models/car'
 import {
   CardsWrapper,
   CenteredContent,
   ContentGrid
 } from './styles'
-import Car from '../../models/car'
-import CarCard from '../../components/Cards/CarCard/CarCard'
 
-const MyCars = () => {
-  const [cars, setCars] = useState<Car[]>([])
-  const [loading, setLoading] = useState(true)
+const SellingCars = () => {
 
+  const { isLoading } = useContext(UIContext)
+  const { fetchCars, cars } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
-  const { profile, access_token } = oidcUser
-  const { email } = profile
+  const { access_token } = oidcUser
 
   useEffect(() => {
-    getUserCars('Bearer ' + access_token, email!, (response) => {
-      setCars(response.data)
-      setLoading(false)
-    })
+    fetchCars(access_token)
   }, [])
 
   let mainContent
 
-  if (loading) {
+  if (isLoading) {
     mainContent =
-      <CenteredContent> <Spinner animation="border" variant="danger" /> </CenteredContent>
+      <CenteredContent>
+        <Spinner animation="border" variant="danger" />
+      </CenteredContent>
   }
 
   else if (cars.length > 0) {
@@ -42,7 +43,7 @@ const MyCars = () => {
           {
             cars.map((car: Car) => (
               <CarCard
-                key={car.plate}
+                key={car.id}
                 id={car.id}
                 maker={car.maker}
                 model={car.model}
@@ -63,16 +64,17 @@ const MyCars = () => {
   else {
     mainContent =
       <CenteredContent>
-        <h2>Ops..</h2>
+        <RemoveShoppingCartIcon />
+        <h3>Ops... looks like we haven't a selling car yet</h3>
       </CenteredContent>
   }
 
   return (
     <>
-      <AppNavbar showSearch={false} />
+      <AppNavbar showSearch />
       {mainContent}
     </>
   )
 }
 
-export default MyCars
+export default SellingCars

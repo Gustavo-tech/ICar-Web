@@ -1,4 +1,5 @@
 interface Car {
+  id: number;
   acceptsChange?: boolean;
   city: string;
   color: string;

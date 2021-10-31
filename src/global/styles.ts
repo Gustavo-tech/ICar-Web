@@ -13,6 +13,18 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     background-color: var(--white);
+
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #FFFFFF;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #ABABAB;
+    }
   }
 
   input {
