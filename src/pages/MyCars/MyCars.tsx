@@ -1,5 +1,5 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { getUserCars } from '../../api/car/get'
 import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
@@ -11,25 +11,27 @@ import {
 } from './styles'
 import Car from '../../models/car'
 import CarCard from '../../components/Cards/CarCard/CarCard'
+import { UIContext } from '../../contexts/UIContext'
 
 const MyCars = () => {
   const [cars, setCars] = useState<Car[]>([])
-  const [loading, setLoading] = useState(true)
 
+  const { isLoading, setIsLoading } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
   const { profile, access_token } = oidcUser
   const { email } = profile
 
   useEffect(() => {
+    setIsLoading(true)
     getUserCars('Bearer ' + access_token, email!, (response) => {
       setCars(response.data)
-      setLoading(false)
+      setIsLoading(false)
     })
   }, [])
 
   let mainContent
 
-  if (loading) {
+  if (isLoading) {
     mainContent =
       <CenteredContent> <Spinner animation="border" variant="danger" /> </CenteredContent>
   }
