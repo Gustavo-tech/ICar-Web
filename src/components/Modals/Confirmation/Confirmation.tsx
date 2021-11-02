@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContext } from 'react'
-import { ModalContext } from '../../../contexts/ModalContext'
+import { UIContext } from '../../../contexts/UIContext'
 import {
   Modal,
   ModalEffect,
@@ -20,7 +20,7 @@ interface ConfirmationModalProps {
 
 const ConfirmationModal = ({ title, text, success, onConfirm }: ConfirmationModalProps) => {
 
-  const { isOpen, modalType, closeModal } = useContext(ModalContext)
+  const { isModalOpen, modalType, closeModal } = useContext(UIContext)
 
   function handleConfirm() {
     closeModal()
@@ -29,7 +29,7 @@ const ConfirmationModal = ({ title, text, success, onConfirm }: ConfirmationModa
 
   return (
     <>
-      {isOpen && modalType === "confirm" &&
+      {isModalOpen && modalType === "confirm" &&
         <ModalEffect>
           <Modal>
             <Title success={success}>{title}</Title>

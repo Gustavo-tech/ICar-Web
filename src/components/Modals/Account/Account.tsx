@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import ReactDOM from 'react-dom'
-import { ModalContext } from '../../../contexts/ModalContext'
+import { UIContext } from '../../../contexts/UIContext'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import {
   Modal,
@@ -15,7 +15,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { serverUrl } from '../../../constants/constants'
 
 const AccountModal = () => {
-  const { isOpen, modalType, closeModal } = useContext(ModalContext)
+  const { isModalOpen, modalType, closeModal } = useContext(UIContext)
 
   function handleModalClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     event.stopPropagation()
@@ -28,7 +28,7 @@ const AccountModal = () => {
   return ReactDOM.createPortal(
     <>
       {
-        isOpen && modalType === "account" &&
+        isModalOpen && modalType === "account" &&
         <ModalEffect onClick={closeModal}>
           <Modal onClick={e => handleModalClick(e)}>
             <ModalHeader headerTitle="Account" />

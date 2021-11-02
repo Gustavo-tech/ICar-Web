@@ -19,7 +19,6 @@ import {
   withOidcSecure,
   InMemoryWebStorage
 } from '@axa-fr/react-oidc-context'
-import ModalProvider from './contexts/ModalContext'
 import UIProvider from './contexts/UIContext'
 import Authenticating from './pages/Authenticating/Authenticating'
 import SellingCars from './pages/Selling/Selling'
@@ -33,26 +32,24 @@ const App = () => (
     authenticating={Redirecting}
     callbackComponentOverride={Authenticating}
   >
-    <ModalProvider>
-      <UIProvider>
-        <CarContextProvider>
-          <BrowserRouter>
-            <Switch>
-              <Route exact path="/" component={withOidcSecure(Home)} />
-              <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
-              <Route exact path='/account/security' component={withOidcSecure(Security)} />
-              <Route exact path='/mycars' component={withOidcSecure(MyCars)} />
-              <Route exact path='/selling' component={withOidcSecure(SellingCars)} />
-              <Route exact path='/selling/:id' component={withOidcSecure(CarDetail)} />
-              <Route exact path='/messages' component={withOidcSecure(Messages)} />
-              <Route exact path='/car/sell' component={withOidcSecure(SellCar)} />
-              <Route exact path='*' component={NotFound} />
-            </Switch>
-          </BrowserRouter>
-          <GlobalStyle />
-        </CarContextProvider>
-      </UIProvider>
-    </ModalProvider>
+    <UIProvider>
+      <CarContextProvider>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={withOidcSecure(Home)} />
+            <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
+            <Route exact path='/account/security' component={withOidcSecure(Security)} />
+            <Route exact path='/mycars' component={withOidcSecure(MyCars)} />
+            <Route exact path='/selling' component={withOidcSecure(SellingCars)} />
+            <Route exact path='/selling/:id' component={withOidcSecure(CarDetail)} />
+            <Route exact path='/messages' component={withOidcSecure(Messages)} />
+            <Route exact path='/car/sell' component={withOidcSecure(SellCar)} />
+            <Route exact path='*' component={NotFound} />
+          </Switch>
+        </BrowserRouter>
+        <GlobalStyle />
+      </CarContextProvider>
+    </UIProvider>
   </AuthenticationProvider>
 )
 

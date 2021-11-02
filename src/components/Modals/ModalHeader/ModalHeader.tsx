@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ModalContext } from '../../../contexts/ModalContext'
+import { UIContext } from '../../../contexts/UIContext'
 import CloseIcon from '@material-ui/icons/Close'
 import {
   StyledModalHeader,
@@ -11,7 +11,7 @@ interface ModalHeaderProps {
 }
 
 const ModalHeader = ({ headerTitle }: ModalHeaderProps) => {
-  const { closeModal } = useContext(ModalContext)
+  const { closeModal } = useContext(UIContext)
 
   return (
     <StyledModalHeader>

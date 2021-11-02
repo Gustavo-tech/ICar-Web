@@ -10,7 +10,7 @@ import {
 } from './styles'
 import MessagesModal from '../Modals/Messages/Messages'
 import { useContext } from 'react'
-import { ModalContext } from '../../contexts/ModalContext'
+import { UIContext } from '../../contexts/UIContext'
 import AccountModal from '../Modals/Account/Account'
 import CarsModal from '../Modals/Cars/Cars'
 
@@ -19,7 +19,7 @@ interface AppNavBarProps {
 }
 
 const AppNavbar = ({ showSearch }: AppNavBarProps) => {
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useContext(UIContext)
 
   function openNavigationModal(type: string) {
     openModal(type)

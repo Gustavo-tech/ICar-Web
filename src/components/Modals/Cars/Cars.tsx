@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import ReactDOM from 'react-dom'
-import { ModalContext } from '../../../contexts/ModalContext'
+import { UIContext } from '../../../contexts/UIContext'
 import {
   Modal,
   ModalBody,
@@ -13,7 +13,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 
 const CarsModal = () => {
-  const { isOpen, modalType, closeModal } = useContext(ModalContext)
+  const { isModalOpen, modalType, closeModal } = useContext(UIContext)
 
   function handleModalClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     event.stopPropagation()
@@ -26,7 +26,7 @@ const CarsModal = () => {
   return ReactDOM.createPortal(
     <>
       {
-        isOpen && modalType === "cars" &&
+        isModalOpen && modalType === "cars" &&
         <ModalEffect onClick={closeModal}>
           <Modal onClick={e => handleModalClick(e)}>
             <ModalHeader headerTitle="Cars" />

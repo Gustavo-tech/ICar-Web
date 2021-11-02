@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import ReactDOM from 'react-dom'
-import { ModalContext } from '../../../contexts/ModalContext'
+import { UIContext } from '../../../contexts/UIContext'
 import ChatIcon from '@material-ui/icons/Chat'
 import {
   Modal,
@@ -11,7 +11,7 @@ import {
 import ModalHeader from '../ModalHeader/ModalHeader'
 
 const MessagesModal = () => {
-  const { isOpen, modalType, closeModal } = useContext(ModalContext)
+  const { isModalOpen, modalType, closeModal } = useContext(UIContext)
 
   function handleModalClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     event.stopPropagation()
@@ -24,7 +24,7 @@ const MessagesModal = () => {
   return ReactDOM.createPortal(
     <>
       {
-        isOpen && modalType === "messages" &&
+        isModalOpen && modalType === "messages" &&
         <ModalEffect onClick={closeModal}>
           <Modal onClick={e => handleModalClick(e)}>
             <ModalHeader headerTitle="Messages" />

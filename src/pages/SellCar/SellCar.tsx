@@ -6,7 +6,7 @@ import { Col, Container, Form, Row } from 'react-bootstrap'
 import { addCar } from '../../api/car/post'
 import ConfirmationModal from '../../components/Modals/Confirmation/Confirmation'
 import AppNavbar from '../../components/Navbar/Navbar'
-import { ModalContext } from '../../contexts/ModalContext'
+import { UIContext } from '../../contexts/UIContext'
 import { capitalizeText } from '../../utilities/string-utilities'
 import {
   AddPictureButton,
@@ -18,7 +18,7 @@ import {
 
 const SellCar = () => {
 
-  const { openModal } = useContext(ModalContext)
+  const { openModal } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
   const { access_token, profile } = oidcUser
 
