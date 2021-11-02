@@ -1,6 +1,6 @@
+import React, { useState } from 'react'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import AddIcon from '@material-ui/icons/Add'
-import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import { Col, Container, Form, Row } from 'react-bootstrap'
 import { addCar } from '../../api/car/post'

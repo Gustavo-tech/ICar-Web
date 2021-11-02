@@ -15,7 +15,7 @@ import {
 
 const MyCars = () => {
 
-  const { isLoading } = useContext(UIContext)
+  const { isLoading, isModalOpen } = useContext(UIContext)
   const { cars, fetchMyCars } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
   const { access_token, profile } = oidcUser
@@ -32,7 +32,7 @@ const MyCars = () => {
       <CenteredContent> <Spinner animation="border" variant="danger" /> </CenteredContent>
   }
 
-  else if (cars.length > 0) {
+  else if (cars.length > 0 && !isModalOpen) {
     mainContent =
       <ContentGrid>
         <FilterSidebar />

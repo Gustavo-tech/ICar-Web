@@ -41,8 +41,6 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
   async function fetchMyCars(token: string, email: string) {
     setIsLoading(true)
-    console.log(token)
-    console.log(email)
     try {
       const resp = await getUserCars(token, email)
       const { data } = resp

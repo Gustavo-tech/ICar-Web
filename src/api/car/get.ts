@@ -28,7 +28,6 @@ export function getCarWithId(authToken: string, id: number, callback?: any) {
     }
   }).then(resp => {
     if (resp.status === 200) {
-      console.log(resp);
 
       if (callback)
         callback(resp.data)

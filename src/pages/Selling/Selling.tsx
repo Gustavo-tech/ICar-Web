@@ -16,7 +16,7 @@ import {
 
 const SellingCars = () => {
 
-  const { isLoading } = useContext(UIContext)
+  const { isLoading, isModalOpen } = useContext(UIContext)
   const { fetchCars, cars } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
   const { access_token } = oidcUser
@@ -34,7 +34,7 @@ const SellingCars = () => {
       </CenteredContent>
   }
 
-  else if (cars.length > 0) {
+  else if (cars.length > 0 && !isModalOpen) {
     mainContent =
       <ContentGrid>
         <FilterSidebar />
