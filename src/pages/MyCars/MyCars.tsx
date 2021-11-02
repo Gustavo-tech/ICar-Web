@@ -1,35 +1,33 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
-import React, { useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { Spinner } from 'react-bootstrap'
-import { getUserCars } from '../../api/car/get'
-import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
+import CarCard from '../../components/Cards/CarCard/CarCard'
 import AppNavbar from '../../components/Navbar/Navbar'
+import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
+import { CarContext } from '../../contexts/CarContext'
+import { UIContext } from '../../contexts/UIContext'
+import Car from '../../models/car'
 import {
   CardsWrapper,
   CenteredContent,
   ContentGrid
 } from './styles'
-import Car from '../../models/car'
-import CarCard from '../../components/Cards/CarCard/CarCard'
 
 const MyCars = () => {
-  const [cars, setCars] = useState<Car[]>([])
-  const [loading, setLoading] = useState(true)
 
+  const { isLoading } = useContext(UIContext)
+  const { cars, fetchMyCars } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
-  const { profile, access_token } = oidcUser
+  const { access_token, profile } = oidcUser
   const { email } = profile
 
   useEffect(() => {
-    getUserCars('Bearer ' + access_token, email!, (response) => {
-      setCars(response.data)
-      setLoading(false)
-    })
+    fetchMyCars(access_token, email!)
   }, [])
 
   let mainContent
 
-  if (loading) {
+  if (isLoading) {
     mainContent =
       <CenteredContent> <Spinner animation="border" variant="danger" /> </CenteredContent>
   }

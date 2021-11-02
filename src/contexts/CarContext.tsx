@@ -1,11 +1,12 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { getSellingCars } from '../api/car/get';
-import CarSearchModel from '../api/search-models/car'
+import { getSellingCars, getUserCars } from '../api/car/get';
+import CarSearchModel from '../api/search-models/car';
 import Car from '../models/car';
 import { UIContext } from './UIContext';
 
 interface CarContextProps {
   fetchCars: (token: string) => void;
+  fetchMyCars: (token: string, email: string) => void;
   cars: Car[];
   searchForMaker: (maker: string) => void;
   searchForModel: (model: string) => void;
@@ -23,7 +24,6 @@ interface CarProviderProps {
 const CarContextProvider = ({ children }: CarProviderProps) => {
   const [cars, setCars] = useState<Car[]>([])
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
-
   const { setIsLoading } = useContext(UIContext)
 
   async function fetchCars(token: string) {
@@ -36,6 +36,22 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     catch (e) {
       setCars([])
     }
+    setIsLoading(false)
+  }
+
+  async function fetchMyCars(token: string, email: string) {
+    setIsLoading(true)
+    console.log(token)
+    console.log(email)
+    try {
+      const resp = await getUserCars(token, email)
+      const { data } = resp
+      setCars(data)
+    }
+    catch (e) {
+      setCars([])
+    }
+
     setIsLoading(false)
   }
 
@@ -77,7 +93,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       searchForMinPrice,
       searchForModel,
       cars,
-      fetchCars
+      fetchCars,
+      fetchMyCars
     }}>
       {children}
     </CarContext.Provider>
