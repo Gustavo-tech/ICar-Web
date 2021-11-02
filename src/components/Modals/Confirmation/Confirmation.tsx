@@ -1,4 +1,3 @@
-import React from 'react'
 import { useContext } from 'react'
 import { UIContext } from '../../../contexts/UIContext'
 import {
@@ -11,7 +10,7 @@ import {
 } from './styles'
 
 
-interface ConfirmationModalProps {
+type ConfirmationModalProps = {
   title: string;
   text: string;
   success: boolean;

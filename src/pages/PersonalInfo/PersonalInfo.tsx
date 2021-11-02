@@ -9,27 +9,28 @@ import {
 } from './styles'
 import { Button, Container } from '@material-ui/core'
 import { Col, Row, Spinner } from 'react-bootstrap'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { getUserInfo } from '../../api/account/get'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
+import { UIContext } from '../../contexts/UIContext'
 
 const PersonalInfo = () => {
+  const { isLoading, setIsLoading } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
   const { profile, access_token } = oidcUser
 
   const [accountCreationDate, setAccountCreationDate] = useState('')
-  const [loading, setLoading] = useState(false)
 
   const email = profile.email
   useEffect(() => {
-    setLoading(true)
+    setIsLoading(true)
     getUserInfo('Bearer ' + access_token, email, (data) => {
       setAccountCreationDate(new Date(data.accountCreationDate).toDateString())
-      setLoading(false)
+      setIsLoading(false)
     })
   }, [])
 
-  const content = loading ? (
+  const content = isLoading ? (
     <SpinnerDiv>
       <Spinner animation="border" variant="danger" />
     </SpinnerDiv>
