@@ -1,62 +1,43 @@
-import { NavLink } from 'react-router-dom'
-import styled from 'styled-components'
+import { makeStyles, Theme } from "@material-ui/core"
 
-export const SidebarSettingsDiv = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  background-color: white;
-`
+type Props = {
+  accountActive: boolean,
+  securityActive: boolean
+}
 
-export const SidebarOption = styled(NavLink)`
-  display: flex;
-  flex-direction: row;
-  text-decoration: none;
-  align-items: center;
-  width: 100%;
-  height: 3rem;
-  text-decoration: none !important;
-  background-color: var(--white);
-
-  &:hover {
-    background-color: var(--red);
-
-    & > * {
-      color: var(--white);
-    fill: var(--white);
+export const useStyles = makeStyles<Theme, Props>({
+  list: {
+    backgroundColor: 'white'
+  },
+  accountItem: {
+    transitionDuration: '0.5s',
+    backgroundColor: ({ accountActive }) => accountActive ? 'var(--red)' : 'white',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: ({ accountActive }) => accountActive ? 'var(--red)' : '#D6D5D5'
     }
-  }
-
-  & > * {
-    color: var(--black);
-    fill: var(--black);
-  }
-
-  &.active {
-    background-color: var(--red);
-
-    & > * {
-      fill: var(--white);
-      color: var(--white);
+  },
+  securityItem: {
+    transitionDuration: '0.5s',
+    backgroundColor: ({ securityActive }) => securityActive ? 'var(--red)' : 'white',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: ({ securityActive }) => securityActive ? 'var(--red)' : '#D6D5D5'
     }
+  },
+  avatar: {
+    backgroundColor: 'transparent'
+  },
+  iconAccount: {
+    fill: ({ accountActive }) => accountActive ? 'white' : 'red'
+  },
+  iconSecurity: {
+    fill: ({ securityActive }) => securityActive ? 'white' : 'red'
+  },
+  accountText: {
+    color: ({ accountActive }) => accountActive ? 'white' : 'red'
+  },
+  securityText: {
+    color: ({ securityActive }) => securityActive ? 'white' : 'red'
   }
-`
-
-export const IconDiv = styled.div`
-  display: flex;
-  width: 20%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`
-
-export const OptionDiv = styled.div`
-  display: flex;
-  width: 80%;
-  height: 100%;
-  justify-content: flex-start;
-  align-items: center;
-`
+})
