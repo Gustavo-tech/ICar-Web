@@ -14,6 +14,7 @@ export const useStyles = makeStyles<Theme, Props>({
     backgroundColor: ({ accountActive }) => accountActive ? 'var(--red)' : 'white',
     cursor: 'pointer',
     '&:hover': {
+
       backgroundColor: ({ accountActive }) => accountActive ? 'var(--red)' : '#D6D5D5'
     }
   },
@@ -29,15 +30,15 @@ export const useStyles = makeStyles<Theme, Props>({
     backgroundColor: 'transparent'
   },
   iconAccount: {
-    fill: ({ accountActive }) => accountActive ? 'white' : 'red'
+    fill: ({ accountActive }) => accountActive ? 'white' : '#7A7A7A'
   },
   iconSecurity: {
-    fill: ({ securityActive }) => securityActive ? 'white' : 'red'
+    fill: ({ securityActive }) => securityActive ? 'white' : '#7A7A7A'
   },
   accountText: {
-    color: ({ accountActive }) => accountActive ? 'white' : 'red'
+    color: ({ accountActive }) => accountActive ? 'white' : '#7A7A7A'
   },
   securityText: {
-    color: ({ securityActive }) => securityActive ? 'white' : 'red'
+    color: ({ securityActive }) => securityActive ? 'white' : '#7A7A7A'
   }
 })
