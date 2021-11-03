@@ -1,28 +1,46 @@
-import React from 'react'
 import {
-  CircleWrapper,
-  LastMessage,
-  Name,
-  NameInCircle,
-  NameInput,
-  NameWrapper,
   Sidebar,
-  UserWrapper,
 } from './style'
+import { TextField, List, ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles({
+  textField: {
+    backgroundColor: 'white',
+    borderRadius: '7px'
+  },
+  list: {
+    marginTop: '4%'
+  },
+  listItem: {
+    cursor: 'pointer',
+    transitionDuration: '0.5s',
+    '&:hover': {
+      backgroundColor: '#EAEAEA'
+    }
+  }
+})
 
 const TalkSidebar = () => {
+
+  const classes = useStyles()
   return (
     <Sidebar>
-      <NameInput placeholder="Search for a name" />
-      <UserWrapper>
-        <CircleWrapper>
-          <NameInCircle>GH</NameInCircle>
-        </CircleWrapper>
-        <NameWrapper>
-          <Name>Gustavo Henrique</Name>
-          <LastMessage>Nice Car!</LastMessage>
-        </NameWrapper>
-      </UserWrapper>
+      <TextField
+        variant="outlined"
+        label="Search someone"
+        className={classes.textField}
+      />
+      <List className={classes.list}>
+        <ListItem className={classes.listItem}>
+          <ListItemAvatar>
+            <Avatar>
+
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Gustavo" secondary="Hello, I am interested in your car" />
+        </ListItem>
+      </List>
     </Sidebar>
   )
 }
