@@ -7,7 +7,8 @@ type Props = {
 
 export const useStyles = makeStyles<Theme, Props>({
   list: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    height: '100%'
   },
   accountItem: {
     transitionDuration: '0.5s',
