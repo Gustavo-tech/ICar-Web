@@ -1,18 +1,24 @@
-import Carousel from 'react-bootstrap/Carousel'
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
-import RoomIcon from '@material-ui/icons/Room'
-import DirectionsCarIcon from '@material-ui/icons/DirectionsCar'
 import {
-  Card,
-  CardBody,
-  CardFooter,
-  MakerSpan,
-  ModelSpan,
-  NameWrapper,
-  Picture,
-  PicturesWrapper,
-  Info
+  CardMedia,
+  ListItem,
+  ListItemAvatar,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  CardActions
+} from '@material-ui/core'
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
+import DriveEtaIcon from '@material-ui/icons/DriveEta'
+import LocationOnIcon from '@material-ui/icons/LocationOn'
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import Card from '@material-ui/core/Card'
+import List from '@material-ui/core/List'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardContent from '@material-ui/core/CardContent'
+import {
+  useStyles,
 } from './styles'
+import { useHistory } from 'react-router'
 
 type CardProps = {
   id: number,
@@ -39,31 +45,55 @@ const CarCard = ({
   price
 }: CardProps) => {
 
+  const history = useHistory()
+
+  function handleOnCardClick(id: number) {
+    history.push('/selling/' + id.toString())
+  }
+
+  const classes = useStyles()
   return (
-    <Card to={`/selling/${id}`}>
-      <PicturesWrapper>
-        <Carousel>
-          {
-            pictures.map(x => (
-              <Carousel.Item key={x}>
-                <Picture src={x} alt="Car-picture" />
-              </Carousel.Item>
-            ))
-          }
-        </Carousel>
-      </PicturesWrapper>
-      <NameWrapper>
-        <MakerSpan>{maker}</MakerSpan>
-        <ModelSpan>{model}</ModelSpan>
-      </NameWrapper>
-      <CardBody>
-        <Info><DirectionsCarIcon /> {kilometersTraveled} KM</Info>
-        <Info><RoomIcon /> {city}</Info>
-        <Info><CalendarTodayIcon /> {makeDate}/{makedDate}</Info>
-      </CardBody>
-      <CardFooter>
-        <h5 style={{ textAlign: 'left' }}>R${price}</h5>
-      </CardFooter>
+    <Card className={classes.card} onClick={() => handleOnCardClick(id)}>
+      <CardActionArea>
+        <CardMedia component="img" src={pictures[0]} className={classes.cardMedia} />
+
+        <CardContent>
+          <Typography variant="h5">{maker} {model}</Typography>
+          <List>
+            <ListItem className={classes.listItem}>
+              <ListItemIcon className={classes.listItemIcon}>
+                <LocationOnIcon className={classes.icon} />
+              </ListItemIcon>
+
+              <ListItemText primary={city} />
+            </ListItem>
+
+            <ListItem className={classes.listItem}>
+              <ListItemIcon className={classes.listItemIcon}>
+                <CalendarTodayIcon className={classes.icon} />
+              </ListItemIcon>
+
+              <ListItemText primary={`${makeDate} / ${makedDate}`} />
+            </ListItem>
+
+            <ListItem className={classes.listItem}>
+              <ListItemIcon className={classes.listItemIcon}>
+                <DriveEtaIcon className={classes.icon} />
+              </ListItemIcon>
+
+              <ListItemText primary={`${kilometersTraveled} KM`} />
+            </ListItem>
+
+            <ListItem className={classes.listItem}>
+              <ListItemIcon className={classes.listItemIcon}>
+                <AttachMoneyIcon className={classes.icon} />
+              </ListItemIcon>
+
+              <ListItemText primary={`${price}`} />
+            </ListItem>
+          </List>
+        </CardContent>
+      </CardActionArea>
     </Card>
   )
 }

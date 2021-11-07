@@ -1,6 +1,7 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart'
 import { useContext, useEffect } from 'react'
+import Grid from '@material-ui/core/Grid'
 import { Spinner } from 'react-bootstrap'
 import CarCard from '../../components/Cards/CarCard/CarCard'
 import AppNavbar from '../../components/Navbar/Navbar'
@@ -11,7 +12,7 @@ import Car from '../../models/car'
 import {
   CardsWrapper,
   CenteredContent,
-  ContentGrid
+  useStyles
 } from './styles'
 
 const SellingCars = () => {
@@ -25,6 +26,7 @@ const SellingCars = () => {
     fetchCars(access_token)
   }, [])
 
+  const classes = useStyles()
   let mainContent
 
   if (isLoading) {
@@ -36,28 +38,34 @@ const SellingCars = () => {
 
   else if (cars.length > 0 && !isModalOpen) {
     mainContent =
-      <ContentGrid>
-        <FilterSidebar />
-        <CardsWrapper>
-          {
-            cars.map((car: Car) => (
-              <CarCard
-                key={car.id}
-                id={car.id}
-                maker={car.maker}
-                model={car.model}
-                kilometersTraveled={car.kilometersTraveled}
-                makeDate={car.makedDate}
-                makedDate={car.makedDate}
-                color={car.color}
-                price={car.price}
-                city={car.city}
-                pictures={car.pictures}
-              />
-            ))
-          }
-        </CardsWrapper>
-      </ContentGrid>
+      <Grid container spacing={4} className={classes.grid}>
+
+        <Grid item xs={2}>
+          <FilterSidebar />
+        </Grid>
+
+        <Grid item xs={10}>
+          <CardsWrapper>
+            {
+              cars.map((car: Car) => (
+                <CarCard
+                  key={car.id}
+                  id={car.id}
+                  maker={car.maker}
+                  model={car.model}
+                  kilometersTraveled={car.kilometersTraveled}
+                  makeDate={car.makedDate}
+                  makedDate={car.makedDate}
+                  color={car.color}
+                  price={car.price}
+                  city={car.city}
+                  pictures={car.pictures}
+                />
+              ))
+            }
+          </CardsWrapper>
+        </Grid>
+      </Grid>
   }
 
   else {

@@ -1,4 +1,12 @@
 import styled from 'styled-components'
+import { makeStyles } from '@material-ui/core/styles'
+
+export const useStyles = makeStyles({
+  grid: {
+    height: '100%',
+    marginTop: '3%'
+  }
+})
 
 export const CenteredContent = styled.div`
   display: flex;
@@ -8,17 +16,9 @@ export const CenteredContent = styled.div`
   height: 84vh;
 `
 
-export const ContentGrid = styled.div`
-  display: flex;
-  margin-top: 4%;
-  width: 100%;
-  height: 100%;
-`
-
 export const CardsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   height: 100%;
-  padding: 0 6%;
 `
