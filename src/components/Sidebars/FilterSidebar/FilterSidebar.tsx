@@ -1,23 +1,29 @@
-import { Form } from 'react-bootstrap'
 import {
-  Sidebar
+  Sidebar,
+  useStyles
 } from './styles'
+import {
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem
+} from '@material-ui/core'
 
 const FilterSidebar = () => {
 
+  const classes = useStyles()
   return (
     <Sidebar>
-      <div style={{ padding: '5%' }}>
-        <Form.Group>
-          <Form.Label style={{ color: 'white' }}>Maker</Form.Label>
-          <Form.Control
-            as="select"
-          >
-            <option value="all">All Makers</option>
-          </Form.Control>
-        </Form.Group>
-
-      </div>
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel id="maker-label">Maker</InputLabel>
+        <Select
+          labelId="maker-label"
+          id="maker-select"
+          label="Maker"
+        >
+          <MenuItem value="">All</MenuItem>
+        </Select>
+      </FormControl>
     </Sidebar >
   )
 }

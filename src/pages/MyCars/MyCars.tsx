@@ -38,11 +38,11 @@ const MyCars = () => {
   else if (cars.length > 0 && !isModalOpen) {
     mainContent =
       <Grid container className={classes.grid} spacing={4}>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <FilterSidebar />
         </Grid>
 
-        <Grid item xs={10}>
+        <Grid item xs={9}>
           <CardsWrapper>
             {
               cars.map((car: Car) => (

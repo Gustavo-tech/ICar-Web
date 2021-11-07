@@ -40,11 +40,11 @@ const SellingCars = () => {
     mainContent =
       <Grid container spacing={4} className={classes.grid}>
 
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <FilterSidebar />
         </Grid>
 
-        <Grid item xs={10}>
+        <Grid item xs={9}>
           <CardsWrapper>
             {
               cars.map((car: Car) => (
