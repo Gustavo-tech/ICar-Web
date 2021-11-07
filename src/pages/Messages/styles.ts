@@ -1,21 +1,11 @@
 import styled from 'styled-components'
+import { makeStyles } from '@material-ui/core'
 
-export const Body = styled.div`
-  display: flex;
-  height: 83.4vh;
-  overflow: hidden;
-  width: 100%;
-  margin-top: 3%;
-`
-
-export const TalkWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 53%;
-  height: 100%;
-`
+export const useStyles = makeStyles({
+  grid: {
+    marginTop: '2%'
+  }
+})
 
 export const TalkHeader = styled.header`
   display: flex;
@@ -43,7 +33,7 @@ export const TalkBody = styled.div`
   width: 100%;
   height: 87%;
   border: 1px solid #B5B5B5;
-  padding: 4%;
+  padding: 4% 4% 1% 4%;
 `
 
 interface MessageProps {
@@ -66,37 +56,13 @@ export const Message = styled.div<MessageProps>`
   min-height: 14%;
 `
 
-export const MessageInputWrapper = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  position: absolute;
-  bottom: 0;
-  width: 95%;
-  height: 10%;
-  background-color: white;
-  padding: 0.7% 3%;
-
-  & > svg {
-    fill: red;
-    width: 7%;
-    cursor: pointer;
-  }
-`
-
-export const MessageInput = styled.input`
-  width: 90%;
-  height: 80%;
-  border-bottom: 1px solid black;
-`
-
 export const DetailsWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   padding: 2% 0;
-  width: 22%;
+  width: 100%;
   height: 100%;
   background-color: white;
   border: 1px solid #B5B5B5;

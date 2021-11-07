@@ -1,24 +1,20 @@
+import { useReactOidc } from '@axa-fr/react-oidc-context'
+import { Grid, TextField } from '@material-ui/core'
+import SendIcon from '@material-ui/icons/Send'
 import { useContext, useEffect, useState } from 'react'
 import { getTalks } from '../../api/account/get'
-import { UIContext } from '../../contexts/UIContext'
+import { TalkResponse } from '../../api/response-types/account'
 import AppNavbar from '../../components/Navbar/Navbar'
 import TalkSidebar from '../../components/Sidebars/TalkSidebar/TalkSidebar'
-import SendIcon from '@material-ui/icons/Send';
+import { UIContext } from '../../contexts/UIContext'
 import {
-  Body,
   DetailsWrapper,
-  Message,
-  MessageInput,
-  MessageInputWrapper,
-  NickName,
+  Message, NickName,
   TalkBody,
   TalkHeader,
-  TalkHeaderTitle,
-  TalkWrapper,
-  UserPic
+  TalkHeaderTitle, UserPic,
+  useStyles
 } from './styles'
-import { useReactOidc } from '@axa-fr/react-oidc-context'
-import { TalkResponse } from '../../api/response-types/account'
 
 const Messages = () => {
 
@@ -36,30 +32,58 @@ const Messages = () => {
     })
   }, [])
 
+  const classes = useStyles()
   return (
     <>
       <AppNavbar showSearch={false} />
-      <Body>
-        <TalkSidebar />
-        <TalkWrapper>
-          <TalkHeader>
-            <TalkHeaderTitle>ICar</TalkHeaderTitle>
-          </TalkHeader>
-          <TalkBody>
-            <Message sent={false}>Hello</Message>
-            <Message sent={true}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi temporibus totam quis eum maxime optio nulla in, dolorem consectetur eveniet.</Message>
-            <Message sent={false}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi temporibus totam quis eum maxime optio nulla in, dolorem consectetur eveniet.</Message>
-            <MessageInputWrapper>
-              <MessageInput placeholder="Type your message" />
-              <SendIcon />
-            </MessageInputWrapper>
-          </TalkBody>
-        </TalkWrapper>
-        <DetailsWrapper>
-          <UserPic>GH</UserPic>
-          <NickName>Gustavo Henrique</NickName>
-        </DetailsWrapper>
-      </Body>
+      <Grid container spacing={1} className={classes.grid}>
+
+        <Grid item xs={3}>
+          <TalkSidebar />
+        </Grid>
+
+        <Grid item xs={6}>
+          <Grid container spacing={1} direction="column">
+            <Grid item xs={12}>
+              <TalkHeader>
+                <TalkHeaderTitle>ICar</TalkHeaderTitle>
+              </TalkHeader>
+            </Grid>
+
+            <Grid item xs={12}>
+              <TalkBody>
+                <Message sent={false}>Hello</Message>
+                <Message sent={true}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi temporibus totam quis eum maxime optio nulla in, dolorem consectetur eveniet.</Message>
+                <Message sent={false}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi temporibus totam quis eum maxime optio nulla in, dolorem consectetur eveniet.</Message>
+              </TalkBody>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                <Grid item xs={10}>
+                  <TextField
+                    fullWidth
+                    label="message"
+                    variant="outlined"
+                    placeholder="Type your message"
+                  />
+                </Grid>
+
+                <Grid item xs={2} justify="center" alignItems="center">
+                  <SendIcon />
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={3}>
+          <DetailsWrapper>
+            <UserPic>GH</UserPic>
+            <NickName>Gustavo Henrique</NickName>
+          </DetailsWrapper>
+        </Grid>
+      </Grid>
     </>
   )
 }
