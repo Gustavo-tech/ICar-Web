@@ -1,5 +1,5 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
-import { Grid, TextField } from '@material-ui/core'
+import { Avatar, Grid, List, ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
 import { useContext, useEffect, useState } from 'react'
 import { getTalks } from '../../api/account/get'
@@ -7,12 +7,13 @@ import { TalkResponse } from '../../api/response-types/account'
 import AppNavbar from '../../components/Navbar/Navbar'
 import TalkSidebar from '../../components/Sidebars/TalkSidebar/TalkSidebar'
 import { UIContext } from '../../contexts/UIContext'
+import EmailIcon from '@material-ui/icons/Email'
 import {
-  DetailsWrapper,
-  Message, NickName,
+  Message,
+  NickName,
   TalkBody,
-  TalkHeader,
-  TalkHeaderTitle, UserPic,
+  TalkHeaderTitle,
+  UserInfo,
   useStyles
 } from './styles'
 
@@ -45,9 +46,7 @@ const Messages = () => {
         <Grid item xs={6}>
           <Grid container spacing={1} direction="column">
             <Grid item xs={12}>
-              <TalkHeader>
-                <TalkHeaderTitle>ICar</TalkHeaderTitle>
-              </TalkHeader>
+              <TalkHeaderTitle>ICar</TalkHeaderTitle>
             </Grid>
 
             <Grid item xs={12}>
@@ -69,19 +68,31 @@ const Messages = () => {
                   />
                 </Grid>
 
-                <Grid item xs={2} justify="center" alignItems="center">
-                  <SendIcon />
+                <Grid container item xs={2} justify="center" alignItems="center">
+                  <SendIcon className={classes.sendIcon} />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid item xs={3}>
-          <DetailsWrapper>
-            <UserPic>GH</UserPic>
-            <NickName>Gustavo Henrique</NickName>
-          </DetailsWrapper>
+        <Grid
+          item
+          xs={3}
+        >
+          <UserInfo>
+            <Avatar>GH</Avatar>
+            <Typography variant="h6">Gustavo Henrique</Typography>
+
+            <List>
+              <ListItem>
+                <ListItemIcon className={classes.listIcon}>
+                  <EmailIcon />
+                </ListItemIcon>
+                <ListItemText primary="gustavo@gmail.com" />
+              </ListItem>
+            </List>
+          </UserInfo>
         </Grid>
       </Grid>
     </>
