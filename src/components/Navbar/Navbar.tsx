@@ -1,7 +1,6 @@
 import EmailIcon from '@material-ui/icons/Email'
 import DriveEtaIcon from '@material-ui/icons/DriveEta'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import Form from 'react-bootstrap/Form'
 import {
   Brand,
   Button,
@@ -34,11 +33,11 @@ const AppNavbar = ({ showSearch }: AppNavBarProps) => {
       <Navbar>
         <Brand to="/">ICar</Brand>
 
-        {showSearch &&
+        {/* {showSearch &&
           <Form.Control
             style={{ width: '24%', outline: 'none', border: 'none' }}
             placeholder="Search for a car"
-          />}
+          />} */}
 
         <ButtonsDiv>
           <Button onClick={() => openNavigationModal('messages')}>

@@ -1,5 +1,4 @@
 import { CenteredDiv } from './styles'
-import Spinner from 'react-bootstrap/Spinner'
 
 type CenteredSpinnerProps = {
   animation: 'grow' | 'border'
@@ -8,7 +7,7 @@ type CenteredSpinnerProps = {
 const CenteredSpinner = ({ animation }: CenteredSpinnerProps) => {
   return (
     <CenteredDiv>
-      <Spinner animation={animation} variant="danger" />
+      {/* <Spinner animation={animation} variant="danger" /> */}
     </CenteredDiv>
   )
 }

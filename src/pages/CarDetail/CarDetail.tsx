@@ -13,8 +13,8 @@ import {
   NameHeader,
   Page
 } from './styles'
-import { Col, Row } from 'react-bootstrap'
 import LabelWithValue from '../../components/LabelWithValue/LabelWithValue'
+import Grid from '@material-ui/core/Grid'
 
 const CarDetail = () => {
   const [car, setCar] = useState<Car | undefined>(undefined)
@@ -54,59 +54,56 @@ const CarDetail = () => {
               <CarName>{car?.maker}</CarName> <CarName inRed>{car?.model}</CarName>
             </NameHeader>
 
-            <Row style={{ marginBottom: '1%' }}>
-              <Col lg={3}>
+            <Grid container>
+              <Grid item>
                 <LabelWithValue label="Year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item>
                 <LabelWithValue label="KM" value={car?.kilometersTraveled?.toString()} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item>
                 <LabelWithValue label="Exchange" value={car?.typeOfExchange?.toString()} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item>
                 <LabelWithValue label="Gasoline type" value={car?.gasolineType?.toString()} />
-              </Col>
-            </Row>
+              </Grid>
+            </Grid>
 
-            <Row style={{ marginBottom: '1%' }}>
-              <Col lg={3}>
+            <Grid container>
+              <Grid item>
                 <LabelWithValue label="Color" value={car?.color} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item>
                 <LabelWithValue label="Accepts change" value={getBoolAnswer(car?.acceptsChange)} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item>
                 <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
+              </Grid>
+            </Grid>
 
-              <Col lg={3}>
-                <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
-            </Row>
-
-            <Row>
-              <Col lg={3}>
+            <Grid container>
+              <Grid item>
                 <LabelWithValue label="Year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item>
                 <LabelWithValue label="KM" value={car?.kilometersTraveled?.toString()} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item>
                 <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item>
                 <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
-            </Row>
+              </Grid>
+            </Grid>
+
           </InfoContainer>
         </InfosDiv>}
     </Page>

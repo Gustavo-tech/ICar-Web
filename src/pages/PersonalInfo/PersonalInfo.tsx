@@ -1,14 +1,15 @@
 import Navbar from '../../components/Navbar/Navbar'
 import SidebarSettings from '../../components/Sidebars/SidebarSettings/SidebarSettings'
-import Form from 'react-bootstrap/Form'
+import Container from '@material-ui/core/Container'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 import {
   Page,
   PageTitle,
   Description,
   SpinnerDiv
 } from './styles'
-import { Button, Container } from '@material-ui/core'
-import { Col, Row, Spinner } from 'react-bootstrap'
 import { useEffect, useState, useContext } from 'react'
 import { getUserInfo } from '../../api/account/get'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
@@ -32,55 +33,24 @@ const PersonalInfo = () => {
 
   const content = isLoading ? (
     <SpinnerDiv>
-      <Spinner animation="border" variant="danger" />
+
     </SpinnerDiv>
   ) : (
     <div>
       <PageTitle>Account information</PageTitle>
       <Description>Your basic account information</Description>
-      <Container
-        style={{
-          backgroundColor: 'var(--red)',
-          padding: '2%',
-          width: '80%',
-          borderRadius: '12px'
-        }}
-      >
-        <Row>
-          <Col>
+      <Grid container direction="row">
+        <Container>
+          <TextField label="Phone" value={profile.phone_number} disabled />
 
-            <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>Phone</Form.Label>
-              <Form.Control disabled value={profile.phone_number} />
-            </Form.Group>
+          <TextField label="Email" disabled value={profile.email} />
 
-            <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>Email</Form.Label>
-              <Form.Control disabled value={profile.email} />
-            </Form.Group>
+          <TextField label="User" disabled value={profile.name} />
 
-            <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>User</Form.Label>
-              <Form.Control disabled value={profile.name} />
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>Account Creation Date</Form.Label>
-              <Form.Control disabled value={accountCreationDate} />
-            </Form.Group>
-
-            <Button
-              style={{
-                backgroundColor: 'var(--black)',
-                color: 'var(--white)',
-                float: 'right'
-              }}
-            >
-              Edit
-            </Button>
-          </Col>
-        </Row>
-      </Container>
+          <TextField label="Account Creation Date" disabled value={accountCreationDate} />
+          <Button>Edit</Button>
+        </Container>
+      </Grid>
     </div>
   )
 

@@ -2,7 +2,6 @@ import { useReactOidc } from '@axa-fr/react-oidc-context'
 import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart'
 import { useContext, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
-import { Spinner } from 'react-bootstrap'
 import CarCard from '../../components/Cards/CarCard/CarCard'
 import AppNavbar from '../../components/Navbar/Navbar'
 import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
@@ -32,7 +31,7 @@ const SellingCars = () => {
   if (isLoading) {
     mainContent =
       <CenteredContent>
-        <Spinner animation="border" variant="danger" />
+
       </CenteredContent>
   }
 

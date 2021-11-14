@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { makeStyles } from '@material-ui/core/styles'
-import { Container } from 'react-bootstrap'
 
 export const useStyles = makeStyles({
   pageGrid: {
@@ -8,7 +7,7 @@ export const useStyles = makeStyles({
   }
 })
 
-export const ListContainer = styled(Container)`
+export const ListContainer = styled.div`
   background-color: white;
   border-radius: 17px;
   padding: 2%;
