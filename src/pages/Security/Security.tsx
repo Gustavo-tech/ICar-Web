@@ -5,19 +5,15 @@ import ListItem from '@material-ui/core/ListItem'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import ErrorIcon from '@material-ui/icons/Error'
 import { useContext, useEffect, useState } from 'react'
 import { getLogins } from '../../api/account/get'
 import { LoginResponse } from '../../api/response-types/account'
-import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner'
 import Navbar from '../../components/Navbar/Navbar'
 import SidebarSettings from '../../components/Sidebars/SidebarSettings/SidebarSettings'
 import { UIContext } from '../../contexts/UIContext'
-import {
-  ListContainer,
-  SecurityTitle,
-  useStyles
-} from './styles'
+import { useStyles } from './styles'
 
 const Security = () => {
 
@@ -40,31 +36,30 @@ const Security = () => {
   return (
     <>
       <Navbar showSearch={false} />
-      <Grid container className={classes.pageGrid} alignItems="stretch">
+      <Grid container className={classes.pageGrid}>
 
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <SidebarSettings />
         </Grid>
 
-        <Grid item xs={10}>
-          {isLoading &&
-            <CenteredSpinner animation='border' />}
+        <Grid item xs={9}>
+          <Grid container direction="column" alignItems="center">
+            {/* {isLoading &&
+            <CircularProgress color="primary" />} */}
 
-          {!isLoading &&
-            <Container>
-              <Grid container justify="center">
-
-                <Grid item>
-                  <Typography variant="h2">Security</Typography>
+            {!isLoading &&
+              <>
+                <Grid item xs={12}>
+                  <Typography variant="h4">Security</Typography>
                 </Grid>
 
-                <Grid item>
-                  <Typography variant="subtitle1">
+                <Grid item xs={12}>
+                  <Typography variant="subtitle1" gutterBottom>
                     Here you can check all your logins to look for suspect actions.
                   </Typography>
                 </Grid>
 
-                <ListContainer>
+                <Grid item xs={12} className={classes.listContainer}>
                   <List>
                     {
                       logins?.map(x => (
@@ -82,9 +77,9 @@ const Security = () => {
                       ))
                     }
                   </List>
-                </ListContainer>
-              </Grid>
-            </Container>}
+                </Grid>
+              </>}
+          </Grid>
         </Grid>
       </Grid>
     </>

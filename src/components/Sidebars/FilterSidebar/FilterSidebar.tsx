@@ -1,13 +1,8 @@
-import {
-  Sidebar,
-  useStyles
-} from './styles'
-import {
-  FormControl,
-  Select,
-  InputLabel,
-  MenuItem
-} from '@material-ui/core'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import { Sidebar, useStyles } from './styles'
 
 const FilterSidebar = () => {
 
@@ -24,6 +19,7 @@ const FilterSidebar = () => {
           <MenuItem value="">All</MenuItem>
         </Select>
       </FormControl>
+
     </Sidebar >
   )
 }
