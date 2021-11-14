@@ -11,10 +11,11 @@ import { UIContext } from '../../contexts/UIContext'
 import { capitalizeText } from '../../utilities/string-utilities'
 import { useStyles } from './styles'
 import CarPictures from './components/CarPictures/CarPictures'
+import CarDetails from './components/CarDetails/CarDetails'
 
 const SellCar = () => {
 
-  const [step, setStep] = useState<number>(0)
+  const [step, setStep] = useState<number>(1)
 
   const { openModal } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
@@ -38,7 +39,12 @@ const SellCar = () => {
           <Step><StepLabel>Completed</StepLabel></Step>
         </Stepper>
 
-        <CarPictures onNextClick={handleNextClick} />
+        {step === 0 &&
+          <CarPictures onNextClick={handleNextClick} />}
+
+        {step === 1 &&
+          <CarDetails onNextClick={handleNextClick} />}
+
       </Container>
     </>
   )
