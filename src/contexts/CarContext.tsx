@@ -5,9 +5,12 @@ import Car from '../models/car';
 import { UIContext } from './UIContext';
 
 interface CarContextProps {
+  cars: Car[];
+  pictures: string[];
+
+  setPictures: (pics: string[]) => void;
   fetchCars: (token: string) => void;
   fetchMyCars: (token: string, email: string) => void;
-  cars: Car[];
   searchForMaker: (maker: string) => void;
   searchForModel: (model: string) => void;
   searchForMinPrice: (price: number) => void;
@@ -23,6 +26,7 @@ interface CarProviderProps {
 
 const CarContextProvider = ({ children }: CarProviderProps) => {
   const [cars, setCars] = useState<Car[]>([])
+  const [pictures, setPictures] = useState<string[]>([])
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
   const { setIsLoading } = useContext(UIContext)
 
@@ -85,12 +89,14 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
   return (
     <CarContext.Provider value={{
+      cars,
+      pictures,
+      setPictures,
       searchForMaker,
       searchForMaxKilometers,
       searchForMaxPrice,
       searchForMinPrice,
       searchForModel,
-      cars,
       fetchCars,
       fetchMyCars
     }}>
