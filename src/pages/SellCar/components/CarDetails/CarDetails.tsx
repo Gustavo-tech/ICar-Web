@@ -7,9 +7,11 @@ import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import { useStyles, Form, ColorInput, ColorWrapper, ColorLabel } from './styles'
+import { useStyles, Form } from './styles'
 import { CarContext } from '../../../../contexts/CarContext'
 import { capitalizeText } from '../../../../utilities/string-utilities'
 import CarValidator from '../../../../utilities/validators/car-validator'
@@ -365,15 +367,43 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
             <TextField
               multiline
               fullWidth
+              value={message}
               variant="outlined"
               label="Message"
               rows={10}
+              onChange={(e) => setMessage(e.target.value)}
             />
           </Grid>
         </Grid>
 
         <Grid container item xs={12}>
+          <Grid item xs={3}>
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={ipvaIsPaid} onChange={(e) => setIpvaIsPaid(e.target.checked)} />}
+              label="Ipva Is Paid"
+            />
+          </Grid>
 
+          <Grid item xs={3}>
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={isLicensed} onChange={(e) => setIsLicensed(e.target.checked)} />}
+              label="Is Licensed"
+            />
+          </Grid>
+
+          <Grid item xs={3}>
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={isArmored} onChange={(e) => setIsArmored(e.target.checked)} />}
+              label="Is Armored"
+            />
+          </Grid>
+
+          <Grid item xs={3}>
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={acceptsChange} onChange={(e) => setAcceptsChange(e.target.checked)} />}
+              label="Accepts Change"
+            />
+          </Grid>
         </Grid>
       </Grid>
 
