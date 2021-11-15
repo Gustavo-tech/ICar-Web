@@ -21,9 +21,14 @@ const SellCar = () => {
   const { oidcUser } = useReactOidc()
   const { access_token, profile } = oidcUser
 
-  function handleNextClick() {
+  function handleNextClick(): void {
     if (step < 4)
       setStep(step + 1)
+  }
+
+  function handleBackClick(): void {
+    if (step !== 0)
+      setStep(step - 1)
   }
 
   const classes = useStyles()
@@ -43,7 +48,7 @@ const SellCar = () => {
           <CarPictures onNextClick={handleNextClick} />}
 
         {step === 1 &&
-          <CarDetails onNextClick={handleNextClick} />}
+          <CarDetails onNextClick={handleNextClick} onBackClick={handleBackClick} />}
 
       </Container>
     </>

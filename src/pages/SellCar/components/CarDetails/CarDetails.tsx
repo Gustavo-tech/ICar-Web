@@ -11,6 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import { useStyles, Form } from './styles'
 import { CarContext } from '../../../../contexts/CarContext'
 import { capitalizeText } from '../../../../utilities/string-utilities'
@@ -19,9 +20,10 @@ import { getCarColors } from '../../../../constants/colors'
 
 type CarDetailsProps = {
   onNextClick: () => void;
+  onBackClick: () => void;
 }
 
-const CarDetails = ({ onNextClick }: CarDetailsProps) => {
+const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
 
   const [plateIsValid, setPlateIsValid] = useState(true)
   const [makeDateIsValid, setMakeDateIsValid] = useState(true)
@@ -209,7 +211,10 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
   const classes = useStyles()
   const colors = getCarColors()
   return (
-    <Form>
+    <Form onSubmit={(e) => {
+      e.preventDefault()
+      onNextClick()
+    }}>
       <Grid container>
         <Grid container justify="center" alignItems="center" item xs={1}>
           <AssignmentIcon color="primary" fontSize="large" />
@@ -228,6 +233,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               label="Maker"
               value={maker}
               fullWidth
+              required
               onChange={(e) => capitalizeAndSet(e.target.value, setMaker)}
             />
           </Grid>
@@ -238,6 +244,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               label="Model"
               value={model}
               fullWidth
+              required
               onChange={(e) => capitalizeAndSet(e.target.value, setModel)}
             />
           </Grid>
@@ -253,6 +260,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               onChange={(e) => handlePlateChange(e.target.value)}
               error={!plateIsValid}
               helperText={!plateIsValid ? 'This plate is not valid' : ''}
+              required
             />
           </Grid>
           <Grid item xs={3}>
@@ -264,6 +272,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               onChange={(e) => handleMakeDateChange(e.target.value)}
               error={!makeDateIsValid}
               helperText={!makeDateIsValid ? 'This year is not valid' : ''}
+              required
             />
           </Grid>
 
@@ -276,6 +285,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               onChange={(e) => handleMakedDateChange(e.target.value)}
               error={!makedDateIsValid}
               helperText={!makedDateIsValid ? 'This year is not valid' : ''}
+              required
             />
           </Grid>
 
@@ -288,6 +298,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               onChange={(e) => handleKilometersChange(e.target.value)}
               error={!kilometersIsValid}
               helperText={!kilometersIsValid ? 'Kilometers is less than zero' : ''}
+              required
             />
           </Grid>
         </Grid>
@@ -302,11 +313,12 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               onChange={(e) => handlePriceChange(e.target.value)}
               error={!priceIsValid}
               helperText={!priceIsValid ? 'Price must be greater than 1000' : ''}
+              required
             />
           </Grid>
 
           <Grid item xs={3}>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl variant="outlined" fullWidth required>
               <InputLabel id="exchange-type-label">Exchange</InputLabel>
               <Select
                 labelId="exchange-type-label"
@@ -323,7 +335,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
           </Grid>
 
           <Grid item xs={3}>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl variant="outlined" fullWidth required>
               <InputLabel id="gasoline-type-label">Gasoline type</InputLabel>
               <Select
                 labelId="gasoline-type-label"
@@ -342,7 +354,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
           </Grid>
 
           <Grid item xs={3}>
-            <FormControl variant="outlined" fullWidth>
+            <FormControl variant="outlined" fullWidth required>
               <InputLabel id="color-label">Color</InputLabel>
               <Select
                 labelId="color-label"
@@ -407,7 +419,17 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
         </Grid>
       </Grid>
 
-      <Grid container justify="flex-end" alignItems="center" className={classes.nextGrid}>
+      <Grid container justify="space-between" alignItems="center" className={classes.nextGrid}>
+        <Button
+          variant="contained"
+          size="large"
+          color="secondary"
+          startIcon={<ArrowBackIosIcon />}
+          onClick={onBackClick}
+        >
+          Back
+        </Button>
+
         <Button
           variant="contained"
           size="large"
