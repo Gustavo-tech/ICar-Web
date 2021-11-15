@@ -11,6 +11,7 @@ type CarContextProps = {
   model: string | undefined;
   makeDate: number | undefined;
   makedDate: number | undefined;
+  kilometers: number | undefined;
   pictures: string[];
 
   setPlate: (p: string | undefined) => void;
@@ -18,6 +19,7 @@ type CarContextProps = {
   setModel: (m: string | undefined) => void;
   setMakeDate: (n: number | undefined) => void;
   setMakedDate: (n: number | undefined) => void;
+  setKilometers: (km: number | undefined) => void;
   setPictures: (pics: string[]) => void;
   fetchCars: (token: string) => void;
   fetchMyCars: (token: string, email: string) => void;
@@ -41,6 +43,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [plate, setPlate] = useState<string | undefined>('')
   const [makeDate, setMakeDate] = useState<number | undefined>(undefined)
   const [makedDate, setMakedDate] = useState<number | undefined>(undefined)
+  const [kilometers, setKilometers] = useState<number | undefined>(undefined)
   const [pictures, setPictures] = useState<string[]>([])
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
 
@@ -111,11 +114,13 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       plate,
       makeDate,
       makedDate,
+      kilometers,
       pictures,
       setMaker,
       setModel,
       setMakeDate,
       setMakedDate,
+      setKilometers,
       setPlate,
       setPictures,
       searchForMaker,

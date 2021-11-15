@@ -19,6 +19,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
   const [plateIsValid, setPlateIsValid] = useState(true)
   const [makeDateIsValid, setMakeDateIsValid] = useState(true)
   const [makedDateIsValid, setMakedDateIsValid] = useState(true)
+  const [kilometersIsValid, setKilometersIsValid] = useState(true)
 
   const {
     maker,
@@ -30,7 +31,9 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
     makeDate,
     setMakeDate,
     makedDate,
-    setMakedDate
+    setMakedDate,
+    kilometers,
+    setKilometers
   } = useContext(CarContext)
 
   function capitalizeAndSet(value: string, setFunction: (text: string) => void): void {
@@ -51,10 +54,29 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
     let isValid: boolean = CarValidator.validateDate(year)
 
     if (makedDate)
-      isValid = year < makedDate
+      isValid = year <= makedDate
 
     setMakeDateIsValid(isValid)
     setMakeDate(value !== '' ? year : undefined)
+  }
+
+  function handleMakedDateChange(value: string) {
+    const year: number = Number.parseInt(value)
+    let isValid: boolean = CarValidator.validateDate(year)
+
+    if (makeDate)
+      isValid = year >= makeDate
+
+    setMakedDateIsValid(isValid)
+    setMakedDate(value !== '' ? year : undefined)
+  }
+
+  function handleKilometersChange(value: string) {
+    const vl: number = Number.parseInt(value)
+    const isValid: boolean = CarValidator.validateKilometers(vl)
+
+    setKilometers(value !== '' ? vl : undefined)
+    setKilometersIsValid(isValid)
   }
 
   const classes = useStyles()
@@ -121,22 +143,24 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
           <Grid item xs={4}>
             <TextField
               variant="outlined"
-              label="Model"
-              value={model}
+              label="Maked Date"
+              value={makedDate}
               fullWidth
-              onChange={(e) => capitalizeAndSet(e.target.value, setModel)}
+              onChange={(e) => handleMakedDateChange(e.target.value)}
+              error={!makedDateIsValid}
+              helperText={!makedDateIsValid ? 'This year is not valid' : ''}
             />
           </Grid>
 
           <Grid item xs={4}>
             <TextField
               variant="outlined"
-              label="Plate"
-              value={plate}
+              label="Kilometers"
+              value={kilometers}
               fullWidth
-              onChange={(e) => handlePlateChange(e.target.value)}
-              error={!plateIsValid}
-              helperText={!plateIsValid ? 'This plate is not valid' : ''}
+              onChange={(e) => handleKilometersChange(e.target.value)}
+              error={!kilometersIsValid}
+              helperText={!kilometersIsValid ? 'Kilometers is less than zero' : ''}
             />
           </Grid>
         </Grid>

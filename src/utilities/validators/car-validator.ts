@@ -12,6 +12,10 @@ class CarValidator {
     const minYear = year - 70
     return yearValue >= minYear && yearValue <= year
   }
+
+  static validateKilometers(km: number): boolean {
+    return km > 0
+  }
 }
 
 export default CarValidator
