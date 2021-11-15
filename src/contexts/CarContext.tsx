@@ -4,10 +4,20 @@ import CarSearchModel from '../api/search-models/car';
 import Car from '../models/car';
 import { UIContext } from './UIContext';
 
-interface CarContextProps {
+type CarContextProps = {
   cars: Car[];
+  plate: string | undefined;
+  maker: string | undefined;
+  model: string | undefined;
+  makeDate: number | undefined;
+  makedDate: number | undefined;
   pictures: string[];
 
+  setPlate: (p: string | undefined) => void;
+  setMaker: (m: string | undefined) => void;
+  setModel: (m: string | undefined) => void;
+  setMakeDate: (n: number | undefined) => void;
+  setMakedDate: (n: number | undefined) => void;
   setPictures: (pics: string[]) => void;
   fetchCars: (token: string) => void;
   fetchMyCars: (token: string, email: string) => void;
@@ -20,14 +30,20 @@ interface CarContextProps {
 
 export const CarContext = createContext({} as CarContextProps)
 
-interface CarProviderProps {
+type CarProviderProps = {
   children: ReactNode;
 }
 
 const CarContextProvider = ({ children }: CarProviderProps) => {
   const [cars, setCars] = useState<Car[]>([])
+  const [maker, setMaker] = useState<string | undefined>(undefined)
+  const [model, setModel] = useState<string | undefined>('')
+  const [plate, setPlate] = useState<string | undefined>('')
+  const [makeDate, setMakeDate] = useState<number | undefined>(undefined)
+  const [makedDate, setMakedDate] = useState<number | undefined>(undefined)
   const [pictures, setPictures] = useState<string[]>([])
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
+
   const { setIsLoading } = useContext(UIContext)
 
   async function fetchCars(token: string) {
@@ -90,7 +106,17 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   return (
     <CarContext.Provider value={{
       cars,
+      maker,
+      model,
+      plate,
+      makeDate,
+      makedDate,
       pictures,
+      setMaker,
+      setModel,
+      setMakeDate,
+      setMakedDate,
+      setPlate,
       setPictures,
       searchForMaker,
       searchForMaxKilometers,
