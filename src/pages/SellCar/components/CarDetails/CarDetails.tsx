@@ -3,12 +3,17 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import { useStyles, Form } from './styles'
+import { useStyles, Form, ColorInput, ColorWrapper, ColorLabel } from './styles'
 import { CarContext } from '../../../../contexts/CarContext'
 import { capitalizeText } from '../../../../utilities/string-utilities'
 import CarValidator from '../../../../utilities/validators/car-validator'
+import { getCarColors } from '../../../../constants/colors'
 
 type CarDetailsProps = {
   onNextClick: () => void;
@@ -20,6 +25,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
   const [makeDateIsValid, setMakeDateIsValid] = useState(true)
   const [makedDateIsValid, setMakedDateIsValid] = useState(true)
   const [kilometersIsValid, setKilometersIsValid] = useState(true)
+  const [priceIsValid, setPriceIsValid] = useState(true)
 
   const {
     maker,
@@ -33,7 +39,25 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
     makedDate,
     setMakedDate,
     kilometers,
-    setKilometers
+    setKilometers,
+    price,
+    setPrice,
+    exchangeType,
+    setExchangeType,
+    gasolineType,
+    setGasolineType,
+    color,
+    setColor,
+    message,
+    setMessage,
+    ipvaIsPaid,
+    setIpvaIsPaid,
+    acceptsChange,
+    setAcceptsChange,
+    isLicensed,
+    setIsLicensed,
+    isArmored,
+    setIsArmored
   } = useContext(CarContext)
 
   function capitalizeAndSet(value: string, setFunction: (text: string) => void): void {
@@ -49,7 +73,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
     setPlate(upperValue)
   }
 
-  function handleMakeDateChange(value: string) {
+  function handleMakeDateChange(value: string): void {
     const year: number = Number.parseInt(value)
     let isValid: boolean = CarValidator.validateDate(year)
 
@@ -60,7 +84,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
     setMakeDate(value !== '' ? year : undefined)
   }
 
-  function handleMakedDateChange(value: string) {
+  function handleMakedDateChange(value: string): void {
     const year: number = Number.parseInt(value)
     let isValid: boolean = CarValidator.validateDate(year)
 
@@ -71,7 +95,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
     setMakedDate(value !== '' ? year : undefined)
   }
 
-  function handleKilometersChange(value: string) {
+  function handleKilometersChange(value: string): void {
     const vl: number = Number.parseInt(value)
     const isValid: boolean = CarValidator.validateKilometers(vl)
 
@@ -79,7 +103,109 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
     setKilometersIsValid(isValid)
   }
 
+  function handleExchangeTypeChange(value: unknown): void {
+    switch (value) {
+      case "Automatic":
+        setExchangeType("Automatic")
+        break
+
+      case "Manual":
+        setExchangeType("Manual")
+        break
+
+      default:
+        setExchangeType(undefined)
+        break
+    }
+  }
+
+  function handleGasolineTypeChange(value: unknown): void {
+    switch (value) {
+      case "Diesel":
+        setGasolineType("Diesel")
+        break
+
+      case "Gasoline":
+        setGasolineType("Gasoline")
+        break
+
+      case "Eletric":
+        setGasolineType("Eletric")
+        break
+
+      case "Flex":
+        setGasolineType("Flex")
+        break
+
+      default:
+        setExchangeType(undefined)
+        break
+    }
+  }
+
+  function handleColorChange(value: unknown): void {
+    switch (value) {
+      case "Red":
+        setColor("Red")
+        break
+
+      case "Orange":
+        setColor("Orange")
+        break
+
+      case "Yellow":
+        setColor("Yellow")
+        break
+
+      case "Dark Green":
+        setColor("Dark Green")
+        break
+
+      case "Light Green":
+        setColor("Light Green")
+        break
+
+      case "Cyan":
+        setColor("Cyan")
+        break
+
+      case "Blue":
+        setColor("Blue")
+        break
+
+      case "Dark Blue":
+        setColor("Dark Blue")
+        break
+
+      case "Purple":
+        setColor("Purple")
+        break
+
+      case "Pink":
+        setColor("Pink")
+        break
+
+      default:
+        setColor(undefined)
+        break
+    }
+  }
+
+  function handlePriceChange(value: string): void {
+    if (value === '') {
+      setPrice(undefined)
+    }
+
+    else {
+      const vle: number = Number.parseInt(value)
+      const isValid: boolean = CarValidator.validatePrice(vle)
+      setPriceIsValid(isValid)
+      setPrice(vle)
+    }
+  }
+
   const classes = useStyles()
+  const colors = getCarColors()
   return (
     <Form>
       <Grid container>
@@ -94,7 +220,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
 
       <Grid container direction="column" className={classes.fieldsGrid} spacing={3}>
         <Grid container item xs={12} spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <TextField
               variant="outlined"
               label="Maker"
@@ -104,7 +230,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
             />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <TextField
               variant="outlined"
               label="Model"
@@ -113,8 +239,10 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               onChange={(e) => capitalizeAndSet(e.target.value, setModel)}
             />
           </Grid>
+        </Grid>
 
-          <Grid item xs={4}>
+        <Grid container item xs={12} spacing={2}>
+          <Grid item xs={3}>
             <TextField
               variant="outlined"
               label="Plate"
@@ -125,10 +253,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               helperText={!plateIsValid ? 'This plate is not valid' : ''}
             />
           </Grid>
-        </Grid>
-
-        <Grid container item xs={12} spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <TextField
               variant="outlined"
               label="Make Date"
@@ -140,7 +265,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
             />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <TextField
               variant="outlined"
               label="Maked Date"
@@ -152,7 +277,7 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
             />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <TextField
               variant="outlined"
               label="Kilometers"
@@ -163,6 +288,92 @@ const CarDetails = ({ onNextClick }: CarDetailsProps) => {
               helperText={!kilometersIsValid ? 'Kilometers is less than zero' : ''}
             />
           </Grid>
+        </Grid>
+
+        <Grid container item xs={12} spacing={2}>
+          <Grid item xs={3}>
+            <TextField
+              variant="outlined"
+              label="Price"
+              value={price}
+              fullWidth
+              onChange={(e) => handlePriceChange(e.target.value)}
+              error={!priceIsValid}
+              helperText={!priceIsValid ? 'Price must be greater than 1000' : ''}
+            />
+          </Grid>
+
+          <Grid item xs={3}>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel id="exchange-type-label">Exchange</InputLabel>
+              <Select
+                labelId="exchange-type-label"
+                id="exchange-type"
+                label="Exchange"
+                value={exchangeType}
+                onChange={(e) => handleExchangeTypeChange(e.target.value)}
+              >
+                <MenuItem value={undefined}>None</MenuItem>
+                <MenuItem value="Automatic">Automatic</MenuItem>
+                <MenuItem value="Manual">Manual</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={3}>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel id="gasoline-type-label">Gasoline type</InputLabel>
+              <Select
+                labelId="gasoline-type-label"
+                id="gasoline-type"
+                label="Gasoline type"
+                value={gasolineType}
+                onChange={(e) => handleGasolineTypeChange(e.target.value)}
+              >
+                <MenuItem value={undefined}>None</MenuItem>
+                <MenuItem value="Diesel">Diesel</MenuItem>
+                <MenuItem value="Gasoline">Gasoline</MenuItem>
+                <MenuItem value="Flex">Flex</MenuItem>
+                <MenuItem value="Eletric">Eletric</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={3}>
+            <FormControl variant="outlined" fullWidth>
+              <InputLabel id="color-label">Color</InputLabel>
+              <Select
+                labelId="color-label"
+                id="color"
+                label="Color"
+                value={color}
+                onChange={(e) => handleColorChange(e.target.value)}
+              >
+                <MenuItem value={undefined}>None</MenuItem>
+                {
+                  colors.map(x => (
+                    <MenuItem value={x.color} key={x.id}>{x.color}</MenuItem>
+                  ))
+                }
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+
+        <Grid container item xs={12}>
+          <Grid item xs={12}>
+            <TextField
+              multiline
+              fullWidth
+              variant="outlined"
+              label="Message"
+              rows={10}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container item xs={12}>
+
         </Grid>
       </Grid>
 

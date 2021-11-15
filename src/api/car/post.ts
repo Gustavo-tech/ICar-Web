@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { apiUrl } from '../../constants/constants';
+import { apiUrl } from '../../constants/urls';
 
 interface newCar {
   pictures: string[];

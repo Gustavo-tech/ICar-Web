@@ -12,7 +12,7 @@ import {
 import ModalHeader from '../ModalHeader/ModalHeader'
 import Security from '@material-ui/icons/Security'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import { serverUrl } from '../../../constants/constants'
+import { serverUrl } from '../../../constants/urls'
 
 const AccountModal = () => {
   const { isModalOpen, modalType, closeModal } = useContext(UIContext)

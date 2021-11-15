@@ -16,6 +16,12 @@ class CarValidator {
   static validateKilometers(km: number): boolean {
     return km > 0
   }
+
+  static validatePrice(price: number) {
+    const vl = Number.parseInt(price.toString())
+
+    return vl > 1000
+  }
 }
 
 export default CarValidator
