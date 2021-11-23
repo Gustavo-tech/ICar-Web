@@ -12,10 +12,11 @@ import { capitalizeText } from '../../utilities/string-utilities'
 import { useStyles } from './styles'
 import CarPictures from './components/CarPictures/CarPictures'
 import CarDetails from './components/CarDetails/CarDetails'
+import CarAddress from './components/CarAddress/CarAddress'
 
 const SellCar = () => {
 
-  const [step, setStep] = useState<number>(1)
+  const [step, setStep] = useState<number>(2)
 
   const { openModal } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
@@ -49,6 +50,9 @@ const SellCar = () => {
 
         {step === 1 &&
           <CarDetails onNextClick={handleNextClick} onBackClick={handleBackClick} />}
+
+        {step === 2 &&
+          <CarAddress onNextClick={handleNextClick} onPreviousClick={handleBackClick} />}
 
       </Container>
     </>
