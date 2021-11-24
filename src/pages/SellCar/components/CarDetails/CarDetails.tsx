@@ -189,6 +189,14 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
         setColor("Pink")
         break
 
+      case "White":
+        setColor("White")
+        break
+
+      case "Black":
+        setColor("Black")
+        break
+
       default:
         setColor(undefined)
         break

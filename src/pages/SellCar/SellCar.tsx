@@ -16,7 +16,7 @@ import CarAddress from './components/CarAddress/CarAddress'
 
 const SellCar = () => {
 
-  const [step, setStep] = useState<number>(2)
+  const [step, setStep] = useState<number>(0)
 
   const { openModal } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
@@ -42,7 +42,7 @@ const SellCar = () => {
           <Step><StepLabel>Pictures</StepLabel></Step>
           <Step><StepLabel>Car Details</StepLabel></Step>
           <Step><StepLabel>Address</StepLabel></Step>
-          <Step><StepLabel>Completed</StepLabel></Step>
+          <Step><StepLabel>Result</StepLabel></Step>
         </Stepper>
 
         {step === 0 &&

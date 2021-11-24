@@ -14,6 +14,8 @@ export function getCarColors(): carColor[] {
     { color: 'Blue', id: 7 },
     { color: 'Dark Blue', id: 8 },
     { color: 'Purple', id: 9 },
-    { color: 'Pink', id: 10 }
+    { color: 'Pink', id: 10 },
+    { color: 'White', id: 11 },
+    { color: 'Black', id: 12 },
   ]
 }

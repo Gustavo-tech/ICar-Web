@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
@@ -12,6 +12,7 @@ import {
 } from './styles'
 import { removeAllCharFromString } from '../../../../utilities/string-utilities'
 import { fetchLocationsApi } from '../../../../api/location/get'
+import { CarContext } from '../../../../contexts/CarContext'
 
 type CarAddressProps = {
   onNextClick: () => void;
@@ -20,10 +21,16 @@ type CarAddressProps = {
 
 const CarAddress = ({ onPreviousClick, onNextClick }: CarAddressProps) => {
 
-  const [zipCode, setZipCode] = useState('')
-  const [district, setDistrict] = useState('')
-  const [street, setStreet] = useState('')
-  const [location, setLocation] = useState('')
+  const {
+    district,
+    setDistrict,
+    location,
+    setLocation,
+    street,
+    setStreet,
+    zipCode,
+    setZipCode
+  } = useContext(CarContext)
 
   function handleFormSubmit(): void {
     onNextClick()
@@ -125,7 +132,7 @@ const CarAddress = ({ onPreviousClick, onNextClick }: CarAddressProps) => {
               size="large"
               color="primary"
               endIcon={<NavigateNextIcon />}
-              onClick={onPreviousClick}
+              onClick={onNextClick}
             >
               Create
             </Button>

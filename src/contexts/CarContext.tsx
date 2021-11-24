@@ -15,13 +15,17 @@ type CarContextProps = {
   price: number | undefined;
   exchangeType: 'Manual' | 'Automatic' | undefined;
   gasolineType: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex' | undefined;
-  color: 'Red' | 'Orange' | 'Yellow' | 'Dark Green' | 'Light Green' | 'Cyan' | 'Blue' | 'Dark Blue' | 'Purple' | 'Pink' | undefined;
+  color: 'Black' | 'White' | 'Red' | 'Orange' | 'Yellow' | 'Dark Green' | 'Light Green' | 'Cyan' | 'Blue' | 'Dark Blue' | 'Purple' | 'Pink' | undefined;
   message: string | undefined;
   acceptsChange: boolean;
   isArmored: boolean;
   ipvaIsPaid: boolean;
   isLicensed: boolean;
   pictures: string[];
+  zipCode: string | undefined;
+  location: string | undefined;
+  district: string | undefined;
+  street: string | undefined;
 
   setPlate: (p: string | undefined) => void;
   setMaker: (m: string | undefined) => void;
@@ -32,13 +36,17 @@ type CarContextProps = {
   setPrice: (price: number | undefined) => void;
   setExchangeType: (type: 'Manual' | 'Automatic' | undefined) => void;
   setGasolineType: (gTyoe: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex' | undefined) => void;
-  setColor: (color: 'Red' | 'Orange' | 'Yellow' | 'Dark Green' | 'Light Green' | 'Cyan' | 'Blue' | 'Dark Blue' | 'Purple' | 'Pink' | undefined) => void;
+  setColor: (color: 'Black' | 'White' | 'Red' | 'Orange' | 'Yellow' | 'Dark Green' | 'Light Green' | 'Cyan' | 'Blue' | 'Dark Blue' | 'Purple' | 'Pink' | undefined) => void;
   setMessage: (m: string | undefined) => void;
   setAcceptsChange: (value: boolean) => void;
   setIsArmored: (value: boolean) => void;
   setIpvaIsPaid: (value: boolean) => void;
   setIsLicensed: (value: boolean) => void;
   setPictures: (pics: string[]) => void;
+  setZipCode: (zipCode: string | undefined) => void;
+  setLocation: (zipCode: string | undefined) => void;
+  setDistrict: (zipCode: string | undefined) => void;
+  setStreet: (zipCode: string | undefined) => void;
   fetchCars: (token: string) => void;
   fetchMyCars: (token: string, email: string) => void;
   searchForMaker: (maker: string) => void;
@@ -65,13 +73,17 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [price, setPrice] = useState<number | undefined>(undefined)
   const [exchangeType, setExchangeType] = useState<'Manual' | 'Automatic' | undefined>(undefined)
   const [gasolineType, setGasolineType] = useState<'Diesel' | 'Gasoline' | 'Eletric' | 'Flex' | undefined>(undefined)
-  const [color, setColor] = useState<'Red' | 'Orange' | 'Yellow' | 'Dark Green' | 'Light Green' | 'Cyan' | 'Blue' | 'Dark Blue' | 'Purple' | 'Pink' | undefined>(undefined)
+  const [color, setColor] = useState<'Black' | 'White' | 'Red' | 'Orange' | 'Yellow' | 'Dark Green' | 'Light Green' | 'Cyan' | 'Blue' | 'Dark Blue' | 'Purple' | 'Pink' | undefined>(undefined)
   const [message, setMessage] = useState<string | undefined>(undefined)
   const [acceptsChange, setAcceptsChange] = useState<boolean>(false)
   const [isArmored, setIsArmored] = useState<boolean>(false)
   const [ipvaIsPaid, setIpvaIsPaid] = useState<boolean>(false)
   const [isLicensed, setIsLicensed] = useState<boolean>(false)
   const [pictures, setPictures] = useState<string[]>([])
+  const [location, setLocation] = useState<string | undefined>(undefined)
+  const [district, setDistrict] = useState<string | undefined>(undefined)
+  const [street, setStreet] = useState<string | undefined>(undefined)
+  const [zipCode, setZipCode] = useState<string | undefined>(undefined)
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
 
   const { setIsLoading } = useContext(UIContext)
@@ -152,6 +164,10 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       isLicensed,
       isArmored,
       pictures,
+      zipCode,
+      district,
+      location,
+      street,
       setMaker,
       setModel,
       setMakeDate,
@@ -168,6 +184,10 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       setIsArmored,
       setPlate,
       setPictures,
+      setZipCode,
+      setDistrict,
+      setLocation,
+      setStreet,
       searchForMaker,
       searchForMaxKilometers,
       searchForMaxPrice,

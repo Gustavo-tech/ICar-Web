@@ -44,12 +44,7 @@ const CarPictures = ({ onNextClick }: PicturesProps) => {
 
   const classes = useStyles()
   return (
-    <form
-      onSubmit={(e) => {
-        e.stopPropagation()
-        onNextClick()
-      }}
-    >
+    <>
       <FileInput
         ref={fileInputRef}
         type="file"
@@ -102,12 +97,12 @@ const CarPictures = ({ onNextClick }: PicturesProps) => {
           size="large"
           className={classes.nextButton}
           disabled={!pictures || pictures.length === 0}
-          type="submit"
+          onClick={onNextClick}
         >
           Next
         </Button>
       </Grid>
-    </form>
+    </>
   )
 }
 
