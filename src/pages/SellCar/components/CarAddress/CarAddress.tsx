@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
@@ -11,7 +11,6 @@ import {
   useStyles
 } from './styles'
 import { removeAllCharFromString } from '../../../../utilities/string-utilities'
-import { fetchLocationsApi } from '../../../../api/location/get'
 import { CarContext } from '../../../../contexts/CarContext'
 
 type CarAddressProps = {
@@ -21,31 +20,27 @@ type CarAddressProps = {
 
 const CarAddress = ({ onPreviousClick, onNextClick }: CarAddressProps) => {
 
+  const [localZipCode, setLocalZipCode] = useState<string | undefined>(undefined)
+
   const {
-    district,
-    setDistrict,
-    location,
-    setLocation,
-    street,
-    setStreet,
     zipCode,
-    setZipCode
+    district,
+    location,
+    street,
+    fetchAddress
   } = useContext(CarContext)
 
   function handleFormSubmit(): void {
     onNextClick()
   }
 
-  async function handleZipCodeChange(value: string): Promise<any> {
+  function handleZipCodeChange(value: string): void {
     if (value.length < 9) {
       const nValue: string = removeAllCharFromString(value)
-      setZipCode(nValue)
-      if (value.length === 8) {
+      setLocalZipCode(nValue)
+      if (nValue.length === 8) {
         try {
-          const resp = await fetchLocationsApi(nValue)
-          setDistrict(resp.data.bairro)
-          setStreet(resp.data.logradouro)
-          setLocation(resp.data.localidade)
+          fetchAddress(nValue)
         } catch (e) {
 
         }
@@ -76,7 +71,7 @@ const CarAddress = ({ onPreviousClick, onNextClick }: CarAddressProps) => {
               fullWidth
               variant="outlined"
               label="Zip Code"
-              value={zipCode}
+              value={localZipCode}
               helperText="Write only numbers"
               onChange={(e) => handleZipCodeChange(e.target.value)}
             />

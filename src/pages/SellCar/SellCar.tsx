@@ -1,26 +1,18 @@
-import React, { useState } from 'react'
-import { useReactOidc } from '@axa-fr/react-oidc-context'
+import { useState } from 'react'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import Container from '@material-ui/core/Container'
-import { useContext } from 'react'
-import { addCar } from '../../api/car/post'
 import AppNavbar from '../../components/Navbar/Navbar'
-import { UIContext } from '../../contexts/UIContext'
-import { capitalizeText } from '../../utilities/string-utilities'
 import { useStyles } from './styles'
 import CarPictures from './components/CarPictures/CarPictures'
 import CarDetails from './components/CarDetails/CarDetails'
 import CarAddress from './components/CarAddress/CarAddress'
+import CarResult from './components/CarResult/CarResult'
 
 const SellCar = () => {
 
-  const [step, setStep] = useState<number>(0)
-
-  const { openModal } = useContext(UIContext)
-  const { oidcUser } = useReactOidc()
-  const { access_token, profile } = oidcUser
+  const [step, setStep] = useState<number>(2)
 
   function handleNextClick(): void {
     if (step < 4)
@@ -53,6 +45,9 @@ const SellCar = () => {
 
         {step === 2 &&
           <CarAddress onNextClick={handleNextClick} onPreviousClick={handleBackClick} />}
+
+        {step === 4 &&
+          <CarResult resetSteps={() => setStep(0)} />}
 
       </Container>
     </>
