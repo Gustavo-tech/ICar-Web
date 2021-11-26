@@ -12,7 +12,7 @@ import CarResult from './components/CarResult/CarResult'
 
 const SellCar = () => {
 
-  const [step, setStep] = useState<number>(2)
+  const [step, setStep] = useState<number>(0)
 
   function handleNextClick(): void {
     if (step < 4)

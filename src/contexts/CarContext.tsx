@@ -1,5 +1,3 @@
-import { useReactOidc } from '@axa-fr/react-oidc-context';
-import { AxiosResponse } from 'axios';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { getSellingCars, getUserCars } from '../api/car/get';
 import { newCar } from '../api/car/input-types';
@@ -11,56 +9,56 @@ import { UIContext } from './UIContext';
 
 type CarContextProps = {
   // Individual car properties
-  plate: string | undefined;
-  maker: string | undefined;
-  model: string | undefined;
-  makeDate: number | undefined;
-  makedDate: number | undefined;
-  kilometers: number | undefined;
-  price: number | undefined;
-  exchangeType: 'Manual' | 'Automatic' | undefined;
-  gasolineType: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex' | undefined;
-  color: 'Black' | 'White' | 'Red' | 'Orange' | 'Yellow' | 'Dark Green' | 'Light Green' | 'Cyan' | 'Blue' | 'Dark Blue' | 'Purple' | 'Pink' | undefined;
-  message: string | undefined;
+  plate: string;
+  maker: string;
+  model: string;
+  makeDate: number;
+  makedDate: number;
+  kilometers: number;
+  price: number;
+  exchangeType: 'Manual' | 'Automatic';
+  gasolineType: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex';
+  color: '#000000' | '#FFFFFF' | '#F9312B' | '#F97C2B' | '#F3DB0E' | '#0EF32A' | '#7DF30E' | '#0EF3CD' | '#0EB8F3' | '#0E6CF3' | '#AA0EF3' | '#F30EBF';
+  message: string;
   acceptsChange: boolean;
   isArmored: boolean;
   ipvaIsPaid: boolean;
   isLicensed: boolean;
   pictures: string[];
-  zipCode: string | undefined;
-  location: string | undefined;
-  district: string | undefined;
-  street: string | undefined;
+  zipCode: string;
+  location: string;
+  district: string;
+  street: string;
 
   // Collections
   cars: Car[];
 
   // Indiviaual car setters
-  setPlate: (p: string | undefined) => void;
-  setMaker: (m: string | undefined) => void;
-  setModel: (m: string | undefined) => void;
-  setMakeDate: (n: number | undefined) => void;
-  setMakedDate: (n: number | undefined) => void;
-  setKilometers: (km: number | undefined) => void;
-  setPrice: (price: number | undefined) => void;
-  setExchangeType: (type: 'Manual' | 'Automatic' | undefined) => void;
-  setGasolineType: (gTyoe: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex' | undefined) => void;
-  setColor: (color: 'Black' | 'White' | 'Red' | 'Orange' | 'Yellow' | 'Dark Green' | 'Light Green' | 'Cyan' | 'Blue' | 'Dark Blue' | 'Purple' | 'Pink' | undefined) => void;
-  setMessage: (m: string | undefined) => void;
+  setPlate: (p: string) => void;
+  setMaker: (m: string) => void;
+  setModel: (m: string) => void;
+  setMakeDate: (n: number) => void;
+  setMakedDate: (n: number) => void;
+  setKilometers: (km: number) => void;
+  setPrice: (price: number) => void;
+  setExchangeType: (type: 'Manual' | 'Automatic') => void;
+  setGasolineType: (gTyoe: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex') => void;
+  setColor: (color: '#000000' | '#FFFFFF' | '#F9312B' | '#F97C2B' | '#F3DB0E' | '#0EF32A' | '#7DF30E' | '#0EF3CD' | '#0EB8F3' | '#0E6CF3' | '#AA0EF3' | '#F30EBF') => void;
+  setMessage: (m: string) => void;
   setAcceptsChange: (value: boolean) => void;
   setIsArmored: (value: boolean) => void;
   setIpvaIsPaid: (value: boolean) => void;
   setIsLicensed: (value: boolean) => void;
-  setZipCode: (zipCode: string | undefined) => void;
-  setDistrict: (district: string | undefined) => void;
-  setLocation: (location: string | undefined) => void;
-  setStreet: (street: string | undefined) => void;
+  setZipCode: (zipCode: string) => void;
+  setDistrict: (district: string) => void;
+  setLocation: (location: string) => void;
+  setStreet: (street: string) => void;
   setPictures: (pics: string[]) => void;
 
   // API calls  
   fetchCars: (token: string) => void;
   fetchMyCars: (token: string, email: string) => void;
-  fetchAddress: (zipCode: string | undefined) => void;
+  fetchAddress: (zipCode: string) => void;
   createCar: (email: string, token: string) => Promise<boolean>;
 
   // Search methods
@@ -82,26 +80,26 @@ type CarProviderProps = {
 
 const CarContextProvider = ({ children }: CarProviderProps) => {
   const [cars, setCars] = useState<Car[]>([])
-  const [maker, setMaker] = useState<string | undefined>(undefined)
-  const [model, setModel] = useState<string | undefined>('')
-  const [plate, setPlate] = useState<string | undefined>('')
-  const [makeDate, setMakeDate] = useState<number | undefined>(undefined)
-  const [makedDate, setMakedDate] = useState<number | undefined>(undefined)
-  const [kilometers, setKilometers] = useState<number | undefined>(undefined)
-  const [price, setPrice] = useState<number | undefined>(undefined)
-  const [exchangeType, setExchangeType] = useState<'Manual' | 'Automatic' | undefined>(undefined)
-  const [gasolineType, setGasolineType] = useState<'Diesel' | 'Gasoline' | 'Eletric' | 'Flex' | undefined>(undefined)
-  const [color, setColor] = useState<'Black' | 'White' | 'Red' | 'Orange' | 'Yellow' | 'Dark Green' | 'Light Green' | 'Cyan' | 'Blue' | 'Dark Blue' | 'Purple' | 'Pink' | undefined>(undefined)
-  const [message, setMessage] = useState<string | undefined>(undefined)
+  const [maker, setMaker] = useState<string>('')
+  const [model, setModel] = useState<string>('')
+  const [plate, setPlate] = useState<string>('')
+  const [makeDate, setMakeDate] = useState<number>(new Date().getFullYear())
+  const [makedDate, setMakedDate] = useState<number>(new Date().getFullYear())
+  const [kilometers, setKilometers] = useState<number>(0)
+  const [price, setPrice] = useState<number>(1000)
+  const [exchangeType, setExchangeType] = useState<'Manual' | 'Automatic'>('Manual')
+  const [gasolineType, setGasolineType] = useState<'Diesel' | 'Gasoline' | 'Eletric' | 'Flex'>('Flex')
+  const [color, setColor] = useState<'#000000' | '#FFFFFF' | '#F9312B' | '#F97C2B' | '#F3DB0E' | '#0EF32A' | '#7DF30E' | '#0EF3CD' | '#0EB8F3' | '#0E6CF3' | '#AA0EF3' | '#F30EBF'>('#FFFFFF')
+  const [message, setMessage] = useState<string>('')
   const [acceptsChange, setAcceptsChange] = useState<boolean>(false)
   const [isArmored, setIsArmored] = useState<boolean>(false)
   const [ipvaIsPaid, setIpvaIsPaid] = useState<boolean>(false)
   const [isLicensed, setIsLicensed] = useState<boolean>(false)
   const [pictures, setPictures] = useState<string[]>([])
-  const [location, setLocation] = useState<string | undefined>('')
-  const [district, setDistrict] = useState<string | undefined>('')
-  const [street, setStreet] = useState<string | undefined>('')
-  const [zipCode, setZipCode] = useState<string | undefined>('')
+  const [location, setLocation] = useState<string>('')
+  const [district, setDistrict] = useState<string>('')
+  const [street, setStreet] = useState<string>('')
+  const [zipCode, setZipCode] = useState<string>('')
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
 
 
@@ -135,8 +133,10 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   }
 
   async function createCar(email: string, token: string): Promise<boolean> {
+    console.log('Called')
     setIsLoading(true)
     const car = createCarToPost(email)
+    console.log(car)
     const result = await addCar(token, car)
     console.log(result)
 
@@ -211,30 +211,28 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     }
   }
 
-
-
   function reset() {
     setCars([])
-    setMaker(undefined)
+    setMaker('')
     setModel('')
     setPlate('')
-    setMakeDate(undefined)
-    setMakedDate(undefined)
-    setKilometers(undefined)
-    setPrice(undefined)
-    setExchangeType(undefined)
-    setGasolineType(undefined)
-    setColor(undefined)
-    setMessage(undefined)
+    setMakeDate(new Date().getFullYear())
+    setMakedDate(new Date().getFullYear())
+    setKilometers(0)
+    setPrice(1000)
+    setExchangeType('Manual')
+    setGasolineType('Gasoline')
+    setColor('#FFFFFF')
+    setMessage('')
     setAcceptsChange(false)
     setIsArmored(false)
     setIpvaIsPaid(false)
     setIsLicensed(false)
     setPictures([])
-    setLocation(undefined)
-    setDistrict(undefined)
-    setStreet(undefined)
-    setZipCode(undefined)
+    setLocation('')
+    setDistrict('')
+    setStreet('')
+    setZipCode('')
     setSearch(new CarSearchModel())
   }
 

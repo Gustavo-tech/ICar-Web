@@ -85,7 +85,7 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
       isValid = year <= makedDate
 
     setMakeDateIsValid(isValid)
-    setMakeDate(value !== '' ? year : undefined)
+    setMakeDate(value !== '' ? year : new Date().getFullYear())
   }
 
   function handleMakedDateChange(value: string): void {
@@ -96,14 +96,14 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
       isValid = year >= makeDate
 
     setMakedDateIsValid(isValid)
-    setMakedDate(value !== '' ? year : undefined)
+    setMakedDate(value !== '' ? year : new Date().getFullYear())
   }
 
   function handleKilometersChange(value: string): void {
     const vl: number = Number.parseInt(value)
     const isValid: boolean = CarValidator.validateKilometers(vl)
 
-    setKilometers(value !== '' ? vl : undefined)
+    setKilometers(value !== '' ? vl : 0)
     setKilometersIsValid(isValid)
   }
 
@@ -118,7 +118,6 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
         break
 
       default:
-        setExchangeType(undefined)
         break
     }
   }
@@ -142,70 +141,68 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
         break
 
       default:
-        setExchangeType(undefined)
         break
     }
   }
 
   function handleColorChange(value: unknown): void {
     switch (value) {
-      case "Red":
-        setColor("Red")
+      case "#F9312B":
+        setColor("#F9312B")
         break
 
-      case "Orange":
-        setColor("Orange")
+      case "#F97C2B":
+        setColor("#F97C2B")
         break
 
-      case "Yellow":
-        setColor("Yellow")
+      case "#F3DB0E":
+        setColor("#F3DB0E")
         break
 
-      case "Dark Green":
-        setColor("Dark Green")
+      case "#0EF32A":
+        setColor("#0EF32A")
         break
 
-      case "Light Green":
-        setColor("Light Green")
+      case "#7DF30E":
+        setColor("#7DF30E")
         break
 
-      case "Cyan":
-        setColor("Cyan")
+      case "#0EF3CD":
+        setColor("#0EF3CD")
         break
 
-      case "Blue":
-        setColor("Blue")
+      case "#0EB8F3":
+        setColor("#0EB8F3")
         break
 
-      case "Dark Blue":
-        setColor("Dark Blue")
+      case "#0E6CF3":
+        setColor("#0E6CF3")
         break
 
-      case "Purple":
-        setColor("Purple")
+      case "#AA0EF3":
+        setColor("#AA0EF3")
         break
 
-      case "Pink":
-        setColor("Pink")
+      case "#F30EBF":
+        setColor("#F30EBF")
         break
 
-      case "White":
-        setColor("White")
+      case "#FFFFFF":
+        setColor("#FFFFFF")
         break
 
-      case "Black":
-        setColor("Black")
+      case "#000000":
+        setColor("#000000")
         break
 
       default:
-        setColor(undefined)
         break
     }
   }
 
   function handlePriceChange(value: string): void {
     if (value === '') {
-      setPrice(undefined)
+      setPrice(0)
     }
 
     else {
@@ -335,7 +332,6 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
                 value={exchangeType}
                 onChange={(e) => handleExchangeTypeChange(e.target.value)}
               >
-                <MenuItem value={undefined}>None</MenuItem>
                 <MenuItem value="Automatic">Automatic</MenuItem>
                 <MenuItem value="Manual">Manual</MenuItem>
               </Select>
@@ -371,10 +367,9 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
                 value={color}
                 onChange={(e) => handleColorChange(e.target.value)}
               >
-                <MenuItem value={undefined}>None</MenuItem>
                 {
                   colors.map(x => (
-                    <MenuItem value={x.color} key={x.id}>{x.color}</MenuItem>
+                    <MenuItem value={x.value} key={x.id}>{x.color}</MenuItem>
                   ))
                 }
               </Select>

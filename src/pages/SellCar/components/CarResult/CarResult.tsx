@@ -22,7 +22,7 @@ type CarResultProps = {
 
 const CarResult = ({ resetSteps }: CarResultProps) => {
 
-  const [savedSuccessfully, setSavedSuccessfully] = useState<boolean | undefined>(false)
+  const [savedSuccessfully, setSavedSuccessfully] = useState<boolean | undefined>(undefined)
   const [numberOfTries, setNumberOfTries] = useState(0)
 
   const history = useHistory()
@@ -60,7 +60,7 @@ const CarResult = ({ resetSteps }: CarResultProps) => {
           <CircularProgress color="primary" />
         </Grid>}
 
-      {!isLoading && savedSuccessfully &&
+      {!isLoading && savedSuccessfully === true &&
         <>
           <Grid container item justify="center" xs={12}>
             <CheckCircleIcon color="primary" className={classes.mainIcon} />
@@ -97,7 +97,7 @@ const CarResult = ({ resetSteps }: CarResultProps) => {
           </Grid>
         </>}
 
-      {!isLoading && !savedSuccessfully &&
+      {!isLoading && savedSuccessfully === false &&
         <>
           <Grid container item justify="center" xs={12}>
             <ErrorIcon color="primary" className={classes.mainIcon} />
