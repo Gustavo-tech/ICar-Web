@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
@@ -9,10 +9,18 @@ import CarPictures from './components/CarPictures/CarPictures'
 import CarDetails from './components/CarDetails/CarDetails'
 import CarAddress from './components/CarAddress/CarAddress'
 import CarResult from './components/CarResult/CarResult'
+import { CarContext } from '../../contexts/CarContext'
+import { useReactOidc } from '@axa-fr/react-oidc-context'
 
 const SellCar = () => {
 
   const [step, setStep] = useState<number>(0)
+  const [savedSuccessfully, setSavedSuccessfully] = useState(false)
+
+  const { oidcUser } = useReactOidc()
+  const { profile, access_token } = oidcUser
+  const { email } = profile
+  const { createCar } = useContext(CarContext)
 
   function handleNextClick(): void {
     if (step < 4)
@@ -22,6 +30,15 @@ const SellCar = () => {
   function handleBackClick(): void {
     if (step !== 0)
       setStep(step - 1)
+  }
+
+  async function handleCreateClick() {
+    const result = await createCar(email!, access_token)
+    setSavedSuccessfully(result)
+
+    if (step === 2) {
+      setStep(step + 1)
+    }
   }
 
   const classes = useStyles()
@@ -44,10 +61,14 @@ const SellCar = () => {
           <CarDetails onNextClick={handleNextClick} onBackClick={handleBackClick} />}
 
         {step === 2 &&
-          <CarAddress onNextClick={handleNextClick} onPreviousClick={handleBackClick} />}
+          <CarAddress onNextClick={handleCreateClick} onPreviousClick={handleBackClick} />}
 
-        {step === 4 &&
-          <CarResult resetSteps={() => setStep(0)} />}
+        {step === 3 &&
+          <CarResult
+            savedSuccessfully={savedSuccessfully}
+            resetSteps={() => setStep(0)}
+            onTryAgainClick={handleCreateClick}
+          />}
 
       </Container>
     </>

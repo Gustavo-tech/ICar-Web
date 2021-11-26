@@ -20,10 +20,9 @@ type CarAddressProps = {
 
 const CarAddress = ({ onPreviousClick, onNextClick }: CarAddressProps) => {
 
-  const [localZipCode, setLocalZipCode] = useState<string | undefined>(undefined)
+  const [localZipCode, setLocalZipCode] = useState<string>('')
 
   const {
-    zipCode,
     district,
     location,
     street,

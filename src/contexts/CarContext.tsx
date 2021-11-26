@@ -102,7 +102,6 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [zipCode, setZipCode] = useState<string>('')
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
 
-
   const { setIsLoading } = useContext(UIContext)
 
   async function fetchCars(token: string) {
@@ -133,12 +132,10 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   }
 
   async function createCar(email: string, token: string): Promise<boolean> {
-    console.log('Called')
     setIsLoading(true)
     const car = createCarToPost(email)
-    console.log(car)
     const result = await addCar(token, car)
-    console.log(result)
+    setIsLoading(false)
 
     return result.status === 200
   }

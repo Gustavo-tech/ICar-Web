@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
@@ -14,36 +14,28 @@ import { UIContext } from '../../../../contexts/UIContext'
 import {
   useStyles
 } from './styles'
-import { useReactOidc } from '@axa-fr/react-oidc-context'
 
 type CarResultProps = {
+  savedSuccessfully: boolean;
   resetSteps: () => void;
+  onTryAgainClick: () => void;
 }
 
-const CarResult = ({ resetSteps }: CarResultProps) => {
-
-  const [savedSuccessfully, setSavedSuccessfully] = useState<boolean | undefined>(undefined)
-  const [numberOfTries, setNumberOfTries] = useState(0)
+const CarResult = ({ savedSuccessfully, resetSteps, onTryAgainClick }: CarResultProps) => {
 
   const history = useHistory()
-  const { oidcUser } = useReactOidc()
-  const { profile, access_token } = oidcUser
-  const { email } = profile
+
+  const { reset } = useContext(CarContext)
   const { isLoading } = useContext(UIContext)
-  const { reset, createCar } = useContext(CarContext)
-
-  useEffect(() => {
-    async function create() {
-      const result = await createCar(email!, access_token)
-      setSavedSuccessfully(result)
-    }
-
-    create()
-  }, [numberOfTries])
 
   function handleAddNewClick() {
     reset()
     resetSteps()
+  }
+
+  function handleGoToMyCarsClick() {
+    reset()
+    history.push('/mycars')
   }
 
   const classes = useStyles()
@@ -81,7 +73,7 @@ const CarResult = ({ resetSteps }: CarResultProps) => {
               variant="contained"
               color="primary"
               startIcon={<EmojiTransportationIcon />}
-              onClick={() => history.push('/mycars')}
+              onClick={handleGoToMyCarsClick}
             >
               Go to my cars
             </Button>
@@ -116,7 +108,7 @@ const CarResult = ({ resetSteps }: CarResultProps) => {
               variant="contained"
               color="primary"
               startIcon={<ReplayIcon />}
-              onClick={() => setNumberOfTries(numberOfTries + 1)}
+              onClick={onTryAgainClick}
             >
               Retry
             </Button>
