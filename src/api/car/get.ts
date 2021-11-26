@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { apiUrl } from '../../constants/constants'
+import { apiUrl } from '../../constants/urls'
 import CarSearchModel from '../search-models/car'
 
 export const getUserCars = (authToken: string, userEmail: string) =>

@@ -1,7 +1,7 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { useContext, useEffect } from 'react'
-import { Spinner } from 'react-bootstrap'
 import Grid from '@material-ui/core/Grid'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import CarCard from '../../components/Cards/CarCard/CarCard'
 import AppNavbar from '../../components/Navbar/Navbar'
 import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
@@ -32,7 +32,9 @@ const MyCars = () => {
 
   if (isLoading) {
     mainContent =
-      <CenteredContent> <Spinner animation="border" variant="danger" /> </CenteredContent>
+      <CenteredContent>
+        <CircularProgress />
+      </CenteredContent>
   }
 
   else if (cars.length > 0 && !isModalOpen) {

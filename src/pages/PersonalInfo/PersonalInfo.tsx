@@ -1,14 +1,12 @@
 import Navbar from '../../components/Navbar/Navbar'
 import SidebarSettings from '../../components/Sidebars/SidebarSettings/SidebarSettings'
-import Form from 'react-bootstrap/Form'
-import {
-  Page,
-  PageTitle,
-  Description,
-  SpinnerDiv
-} from './styles'
-import { Button, Container } from '@material-ui/core'
-import { Col, Row, Spinner } from 'react-bootstrap'
+import Container from '@material-ui/core/Container'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { useStyles } from './styles'
 import { useEffect, useState, useContext } from 'react'
 import { getUserInfo } from '../../api/account/get'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
@@ -30,67 +28,87 @@ const PersonalInfo = () => {
     })
   }, [])
 
-  const content = isLoading ? (
-    <SpinnerDiv>
-      <Spinner animation="border" variant="danger" />
-    </SpinnerDiv>
-  ) : (
-    <div>
-      <PageTitle>Account information</PageTitle>
-      <Description>Your basic account information</Description>
-      <Container
-        style={{
-          backgroundColor: 'var(--red)',
-          padding: '2%',
-          width: '80%',
-          borderRadius: '12px'
-        }}
-      >
-        <Row>
-          <Col>
-
-            <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>Phone</Form.Label>
-              <Form.Control disabled value={profile.phone_number} />
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>Email</Form.Label>
-              <Form.Control disabled value={profile.email} />
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>User</Form.Label>
-              <Form.Control disabled value={profile.name} />
-            </Form.Group>
-
-            <Form.Group>
-              <Form.Label style={{ color: 'var(--white)' }}>Account Creation Date</Form.Label>
-              <Form.Control disabled value={accountCreationDate} />
-            </Form.Group>
-
-            <Button
-              style={{
-                backgroundColor: 'var(--black)',
-                color: 'var(--white)',
-                float: 'right'
-              }}
-            >
-              Edit
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  )
-
+  const classes = useStyles()
   return (
     <>
       <Navbar showSearch={false} />
-      <Page>
-        <SidebarSettings />
-        {content}
-      </Page>
+      <Grid
+        container
+        spacing={2}
+        className={classes.pageStyle}
+      >
+        <Grid item xs={3}>
+          <SidebarSettings />
+        </Grid>
+
+        <Grid
+          container
+          item
+          xs={9}
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          {isLoading &&
+            <CircularProgress />}
+
+          {!isLoading &&
+            <>
+              <Typography variant="h4">Account information</Typography>
+              <Typography variant="subtitle1" gutterBottom>Your basic account information</Typography>
+              <Container className={classes.infoContainer}>
+                <Grid container direction="column" spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Phone"
+                      variant="outlined"
+                      value={profile.phone_number}
+                      fullWidth
+                      disabled
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Email"
+                      variant="outlined"
+                      value={profile.email}
+                      fullWidth
+                      disabled
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      label="User"
+                      variant="outlined"
+                      value={profile.name}
+                      fullWidth
+                      disabled
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Account Creation Date"
+                      variant="outlined"
+                      fullWidth
+                      value={accountCreationDate}
+                      disabled
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Button variant="contained" color="primary">
+                      Edit
+                    </Button>
+                  </Grid>
+                </Grid>
+
+              </Container>
+            </>}
+        </Grid>
+      </Grid>
     </>
   )
 }

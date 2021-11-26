@@ -2,7 +2,6 @@ import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCarWithId } from '../../api/car/get'
-import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner'
 import AppNavbar from '../../components/Navbar/Navbar'
 import { UIContext } from '../../contexts/UIContext'
 import Car from '../../models/car'
@@ -13,8 +12,9 @@ import {
   NameHeader,
   Page
 } from './styles'
-import { Col, Row } from 'react-bootstrap'
 import LabelWithValue from '../../components/LabelWithValue/LabelWithValue'
+import Grid from '@material-ui/core/Grid'
+import { CircularProgress } from '@material-ui/core'
 
 const CarDetail = () => {
   const [car, setCar] = useState<Car | undefined>(undefined)
@@ -45,7 +45,7 @@ const CarDetail = () => {
       <AppNavbar showSearch />
 
       {isLoading &&
-        <CenteredSpinner animation="border" />}
+        <CircularProgress />}
 
       {!isLoading &&
         <InfosDiv>
@@ -54,59 +54,56 @@ const CarDetail = () => {
               <CarName>{car?.maker}</CarName> <CarName inRed>{car?.model}</CarName>
             </NameHeader>
 
-            <Row style={{ marginBottom: '1%' }}>
-              <Col lg={3}>
+            <Grid container>
+              <Grid item xs={3}>
                 <LabelWithValue label="Year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item xs={3}>
                 <LabelWithValue label="KM" value={car?.kilometersTraveled?.toString()} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item xs={3}>
                 <LabelWithValue label="Exchange" value={car?.typeOfExchange?.toString()} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item xs={3}>
                 <LabelWithValue label="Gasoline type" value={car?.gasolineType?.toString()} />
-              </Col>
-            </Row>
+              </Grid>
+            </Grid>
 
-            <Row style={{ marginBottom: '1%' }}>
-              <Col lg={3}>
+            <Grid container>
+              <Grid item xs={3}>
                 <LabelWithValue label="Color" value={car?.color} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item xs={3}>
                 <LabelWithValue label="Accepts change" value={getBoolAnswer(car?.acceptsChange)} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item xs={3}>
                 <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
-                <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
-            </Row>
-
-            <Row>
-              <Col lg={3}>
+              <Grid item xs={3}>
                 <LabelWithValue label="Year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
+              </Grid>
+            </Grid>
 
-              <Col lg={3}>
+            <Grid container>
+              <Grid item xs={3}>
                 <LabelWithValue label="KM" value={car?.kilometersTraveled?.toString()} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item xs={3}>
                 <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
+              </Grid>
 
-              <Col lg={3}>
+              <Grid item xs={3}>
                 <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Col>
-            </Row>
+              </Grid>
+            </Grid>
+
           </InfoContainer>
         </InfosDiv>}
     </Page>

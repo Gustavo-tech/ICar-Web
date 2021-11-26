@@ -1,5 +1,5 @@
 import axios from "axios"
-import { apiUrl } from "../../constants/constants"
+import { apiUrl } from "../../constants/urls"
 import { LoginResponse, TalkResponse, UserInfoResponse } from "../response-types/account"
 
 export function getUserInfo(token: string, email?: string, callback?: (data: UserInfoResponse) => void): void {
