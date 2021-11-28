@@ -1,10 +1,10 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { getSellingCars, getUserCars } from '../api/car/get';
+import { getSellingCars, getUserCars, getCarWithId } from '../api/car/get';
 import { newCar } from '../api/car/input-types';
 import { addCar } from '../api/car/post';
 import { fetchLocationsApi } from '../api/location/get';
 import CarSearchModel from '../api/search-models/car';
-import Car from '../models/car';
+import { Car } from '../api/response-types/car';
 import { UIContext } from './UIContext';
 
 type CarContextProps = {
@@ -20,6 +20,7 @@ type CarContextProps = {
   gasolineType: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex';
   color: '#000000' | '#FFFFFF' | '#F9312B' | '#F97C2B' | '#F3DB0E' | '#0EF32A' | '#7DF30E' | '#0EF3CD' | '#0EB8F3' | '#0E6CF3' | '#AA0EF3' | '#F30EBF';
   message: string;
+  numberOfViews: number;
   acceptsChange: boolean;
   isArmored: boolean;
   ipvaIsPaid: boolean;
@@ -43,6 +44,7 @@ type CarContextProps = {
   setPrice: (price: number) => void;
   setExchangeType: (type: 'Manual' | 'Automatic') => void;
   setGasolineType: (gTyoe: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex') => void;
+  setNumberOfViews: (value: number) => void;
   setColor: (color: '#000000' | '#FFFFFF' | '#F9312B' | '#F97C2B' | '#F3DB0E' | '#0EF32A' | '#7DF30E' | '#0EF3CD' | '#0EB8F3' | '#0E6CF3' | '#AA0EF3' | '#F30EBF') => void;
   setMessage: (m: string) => void;
   setAcceptsChange: (value: boolean) => void;
@@ -57,6 +59,7 @@ type CarContextProps = {
 
   // API calls  
   fetchCars: (token: string) => void;
+  fetchCar: (token: string, id: string) => void;
   fetchMyCars: (token: string, email: string) => void;
   fetchAddress: (zipCode: string) => void;
   createCar: (email: string, token: string) => Promise<boolean>;
@@ -91,6 +94,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [gasolineType, setGasolineType] = useState<'Diesel' | 'Gasoline' | 'Eletric' | 'Flex'>('Flex')
   const [color, setColor] = useState<'#000000' | '#FFFFFF' | '#F9312B' | '#F97C2B' | '#F3DB0E' | '#0EF32A' | '#7DF30E' | '#0EF3CD' | '#0EB8F3' | '#0E6CF3' | '#AA0EF3' | '#F30EBF'>('#FFFFFF')
   const [message, setMessage] = useState<string>('')
+  const [numberOfViews, setNumberOfViews] = useState(0)
   const [acceptsChange, setAcceptsChange] = useState<boolean>(false)
   const [isArmored, setIsArmored] = useState<boolean>(false)
   const [ipvaIsPaid, setIpvaIsPaid] = useState<boolean>(false)
@@ -117,6 +121,32 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     setIsLoading(false)
   }
 
+  async function fetchCar(token: string, id: string): Promise<void> {
+    setIsLoading(true)
+    const { data } = await getCarWithId(token, id)
+    setMaker(data.maker)
+    setModel(data.model)
+    setAcceptsChange(data.acceptsChange)
+    setColor(data.color)
+    setGasolineType(data.gasolineType)
+    setIpvaIsPaid(data.ipvaIsPaid)
+    setIsArmored(data.isArmored)
+    setIsLicensed(data.isLicensed)
+    setKilometers(data.kilometersTraveled)
+    setMakeDate(data.makeDate)
+    setMakedDate(data.makedDate)
+    setMessage(data.message)
+    setNumberOfViews(data.numberOfViews)
+    setPlate(data.plate)
+    setExchangeType(data.typeOfExchange)
+    setZipCode(data.address.cep)
+    setLocation(data.address.localidade)
+    setStreet(data.address.logradouro)
+    setDistrict(data.address.bairro)
+    setPictures(data.pictures)
+    setIsLoading(false)
+  }
+
   async function fetchMyCars(token: string, email: string) {
     setIsLoading(true)
     try {
@@ -130,6 +160,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
     setIsLoading(false)
   }
+
+
 
   async function createCar(email: string, token: string): Promise<boolean> {
     setIsLoading(true)
@@ -235,6 +267,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
   return (
     <CarContext.Provider value={{
+      // states
       cars,
       maker,
       model,
@@ -244,6 +277,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       kilometers,
       price,
       exchangeType,
+      numberOfViews,
       gasolineType,
       color,
       message,
@@ -256,6 +290,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       district,
       location,
       street,
+
+      // set states
       setMaker,
       setModel,
       setMakeDate,
@@ -263,6 +299,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       setKilometers,
       setPrice,
       setExchangeType,
+      setNumberOfViews,
       setGasolineType,
       setColor,
       setMessage,
@@ -276,6 +313,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       setDistrict,
       setLocation,
       setStreet,
+
+      // api calls
       searchForMaker,
       searchForMaxKilometers,
       searchForMaxPrice,
@@ -283,9 +322,12 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       searchForModel,
       fetchCars,
       fetchMyCars,
+      fetchCar,
       createCar,
+      fetchAddress,
+
+      // context functions
       reset,
-      fetchAddress
     }}>
       {children}
     </CarContext.Provider>

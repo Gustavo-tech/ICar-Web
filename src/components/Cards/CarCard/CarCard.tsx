@@ -1,16 +1,15 @@
 import {
   CardMedia,
   ListItem,
-  ListItemAvatar,
   ListItemIcon,
   ListItemText,
   Typography,
-  CardActions
 } from '@material-ui/core'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
 import DriveEtaIcon from '@material-ui/icons/DriveEta'
 import LocationOnIcon from '@material-ui/icons/LocationOn'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye'
 import Card from '@material-ui/core/Card'
 import List from '@material-ui/core/List'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -25,12 +24,13 @@ type CardProps = {
   maker: string,
   model: string,
   kilometersTraveled: number,
-  city: string,
+  location: string,
   makeDate: number,
   makedDate: number,
-  pictures: string[],
+  picture: string,
   color: string,
-  price: number
+  price: number,
+  numberOfViews?: number
 }
 
 const CarCard = ({
@@ -38,11 +38,12 @@ const CarCard = ({
   maker,
   model,
   kilometersTraveled,
-  city,
+  location,
   makeDate,
   makedDate,
-  pictures,
-  price
+  picture,
+  price,
+  numberOfViews
 }: CardProps) => {
 
   const history = useHistory()
@@ -55,7 +56,7 @@ const CarCard = ({
   return (
     <Card className={classes.card} onClick={() => handleOnCardClick(id)}>
       <CardActionArea>
-        <CardMedia component="img" src={pictures[0]} className={classes.cardMedia} />
+        <CardMedia image={picture} className={classes.cardMedia} />
 
         <CardContent>
           <Typography variant="h5">{maker} {model}</Typography>
@@ -65,7 +66,7 @@ const CarCard = ({
                 <LocationOnIcon className={classes.icon} />
               </ListItemIcon>
 
-              <ListItemText primary={city} />
+              <ListItemText primary={location} />
             </ListItem>
 
             <ListItem className={classes.listItem}>
@@ -84,6 +85,15 @@ const CarCard = ({
               <ListItemText primary={`${kilometersTraveled} KM`} />
             </ListItem>
 
+            {numberOfViews !== undefined &&
+              <ListItem className={classes.listItem}>
+                <ListItemIcon className={classes.listItemIcon}>
+                  <RemoveRedEyeIcon className={classes.icon} />
+                </ListItemIcon>
+
+                <ListItemText primary={numberOfViews} />
+              </ListItem>}
+
             <ListItem className={classes.listItem}>
               <ListItemIcon className={classes.listItemIcon}>
                 <AttachMoneyIcon className={classes.icon} />
@@ -91,6 +101,7 @@ const CarCard = ({
 
               <ListItemText primary={`${price}`} />
             </ListItem>
+
           </List>
         </CardContent>
       </CardActionArea>

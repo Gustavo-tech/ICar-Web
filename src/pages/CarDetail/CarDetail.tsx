@@ -1,10 +1,10 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getCarWithId } from '../../api/car/get'
 import AppNavbar from '../../components/Navbar/Navbar'
 import { UIContext } from '../../contexts/UIContext'
-import Car from '../../models/car'
+import { CarContext } from '../../contexts/CarContext'
+import { Car } from '../../api/response-types/car'
 import {
   CarName,
   InfoContainer,
@@ -17,19 +17,26 @@ import Grid from '@material-ui/core/Grid'
 import { CircularProgress } from '@material-ui/core'
 
 const CarDetail = () => {
-  const [car, setCar] = useState<Car | undefined>(undefined)
-
   const { isLoading, setIsLoading } = useContext(UIContext)
+  const
+    {
+      maker,
+      model,
+      makeDate,
+      makedDate,
+      kilometers,
+      exchangeType,
+      gasolineType,
+      color,
+      acceptsChange,
+      fetchCar
+    } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
   const { access_token } = oidcUser
   const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
-    setIsLoading(true)
-    getCarWithId(access_token, Number.parseInt(id), (data: Car) => {
-      setIsLoading(false)
-      setCar(data)
-    })
+    fetchCar(access_token, id)
   }, [])
 
 
@@ -51,56 +58,56 @@ const CarDetail = () => {
         <InfosDiv>
           <InfoContainer>
             <NameHeader>
-              <CarName>{car?.maker}</CarName> <CarName inRed>{car?.model}</CarName>
+              <CarName>{maker}</CarName> <CarName inRed>{model}</CarName>
             </NameHeader>
 
             <Grid container>
               <Grid item xs={3}>
-                <LabelWithValue label="Year" value={`${car?.makeDate}/${car?.makedDate}`} />
+                <LabelWithValue label="Year" value={`${makeDate}/${makedDate}`} />
               </Grid>
 
               <Grid item xs={3}>
-                <LabelWithValue label="KM" value={car?.kilometersTraveled?.toString()} />
+                <LabelWithValue label="KM" value={kilometers.toString()} />
               </Grid>
 
               <Grid item xs={3}>
-                <LabelWithValue label="Exchange" value={car?.typeOfExchange?.toString()} />
+                <LabelWithValue label="Exchange" value={exchangeType} />
               </Grid>
 
               <Grid item xs={3}>
-                <LabelWithValue label="Gasoline type" value={car?.gasolineType?.toString()} />
-              </Grid>
-            </Grid>
-
-            <Grid container>
-              <Grid item xs={3}>
-                <LabelWithValue label="Color" value={car?.color} />
-              </Grid>
-
-              <Grid item xs={3}>
-                <LabelWithValue label="Accepts change" value={getBoolAnswer(car?.acceptsChange)} />
-              </Grid>
-
-              <Grid item xs={3}>
-                <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
-              </Grid>
-
-              <Grid item xs={3}>
-                <LabelWithValue label="Year" value={`${car?.makeDate}/${car?.makedDate}`} />
+                <LabelWithValue label="Gasoline type" value={gasolineType} />
               </Grid>
             </Grid>
 
             <Grid container>
               <Grid item xs={3}>
-                <LabelWithValue label="KM" value={car?.kilometersTraveled?.toString()} />
+                <LabelWithValue label="Color" value={color} />
               </Grid>
 
               <Grid item xs={3}>
-                <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
+                <LabelWithValue label="Accepts change" value={getBoolAnswer(acceptsChange)} />
               </Grid>
 
               <Grid item xs={3}>
-                <LabelWithValue label="year" value={`${car?.makeDate}/${car?.makedDate}`} />
+                <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
+              </Grid>
+
+              <Grid item xs={3}>
+                <LabelWithValue label="Year" value={`${makeDate}/${makedDate}`} />
+              </Grid>
+            </Grid>
+
+            <Grid container>
+              <Grid item xs={3}>
+                <LabelWithValue label="KM" value={kilometers.toString()} />
+              </Grid>
+
+              <Grid item xs={3}>
+                <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
+              </Grid>
+
+              <Grid item xs={3}>
+                <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
               </Grid>
             </Grid>
 

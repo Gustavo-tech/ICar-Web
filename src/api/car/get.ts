@@ -1,9 +1,10 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { apiUrl } from '../../constants/urls'
 import CarSearchModel from '../search-models/car'
+import { Car } from '../response-types/car'
 
-export const getUserCars = (authToken: string, userEmail: string) =>
-  axios.get(`${apiUrl}/cars/${userEmail}`, {
+export const getUserCars = (authToken: string, userEmail: string): Promise<AxiosResponse<Car[]>> =>
+  axios.get<Car[]>(`${apiUrl}/cars/${userEmail}`, {
     headers: {
       'Authorization': 'Bearer ' + authToken,
       'Content-Type': 'application/json'
@@ -11,8 +12,8 @@ export const getUserCars = (authToken: string, userEmail: string) =>
   })
 
 
-export const getSellingCars = (authToken: string, search: CarSearchModel) =>
-  axios.get(`${apiUrl}/cars/selling`, {
+export const getSellingCars = (authToken: string, search: CarSearchModel): Promise<AxiosResponse<Car[]>> =>
+  axios.get<Car[]>(`${apiUrl}/cars/selling`, {
     headers: {
       'Authorization': 'Bearer ' + authToken,
       'Content-Type': 'application/json'
@@ -20,17 +21,10 @@ export const getSellingCars = (authToken: string, search: CarSearchModel) =>
     params: search
   })
 
-export function getCarWithId(authToken: string, id: number, callback?: any) {
-  axios.get(`${apiUrl}/cars/selling/${id}`, {
+export const getCarWithId = (authToken: string, id: string): Promise<AxiosResponse<Car>> =>
+  axios.get<Car>(`${apiUrl}/cars/selling/${id}`, {
     headers: {
       'Authorization': 'Bearer ' + authToken,
       'Content-Type': 'application/json'
     }
-  }).then(resp => {
-    if (resp.status === 200) {
-
-      if (callback)
-        callback(resp.data)
-    }
   })
-}

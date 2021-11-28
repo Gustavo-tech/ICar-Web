@@ -2,8 +2,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 export const useStyles = makeStyles({
   card: {
-    width: '30%',
-    height: '61%'
+    width: '100%',
   },
   cardMedia: {
     height: '25vh',

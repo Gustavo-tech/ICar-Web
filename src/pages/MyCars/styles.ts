@@ -15,10 +15,3 @@ export const CenteredContent = styled.div`
   width: 100%;
   height: 84vh;
 `
-
-export const CardsWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 100%;
-`

@@ -8,9 +8,8 @@ import AppNavbar from '../../components/Navbar/Navbar'
 import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
 import { CarContext } from '../../contexts/CarContext'
 import { UIContext } from '../../contexts/UIContext'
-import Car from '../../models/car'
+import { Car } from '../../api/response-types/car'
 import {
-  CardsWrapper,
   CenteredContent,
   useStyles
 } from './styles'
@@ -44,10 +43,15 @@ const SellingCars = () => {
           <FilterSidebar />
         </Grid>
 
-        <Grid item xs={9}>
-          <CardsWrapper>
-            {
-              cars.map((car: Car) => (
+        <Grid
+          item
+          container
+          spacing={2}
+          xs={9}
+        >
+          {
+            cars.map((car: Car) => (
+              <Grid item xs={4}>
                 <CarCard
                   key={car.id}
                   id={car.id}
@@ -58,12 +62,12 @@ const SellingCars = () => {
                   makedDate={car.makedDate}
                   color={car.color}
                   price={car.price}
-                  city={car.city}
-                  pictures={car.pictures}
+                  location={car.address.localidade}
+                  picture={car.pictures[0]}
                 />
-              ))
-            }
-          </CardsWrapper>
+              </Grid>
+            ))
+          }
         </Grid>
       </Grid>
   }
