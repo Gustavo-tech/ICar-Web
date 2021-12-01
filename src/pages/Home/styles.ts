@@ -1,19 +1,16 @@
 import styled from 'styled-components'
+import { makeStyles } from '@material-ui/core/styles'
 
-export const PageBody = styled.div`
-  width: 100%;
-  height: 100%;
-`
+export const useStyles = makeStyles({
+  container: {
+    padding: '2% 1%'
+  }
+})
 
-export const SearchWrapper = styled.div`
+export const CenteredContent = styled.div`
   display: flex;
+  width: 100%;
+  height: 91%;
   justify-content: center;
-  align-content: flex-start;
-  margin-top: 7%;
-`
-
-export const SearchLabel = styled.label`
-  display: block;
-  color: black;
-  border-bottom: 5px solid var(--red);
+  align-items: center;
 `

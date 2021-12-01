@@ -161,8 +161,6 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     setIsLoading(false)
   }
 
-
-
   async function createCar(email: string, token: string): Promise<boolean> {
     setIsLoading(true)
     const car = createCarToPost(email)
