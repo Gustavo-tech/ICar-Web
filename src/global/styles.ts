@@ -9,13 +9,15 @@ const GlobalStyle = createGlobalStyle`
     --black: #0A111F;
   }
 
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+  }
+
   body {
     margin: 0;
     padding: 0;
     background-color: var(--white);
-    width: 100vw;
-    height: auto;
-    min-height: 100vh;
     overflow-x: hidden;
 
     &::-webkit-scrollbar {

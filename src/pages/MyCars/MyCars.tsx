@@ -1,7 +1,9 @@
-import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { useContext, useEffect } from 'react'
+import { useReactOidc } from '@axa-fr/react-oidc-context'
+import { useHistory } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import CarCard from '../../components/Cards/CarCard/CarCard'
 import AppNavbar from '../../components/Navbar/Navbar'
 import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
@@ -12,6 +14,7 @@ import {
   CenteredContent,
   useStyles
 } from './styles'
+import { Button, Typography } from '@material-ui/core'
 
 const MyCars = () => {
 
@@ -26,6 +29,7 @@ const MyCars = () => {
   }, [])
 
   const classes = useStyles()
+  const history = useHistory()
 
   let mainContent
 
@@ -76,7 +80,15 @@ const MyCars = () => {
   else {
     mainContent =
       <CenteredContent>
-        <h2>Ops..</h2>
+        <Typography gutterBottom variant="h6">Ops... looks like you don't have a car selling yet</Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<LocalOfferIcon />}
+          onClick={() => history.push('/car/sell')}
+        >
+          Sell Car
+        </Button>
       </CenteredContent>
   }
 

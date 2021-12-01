@@ -5,7 +5,7 @@ export const useStyles = makeStyles({
   grid: {
     height: '100%',
     marginTop: '3%'
-  }
+  },
 })
 
 

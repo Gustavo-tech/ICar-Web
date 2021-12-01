@@ -13,6 +13,7 @@ import {
   CenteredContent,
   useStyles
 } from './styles'
+import { Typography } from '@material-ui/core'
 
 const SellingCars = () => {
 
@@ -75,8 +76,8 @@ const SellingCars = () => {
   else {
     mainContent =
       <CenteredContent>
-        <RemoveShoppingCartIcon />
-        <h3>Ops... looks like we haven't a selling car yet</h3>
+        <RemoveShoppingCartIcon fontSize="small" color="primary" />
+        <Typography variant="h6">Ops... looks like we haven't a selling car yet</Typography>
       </CenteredContent>
   }
 
