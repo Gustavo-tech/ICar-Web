@@ -1,9 +1,10 @@
 type News = {
+  id: string;
   title: string;
   text: string;
-  writter: string;
+  author: string;
   createdAt: Date;
-  lastUpdate: Date;
+  updatedAt: Date;
 }
 
 export default News;

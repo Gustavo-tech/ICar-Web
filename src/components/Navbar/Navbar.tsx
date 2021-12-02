@@ -1,17 +1,12 @@
-import EmailIcon from '@material-ui/icons/Email'
-import DriveEtaIcon from '@material-ui/icons/DriveEta'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import {
-  Brand,
-  Button,
-  ButtonsDiv,
-  Navbar
-} from './styles'
+import MenuIcon from '@material-ui/icons/Menu'
+import { useStyles } from './styles'
 import MessagesModal from '../Modals/Messages/Messages'
 import { useContext } from 'react'
 import { UIContext } from '../../contexts/UIContext'
 import AccountModal from '../Modals/Account/Account'
 import CarsModal from '../Modals/Cars/Cars'
+import MenuModal from '../Modals/MenuModal/MenuModal'
+import { Button, Grid, Typography } from '@material-ui/core'
 
 type AppNavBarProps = {
   showSearch: boolean;
@@ -25,32 +20,26 @@ const AppNavbar = ({ showSearch }: AppNavBarProps) => {
     openModal(type)
   }
 
+  const classes = useStyles()
   return (
     <>
       <MessagesModal />
       <AccountModal />
       <CarsModal />
-      <Navbar>
-        <Brand to="/">ICar</Brand>
-
-        {/* {showSearch &&
-          <Form.Control
-            style={{ width: '24%', outline: 'none', border: 'none' }}
-            placeholder="Search for a car"
-          />} */}
-
-        <ButtonsDiv>
-          <Button onClick={() => openNavigationModal('messages')}>
-            <EmailIcon />
-          </Button>
-          <Button onClick={() => openNavigationModal('cars')}>
-            <DriveEtaIcon />
-          </Button>
-          <Button onClick={() => openNavigationModal('account')}>
-            <AccountCircleIcon />
-          </Button>
-        </ButtonsDiv>
-      </Navbar>
+      <MenuModal />
+      <Grid
+        container
+        justify="space-between"
+        alignItems="center"
+        className={classes.navbar}
+      >
+        <Typography variant="h4" className={classes.brand}>ICar</Typography>
+        <Button
+          className={classes.menuButton}
+          onClick={() => openNavigationModal('account')}>
+          <MenuIcon className={classes.menuIcon} />
+        </Button>
+      </Grid>
     </>
   )
 }

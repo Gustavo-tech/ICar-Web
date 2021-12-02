@@ -9,6 +9,7 @@ import SellCar from './pages/SellCar/SellCar'
 import MyCars from './pages/MyCars/MyCars'
 import Messages from './pages/Messages/Messages'
 import CarDetail from './pages/CarDetail/CarDetail'
+import News from './pages/News/News'
 
 import GlobalStyle from './global/styles'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -25,6 +26,7 @@ import Authenticating from './pages/Authenticating/Authenticating'
 import SellingCars from './pages/Selling/Selling'
 import CarContextProvider from './contexts/CarContext'
 import NewsContextProvider from './contexts/NewsContext'
+import NewsDetail from './pages/NewsDetail/NewsDetail'
 
 const theme = createMuiTheme({
   palette: {
@@ -67,6 +69,8 @@ const App = () => (
                 <Route exact path='/selling/:id' component={withOidcSecure(CarDetail)} />
                 <Route exact path='/messages' component={withOidcSecure(Messages)} />
                 <Route exact path='/car/sell' component={withOidcSecure(SellCar)} />
+                <Route exact path='/news' component={withOidcSecure(News)} />
+                <Route exact path='/news/:id' component={withOidcSecure(NewsDetail)} />
                 <Route exact path='*' component={NotFound} />
               </Switch>
             </BrowserRouter>
