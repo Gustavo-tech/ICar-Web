@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { UIContext } from '../../contexts/UIContext'
 import MenuModal from '../Modals/MenuModal/MenuModal'
 import { Button, Grid, Typography } from '@material-ui/core'
+import { useHistory } from 'react-router'
 
 type AppNavBarProps = {
   showSearch: boolean;
@@ -13,6 +14,7 @@ const AppNavbar = ({ showSearch }: AppNavBarProps) => {
 
   const { openModal } = useContext(UIContext)
 
+  const history = useHistory()
   const classes = useStyles()
   return (
     <>
@@ -23,7 +25,12 @@ const AppNavbar = ({ showSearch }: AppNavBarProps) => {
         alignItems="center"
         className={classes.navbar}
       >
-        <Typography variant="h4" className={classes.brand}>ICar</Typography>
+        <Typography
+          variant="h4"
+          className={classes.brand}
+          onClick={() => history.push('/')}
+        >
+          ICar</Typography>
         <Button
           className={classes.menuButton}
           onClick={() => openModal('menu')}>

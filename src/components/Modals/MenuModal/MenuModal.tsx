@@ -21,6 +21,7 @@ import StoreIcon from '@material-ui/icons/Store'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
 import ListAltIcon from '@material-ui/icons/ListAlt'
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 
 const MenuModal = () => {
 
@@ -68,7 +69,7 @@ const MenuModal = () => {
       id: 3,
       icon: <MonetizationOnIcon className={classes.menuIcon} />,
       text: 'Sell',
-      path: '/car/sell '
+      path: '/car/sell'
     },
   ]
 
@@ -90,6 +91,15 @@ const MenuModal = () => {
       icon: <CreateIcon className={classes.menuIcon} />,
       text: 'Create',
       path: '/news/create '
+    },
+  ]
+
+  const messageItems = [
+    {
+      id: 1,
+      icon: <ChatBubbleOutlineIcon className={classes.menuIcon} />,
+      text: 'Chat',
+      path: '/messages'
     },
   ]
 
@@ -179,6 +189,29 @@ const MenuModal = () => {
 
           {selectedTab === 2 &&
             newsItems.map((x) => {
+              return (
+                <Grid
+                  key={x.id}
+                  item
+                  container
+                  xs={3}
+                  alignItems="flex-start"
+                  justify="flex-start"
+                  className={classes.menuItem}
+                >
+                  <Paper
+                    className={classes.paperItem}
+                    onClick={() => handleItemClick(x.path)}
+                  >
+                    {x.icon}
+                    <Typography className={classes.itemText}>{x.text}</Typography>
+                  </Paper>
+                </Grid>
+              )
+            })}
+
+          {selectedTab === 3 &&
+            messageItems.map((x) => {
               return (
                 <Grid
                   key={x.id}

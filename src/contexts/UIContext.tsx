@@ -1,11 +1,16 @@
 import { createContext, ReactNode, useState } from 'react'
 
 interface UIContextInterface {
+  // states
   isLoading: boolean;
-  setIsLoading: (value: boolean) => void;
   isModalOpen: boolean;
   modalType: string;
+
+  // set states
+  setIsLoading: (value: boolean) => void;
   openModal: (type: string) => void;
+
+  // context API's
   closeModal: () => void;
 }
 

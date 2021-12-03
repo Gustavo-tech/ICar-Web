@@ -19,7 +19,8 @@ export const useStyles = makeStyles({
     height: '75%'
   },
   itemsBody: {
-    height: '80%'
+    height: '80%',
+    padding: '0 1%'
   },
   menuItem: {
     height: '9vw',
