@@ -25,9 +25,13 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 
 const MenuModal = () => {
 
-  const [selectedTab, setSelectedTab] = useState<number>(0)
-
-  const { isModalOpen, modalType, closeModal } = useContext(UIContext)
+  const {
+    isModalOpen,
+    menuTabSelected,
+    modalType,
+    closeModal,
+    setMenuTabSelected
+  } = useContext(UIContext)
 
   const classes = useStyles()
   const history = useHistory()
@@ -118,8 +122,8 @@ const MenuModal = () => {
         <Grid item xs={12} className={classes.tabGrid}>
           <Paper>
             <Tabs
-              value={selectedTab}
-              onChange={(_, index) => setSelectedTab(index)}
+              value={menuTabSelected}
+              onChange={(_, index) => setMenuTabSelected(index)}
               variant="fullWidth"
               indicatorColor="secondary"
               textColor="secondary"
@@ -141,7 +145,7 @@ const MenuModal = () => {
           className={classes.itemsBody}
           spacing={1}
         >
-          {selectedTab === 0 &&
+          {menuTabSelected === 0 &&
             accountItems.map((x) => {
               return (
                 <Grid
@@ -164,7 +168,7 @@ const MenuModal = () => {
               )
             })}
 
-          {selectedTab === 1 &&
+          {menuTabSelected === 1 &&
             carItems.map((x) => {
               return (
                 <Grid
@@ -187,7 +191,7 @@ const MenuModal = () => {
               )
             })}
 
-          {selectedTab === 2 &&
+          {menuTabSelected === 2 &&
             newsItems.map((x) => {
               return (
                 <Grid
@@ -210,7 +214,7 @@ const MenuModal = () => {
               )
             })}
 
-          {selectedTab === 3 &&
+          {menuTabSelected === 3 &&
             messageItems.map((x) => {
               return (
                 <Grid

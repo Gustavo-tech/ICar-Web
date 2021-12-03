@@ -5,10 +5,12 @@ interface UIContextInterface {
   isLoading: boolean;
   isModalOpen: boolean;
   modalType: string;
+  menuTabSelected: number;
 
   // set states
   setIsLoading: (value: boolean) => void;
   openModal: (type: string) => void;
+  setMenuTabSelected: (index: 0 | 1 | 2 | 3) => void;
 
   // context API's
   closeModal: () => void;
@@ -24,6 +26,7 @@ const UIProvider = ({ children }: UIContextProps) => {
   const [loading, setIsLoading] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [modalType, setModalType] = useState<string>('')
+  const [menuTabSelected, setMenuTabSelected] = useState(0)
 
   function openModal(type: string) {
     setIsModalOpen(true)
@@ -38,11 +41,18 @@ const UIProvider = ({ children }: UIContextProps) => {
   return (
     <UIContext.Provider
       value={{
+        // states
         isLoading: loading,
-        setIsLoading: setIsLoading,
         isModalOpen: isModalOpen,
         modalType: modalType,
+        menuTabSelected,
+
+        // set states
+        setIsLoading: setIsLoading,
         openModal: openModal,
+        setMenuTabSelected,
+
+        // context API's
         closeModal: closeModal
       }}
     >
