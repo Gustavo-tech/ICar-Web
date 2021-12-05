@@ -6,11 +6,13 @@ interface UIContextInterface {
   isModalOpen: boolean;
   modalType: string;
   menuTabSelected: number;
+  success: boolean;
 
   // set states
   setIsLoading: (value: boolean) => void;
   openModal: (type: string) => void;
   setMenuTabSelected: (index: 0 | 1 | 2 | 3) => void;
+  setSuccess: (success: boolean) => void;
 
   // context API's
   closeModal: () => void;
@@ -27,6 +29,7 @@ const UIProvider = ({ children }: UIContextProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [modalType, setModalType] = useState<string>('')
   const [menuTabSelected, setMenuTabSelected] = useState(0)
+  const [success, setSuccess] = useState<boolean>(false)
 
   function openModal(type: string) {
     setIsModalOpen(true)
@@ -46,11 +49,13 @@ const UIProvider = ({ children }: UIContextProps) => {
         isModalOpen: isModalOpen,
         modalType: modalType,
         menuTabSelected,
+        success,
 
         // set states
         setIsLoading: setIsLoading,
         openModal: openModal,
         setMenuTabSelected,
+        setSuccess,
 
         // context API's
         closeModal: closeModal

@@ -27,6 +27,7 @@ import SellingCars from './pages/Selling/Selling'
 import CarContextProvider from './contexts/CarContext'
 import NewsContextProvider from './contexts/NewsContext'
 import NewsDetail from './pages/NewsDetail/NewsDetail'
+import CreateNews from './pages/CreateNews/CreateNews'
 
 const theme = createMuiTheme({
   palette: {
@@ -62,15 +63,26 @@ const App = () => (
             <BrowserRouter>
               <Switch>
                 <Route exact path="/" component={withOidcSecure(Home)} />
+
+                // Account routes
                 <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
                 <Route exact path='/account/security' component={withOidcSecure(Security)} />
+
+                // Car routes
                 <Route exact path='/mycars' component={withOidcSecure(MyCars)} />
                 <Route exact path='/selling' component={withOidcSecure(SellingCars)} />
                 <Route exact path='/selling/:id' component={withOidcSecure(CarDetail)} />
-                <Route exact path='/messages' component={withOidcSecure(Messages)} />
                 <Route exact path='/car/sell' component={withOidcSecure(SellCar)} />
+
+                // Chat routes
+                <Route exact path='/messages' component={withOidcSecure(Messages)} />
+
+                // News routes
+                <Route exact path='/news/create' component={withOidcSecure(CreateNews)} />
+                <Route exact path='/news/details/:id' component={withOidcSecure(NewsDetail)} />
                 <Route exact path='/news' component={withOidcSecure(News)} />
-                <Route exact path='/news/:id' component={withOidcSecure(NewsDetail)} />
+
+                // Routes that does not exists
                 <Route exact path='*' component={NotFound} />
               </Switch>
             </BrowserRouter>
