@@ -1,1 +1,7 @@
-import styled from 'styled-components'
+import { makeStyles } from "@material-ui/core"
+
+export const useStyles = makeStyles({
+  title: {
+    marginTop: '3%'
+  }
+})
