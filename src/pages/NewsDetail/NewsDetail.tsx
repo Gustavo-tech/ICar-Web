@@ -1,19 +1,23 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState, useRef } from 'react'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { useRouteMatch } from 'react-router'
 import AppNavbar from '../../components/Navbar/Navbar'
 import { NewsContext } from '../../contexts/NewsContext'
 import {
+  Button,
   Container,
   Grid,
   IconButton,
   Paper,
+  TextField,
   Tooltip,
   Typography
 } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
+import SaveIcon from '@material-ui/icons/Save'
 import { useStyles } from './styles'
+import { UIContext } from '../../contexts/UIContext'
 
 type MatchProps = {
   id: string;
@@ -21,7 +25,20 @@ type MatchProps = {
 
 const NewsDetail = () => {
 
-  const { title, text, userIsAuthor, fetchNewsById } = useContext(NewsContext)
+  const [isEditing, setIsEditing] = useState<boolean>(false)
+
+  const formRef = useRef<HTMLFormElement>(null)
+
+  const {
+    title,
+    text,
+    userIsAuthor,
+    setTitle,
+    setText,
+    fetchNewsById,
+    updateNews
+  } = useContext(NewsContext)
+  const { isLoading } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
   const { access_token, profile } = oidcUser
   const { email } = profile
@@ -32,52 +49,103 @@ const NewsDetail = () => {
     fetchNewsById(access_token, id, email!)
   }, [access_token, id, email])
 
+  function handleFormSubmit() {
+    console.log('Called')
+    updateNews(id, email!, access_token)
+    setIsEditing(false)
+  }
+
   const classes = useStyles()
   return (
     <>
       <AppNavbar showSearch={false} />
 
-      <Container className={classes.mainContainer}>
-        <Grid container>
-          <Grid
-            item
-            container
-            justify="flex-end"
-            alignItems="center"
-            xs={12}
-          >
-            <Tooltip title="edit">
-              <IconButton>
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
+      {!isLoading &&
+        <Container className={classes.mainContainer}>
+          <Grid container>
 
-            <Tooltip title="delete">
-              <IconButton>
-                <DeleteIcon color="primary" />
-              </IconButton>
-            </Tooltip>
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-          >
-            <Paper className={classes.paper}>
-              <Typography
-                variant="h4"
-                color="primary"
-                align="center"
-                gutterBottom
+            {userIsAuthor &&
+              <Grid
+                item
+                container
+                justify="flex-end"
+                alignItems="center"
+                xs={12}
               >
-                {title}
-              </Typography>
+                {!isEditing &&
+                  <Tooltip title="edit">
+                    <IconButton onClick={() => setIsEditing(true)}>
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>}
 
-              <Typography variant="body1" align="justify">{text}</Typography>
-            </Paper>
+                {isEditing &&
+                  <Tooltip title="save">
+                    <IconButton onClick={() => {
+                      formRef!.current!.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
+                    }}>
+                      <SaveIcon />
+                    </IconButton>
+                  </Tooltip>}
+
+                <Tooltip title="delete">
+                  <IconButton>
+                    <DeleteIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+              </Grid>}
+
+            <Grid
+              item
+              xs={12}
+            >
+              <Paper className={classes.paper}>
+
+                {!isEditing &&
+                  <>
+                    <Typography
+                      variant="h4"
+                      color="primary"
+                      align="center"
+                      gutterBottom
+                    >
+                      {title}
+                    </Typography>
+
+                    <Typography variant="body1" align="justify">{text}</Typography>
+                  </>}
+
+                {isEditing &&
+                  <form ref={formRef} onSubmit={(e) => {
+                    e.preventDefault()
+                    handleFormSubmit()
+                  }}>
+                    <TextField
+                      variant="outlined"
+                      label="title"
+                      fullWidth
+                      required
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      className={classes.formField}
+                    />
+
+                    <TextField
+                      variant="outlined"
+                      label="text"
+                      fullWidth
+                      required
+                      multiline
+                      rows={15}
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      className={classes.formField}
+                    />
+                  </form>}
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>}
     </>
   )
 }

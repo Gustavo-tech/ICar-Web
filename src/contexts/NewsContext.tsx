@@ -1,6 +1,7 @@
 import { createContext, useState, ReactNode, useContext } from 'react'
 import { getMyNews, getNews, getNewsById } from '../api/news/get'
 import { createNews } from '../api/news/post'
+import { updateNewsRequest } from '../api/news/put'
 import News from '../models/news'
 import { UIContext } from './UIContext'
 
@@ -19,6 +20,7 @@ type NewsContextProps = {
   fetchNews: (token: string) => void;
   fetchMyNews: (token: string, userEmail: string) => void;
   fetchNewsById: (token: string, id: string, userEmail: string) => void;
+  updateNews: (id: string, userEmail: string, token: string) => void;
   addNews: (token: string, userEmail: string) => void;
 }
 
@@ -97,6 +99,17 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       })
   }
 
+  function updateNews(id: string, userEmail: string, token: string) {
+    setIsLoading(true)
+    updateNewsRequest(id, title, text, userEmail, token)
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
   return (
     <NewsContext.Provider value={{
       // states
@@ -113,6 +126,7 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       fetchNews,
       fetchMyNews,
       fetchNewsById,
+      updateNews,
       addNews
     }}>
       {children}

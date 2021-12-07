@@ -9,5 +9,8 @@ export const useStyles = makeStyles({
   paper: {
     padding: '2%',
     wordWrap: 'break-word'
+  },
+  formField: {
+    margin: '2% 0'
   }
 })
