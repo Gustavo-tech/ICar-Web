@@ -9,6 +9,7 @@ type NewsContextProps = {
   title: string;
   text: string;
   news: News[];
+  userIsAuthor: boolean;
 
   // set states
   setTitle: (title: string) => void;
@@ -17,7 +18,7 @@ type NewsContextProps = {
   // api calls
   fetchNews: (token: string) => void;
   fetchMyNews: (token: string, userEmail: string) => void;
-  fetchNewsById: (token: string, id: string) => void;
+  fetchNewsById: (token: string, id: string, userEmail: string) => void;
   addNews: (token: string, userEmail: string) => void;
 }
 
@@ -32,6 +33,7 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
   const [title, setTitle] = useState<string>('')
   const [text, setText] = useState<string>('')
   const [news, setNews] = useState<News[]>([])
+  const [userIsAuthor, setUserIsAuthor] = useState<boolean>(false)
 
   const { setIsLoading, setSuccess } = useContext(UIContext)
 
@@ -63,13 +65,14 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       })
   }
 
-  function fetchNewsById(token: string, id: string) {
+  function fetchNewsById(token: string, id: string, userEmail: string) {
     setIsLoading(true)
     getNewsById(token, id)
       .then(resp => {
         const { data } = resp
         setTitle(data.title)
         setText(data.text)
+        setUserIsAuthor(data.author === userEmail)
       })
       .catch(error => {
         console.error(error)
@@ -100,6 +103,7 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       title,
       text,
       news,
+      userIsAuthor,
 
       // set states
       setTitle,

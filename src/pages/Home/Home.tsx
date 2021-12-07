@@ -46,6 +46,7 @@ const Home = () => {
               container
               justify="space-between"
               alignItems="flex-end"
+              item
               xs={12}
               className={classes.sectionHeader}
             >
