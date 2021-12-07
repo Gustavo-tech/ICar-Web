@@ -3,6 +3,8 @@ import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { useRouteMatch } from 'react-router'
 import AppNavbar from '../../components/Navbar/Navbar'
 import { NewsContext } from '../../contexts/NewsContext'
+import { Container, Paper, Typography } from '@material-ui/core'
+import { useStyles } from './styles'
 
 type MatchProps = {
   id: string;
@@ -20,9 +22,23 @@ const NewsDetail = () => {
     fetchNewsById(access_token, id)
   }, [access_token, id])
 
+  const classes = useStyles()
   return (
     <>
       <AppNavbar showSearch={false} />
+
+      <Paper className={classes.paper}>
+        <Typography
+          variant="h4"
+          color="primary"
+          align="center"
+          gutterBottom
+        >
+          {title}
+        </Typography>
+
+        <Typography variant="body1" align="justify" display="inline">{text}</Typography>
+      </Paper>
     </>
   )
 }
