@@ -10,6 +10,7 @@ import { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { UIContext } from '../../../contexts/UIContext'
 import { useStyles } from './styles'
+import { serverUrl } from '../../../constants/urls'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import MessageIcon from '@material-ui/icons/Message'
 import DriveEtaIcon from '@material-ui/icons/DriveEta'
@@ -22,6 +23,7 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
 import ListAltIcon from '@material-ui/icons/ListAlt'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
 const MenuModal = () => {
 
@@ -38,7 +40,6 @@ const MenuModal = () => {
 
   function handleItemClick(url: string) {
     closeModal()
-    console.log(url)
     history.push(url)
   }
 
@@ -54,6 +55,12 @@ const MenuModal = () => {
       icon: <SecurityIcon className={classes.menuIcon} />,
       text: 'Security',
       path: '/account/security'
+    },
+    {
+      id: 3,
+      icon: <ExitToAppIcon className={classes.menuIcon} />,
+      text: 'Logout',
+      path: '/account/logout'
     }
   ]
 

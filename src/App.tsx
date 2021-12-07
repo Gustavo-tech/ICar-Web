@@ -29,6 +29,7 @@ import NewsContextProvider from './contexts/NewsContext'
 import NewsDetail from './pages/NewsDetail/NewsDetail'
 import CreateNews from './pages/CreateNews/CreateNews'
 import MyNews from './pages/MyNews/MyNews'
+import Logout from './pages/Logout/Logout'
 
 const theme = createMuiTheme({
   palette: {
@@ -70,6 +71,7 @@ const App = () => (
                 {/* Account routes */}
                 <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
                 <Route exact path='/account/security' component={withOidcSecure(Security)} />
+                <Route exact path='/account/logout' component={withOidcSecure(Logout)} />
 
                 {/* Car routes */}
                 <Route exact path='/mycars' component={withOidcSecure(MyCars)} />
