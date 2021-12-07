@@ -64,29 +64,29 @@ const App = () => (
             <BrowserRouter>
               <Switch>
 
-                // home
+                {/* home */}
                 <Route exact path="/" component={withOidcSecure(Home)} />
 
-                // Account routes
+                {/* Account routes */}
                 <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
                 <Route exact path='/account/security' component={withOidcSecure(Security)} />
 
-                // Car routes
+                {/* Car routes */}
                 <Route exact path='/mycars' component={withOidcSecure(MyCars)} />
                 <Route exact path='/selling' component={withOidcSecure(SellingCars)} />
                 <Route exact path='/selling/:id' component={withOidcSecure(CarDetail)} />
                 <Route exact path='/car/sell' component={withOidcSecure(SellCar)} />
 
-                // Chat routes
+                {/* Chat routes */}
                 <Route exact path='/messages' component={withOidcSecure(Messages)} />
 
-                // News routes
+                {/* News routes */}
                 <Route exact path='/news/create' component={withOidcSecure(CreateNews)} />
                 <Route exact path='/news/details/:id' component={withOidcSecure(NewsDetail)} />
                 <Route exact path='/news' component={withOidcSecure(News)} />
                 <Route exact path='/mynews' component={withOidcSecure(MyNews)} />
 
-                // Routes that does not exists
+                {/* Routes that does not exists */}
                 <Route exact path='*' component={NotFound} />
               </Switch>
             </BrowserRouter>
