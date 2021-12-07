@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState, useRef } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { useRouteMatch } from 'react-router'
 import AppNavbar from '../../components/Navbar/Navbar'
@@ -6,6 +7,11 @@ import { NewsContext } from '../../contexts/NewsContext'
 import {
   Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
   IconButton,
   Paper,
@@ -26,6 +32,7 @@ type MatchProps = {
 const NewsDetail = () => {
 
   const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
 
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -36,13 +43,16 @@ const NewsDetail = () => {
     setTitle,
     setText,
     fetchNewsById,
-    updateNews
+    updateNews,
+    removeNews
   } = useContext(NewsContext)
   const { isLoading } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
   const { access_token, profile } = oidcUser
   const { email } = profile
+
   const match = useRouteMatch<MatchProps>()
+  const history = useHistory()
   const id = match.params.id
 
   useEffect(() => {
@@ -50,15 +60,51 @@ const NewsDetail = () => {
   }, [access_token, id, email])
 
   function handleFormSubmit() {
-    console.log('Called')
     updateNews(id, email!, access_token)
     setIsEditing(false)
+  }
+
+  function handleDeleteNewsClick() {
+    removeNews(id, email!, access_token)
+    setOpenDeleteDialog(false)
+    history.push('/mynews')
   }
 
   const classes = useStyles()
   return (
     <>
       <AppNavbar showSearch={false} />
+
+      {openDeleteDialog &&
+        <Dialog
+          open={openDeleteDialog}
+          onClose={() => setOpenDeleteDialog(false)}
+        >
+          <DialogTitle color="primary ">Are you sure you want to delete this news?</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              If you delete this news you won't be able to recover it
+            </DialogContentText>
+          </DialogContent>
+
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDeleteNewsClick}
+            >
+              Yes
+            </Button>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setOpenDeleteDialog(false)}
+            >
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>}
 
       {!isLoading &&
         <Container className={classes.mainContainer}>
@@ -89,7 +135,7 @@ const NewsDetail = () => {
                   </Tooltip>}
 
                 <Tooltip title="delete">
-                  <IconButton>
+                  <IconButton onClick={() => setOpenDeleteDialog(true)}>
                     <DeleteIcon color="primary" />
                   </IconButton>
                 </Tooltip>
