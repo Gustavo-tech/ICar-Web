@@ -38,6 +38,7 @@ const MenuModal = () => {
 
   function handleItemClick(url: string) {
     closeModal()
+    console.log(url)
     history.push(url)
   }
 
@@ -86,16 +87,16 @@ const MenuModal = () => {
     },
     {
       id: 2,
-      icon: <ListAltIcon className={classes.menuIcon} />,
-      text: 'All',
-      path: '/news'
-    },
-    {
-      id: 3,
       icon: <CreateIcon className={classes.menuIcon} />,
       text: 'Create',
       path: '/news/create '
     },
+    {
+      id: 3,
+      icon: <ListAltIcon className={classes.menuIcon} />,
+      text: 'All',
+      path: '/news'
+    }
   ]
 
   const messageItems = [

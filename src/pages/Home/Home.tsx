@@ -6,19 +6,16 @@ import {
 } from './styles'
 import {
   Button,
-  Card,
-  CardHeader,
-  CardContent,
   CircularProgress,
   Container,
   Grid,
-  Typography,
-  Paper
+  Typography
 } from '@material-ui/core'
 import TvIcon from '@material-ui/icons/Tv'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { NewsContext } from '../../contexts/NewsContext'
 import { UIContext } from '../../contexts/UIContext'
+import NewsCard from '../../components/Cards/NewsCard/NewsCard'
 
 const Home = () => {
 
@@ -65,14 +62,10 @@ const Home = () => {
             <Grid container item xs={12} spacing={2}>
               {
                 localNews.map((x) => (
-                  <Grid item xs={3}>
-                    <Card className={classes.newsCard}>
-                      <CardContent className={classes.newsContent}>
-                        <Typography color="primary" variant="h6" gutterBottom>{x.title}</Typography>
-                        <Typography variant="body2">{x.text}</Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
+                  <NewsCard
+                    key={x.id}
+                    news={x}
+                  />
                 ))
               }
             </Grid>

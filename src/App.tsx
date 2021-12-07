@@ -28,6 +28,7 @@ import CarContextProvider from './contexts/CarContext'
 import NewsContextProvider from './contexts/NewsContext'
 import NewsDetail from './pages/NewsDetail/NewsDetail'
 import CreateNews from './pages/CreateNews/CreateNews'
+import MyNews from './pages/MyNews/MyNews'
 
 const theme = createMuiTheme({
   palette: {
@@ -62,6 +63,8 @@ const App = () => (
           <NewsContextProvider>
             <BrowserRouter>
               <Switch>
+
+                // home
                 <Route exact path="/" component={withOidcSecure(Home)} />
 
                 // Account routes
@@ -81,6 +84,7 @@ const App = () => (
                 <Route exact path='/news/create' component={withOidcSecure(CreateNews)} />
                 <Route exact path='/news/details/:id' component={withOidcSecure(NewsDetail)} />
                 <Route exact path='/news' component={withOidcSecure(News)} />
+                <Route exact path='/mynews' component={withOidcSecure(MyNews)} />
 
                 // Routes that does not exists
                 <Route exact path='*' component={NotFound} />

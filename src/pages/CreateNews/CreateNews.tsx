@@ -152,30 +152,26 @@ const CreateNews = () => {
           open={true}
           onClose={resetComponent}
         >
-          <DialogTitle>News saved successfully!</DialogTitle>
+          <DialogTitle>Some error occurred while saving this news</DialogTitle>
 
           <DialogContent>
             <DialogContentText>
-              Your news was saved successfully, now the users can read it.
-              You can edit or delete it on my news section
+              We couldn't save this news, hopefully if you try again, everything
+              is going to be alright!
             </DialogContentText>
           </DialogContent>
 
           <DialogActions>
             <Button
               variant="contained"
-              onClick={resetComponent}
+              onClick={() => {
+                if (email) {
+                  addNews(access_token, email)
+                }
+              }}
               color="primary"
             >
-              Create another
-            </Button>
-
-            <Button
-              variant="contained"
-              onClick={resetComponent}
-              color="primary"
-            >
-              Go to my news
+              Try again
             </Button>
           </DialogActions>
         </Dialog>}

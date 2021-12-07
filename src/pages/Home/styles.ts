@@ -8,17 +8,7 @@ export const useStyles = makeStyles({
   sectionHeader: {
     marginBottom: '1%'
   },
-  newsCard: {
-    cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: '#F7F7F7'
-    }
-  },
-  newsContent: {
-    height: 200,
-    wordWrap: 'break-word',
-    padding: '2% 5%'
-  }
+
 })
 
 export const CenteredContent = styled.div`

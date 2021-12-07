@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode, useContext } from 'react'
-import { getNews } from '../api/news/get'
+import { getMyNews, getNews } from '../api/news/get'
 import { createNews } from '../api/news/post'
 import News from '../models/news'
 import { UIContext } from './UIContext'
@@ -16,6 +16,7 @@ type NewsContextProps = {
 
   // api calls
   fetchNews: (token: string) => void;
+  fetchMyNews: (token: string, userEmail: string) => void;
   addNews: (token: string, userEmail: string) => void;
 }
 
@@ -43,6 +44,20 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       .catch(error => {
         console.error(error)
         setNews([])
+        setIsLoading(false)
+      })
+  }
+
+  function fetchMyNews(token: string, userEmail: string): void {
+    setIsLoading(true)
+    getMyNews(token, userEmail)
+      .then(resp => [
+        setNews(resp.data)
+      ])
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
         setIsLoading(false)
       })
   }
@@ -75,6 +90,7 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
 
       // api calls
       fetchNews,
+      fetchMyNews,
       addNews
     }}>
       {children}
