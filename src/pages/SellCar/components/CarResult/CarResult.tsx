@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
@@ -16,17 +16,16 @@ import {
 } from './styles'
 
 type CarResultProps = {
-  savedSuccessfully: boolean;
   resetSteps: () => void;
   onTryAgainClick: () => void;
 }
 
-const CarResult = ({ savedSuccessfully, resetSteps, onTryAgainClick }: CarResultProps) => {
+const CarResult = ({ resetSteps, onTryAgainClick }: CarResultProps) => {
 
   const history = useHistory()
 
   const { reset } = useContext(CarContext)
-  const { isLoading } = useContext(UIContext)
+  const { isLoading, success } = useContext(UIContext)
 
   function handleAddNewClick() {
     reset()
@@ -52,7 +51,7 @@ const CarResult = ({ savedSuccessfully, resetSteps, onTryAgainClick }: CarResult
           <CircularProgress color="primary" />
         </Grid>}
 
-      {!isLoading && savedSuccessfully === true &&
+      {!isLoading && success === true &&
         <>
           <Grid container item justify="center" xs={12}>
             <CheckCircleIcon color="primary" className={classes.mainIcon} />
@@ -89,7 +88,7 @@ const CarResult = ({ savedSuccessfully, resetSteps, onTryAgainClick }: CarResult
           </Grid>
         </>}
 
-      {!isLoading && savedSuccessfully === false &&
+      {!isLoading && success === false &&
         <>
           <Grid container item justify="center" xs={12}>
             <ErrorIcon color="primary" className={classes.mainIcon} />

@@ -62,7 +62,7 @@ type CarContextProps = {
   fetchCar: (token: string, id: string) => void;
   fetchMyCars: (token: string, email: string) => void;
   fetchAddress: (zipCode: string) => void;
-  createCar: (email: string, token: string) => Promise<boolean>;
+  createCar: (email: string, token: string) => void;
 
   // Search methods
   searchForMaker: (maker: string) => void;
@@ -106,7 +106,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [zipCode, setZipCode] = useState<string>('')
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
 
-  const { setIsLoading } = useContext(UIContext)
+  const { setIsLoading, setSuccess } = useContext(UIContext)
 
   async function fetchCars(token: string) {
     setIsLoading(true)
@@ -161,13 +161,24 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     setIsLoading(false)
   }
 
-  async function createCar(email: string, token: string): Promise<boolean> {
+  function createCar(email: string, token: string): void {
     setIsLoading(true)
     const car = createCarToPost(email)
-    const result = await addCar(token, car)
-    setIsLoading(false)
+    addCar(token, car)
+      .then((response) => {
+        if (response.status === 200)
+          setSuccess(true)
 
-    return result.status === 200
+        else
+          setSuccess(false)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+
   }
 
   async function fetchAddress(code: string | undefined): Promise<void> {

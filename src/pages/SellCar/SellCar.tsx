@@ -15,7 +15,6 @@ import { useReactOidc } from '@axa-fr/react-oidc-context'
 const SellCar = () => {
 
   const [step, setStep] = useState<number>(0)
-  const [savedSuccessfully, setSavedSuccessfully] = useState(false)
 
   const { oidcUser } = useReactOidc()
   const { profile, access_token } = oidcUser
@@ -32,9 +31,8 @@ const SellCar = () => {
       setStep(step - 1)
   }
 
-  async function handleCreateClick() {
-    const result = await createCar(email!, access_token)
-    setSavedSuccessfully(result)
+  function handleCreateClick() {
+    createCar(email!, access_token)
 
     if (step === 2) {
       setStep(step + 1)
@@ -65,7 +63,6 @@ const SellCar = () => {
 
         {step === 3 &&
           <CarResult
-            savedSuccessfully={savedSuccessfully}
             resetSteps={() => setStep(0)}
             onTryAgainClick={handleCreateClick}
           />}
