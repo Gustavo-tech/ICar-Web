@@ -1,10 +1,9 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import AppNavbar from '../../components/Navbar/Navbar'
 import { UIContext } from '../../contexts/UIContext'
 import { CarContext } from '../../contexts/CarContext'
-import { Car } from '../../api/response-types/car'
 import {
   CarName,
   InfoContainer,

@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios'
 import { apiUrl } from '../../constants/urls'
+import { CarOverview, Car } from '../../models/car'
 import CarSearchModel from '../search-models/car'
-import { Car } from '../response-types/car'
 
-export const getUserCars = (authToken: string, userEmail: string): Promise<AxiosResponse<Car[]>> =>
-  axios.get<Car[]>(`${apiUrl}/cars/${userEmail}`, {
+export const getUserCars = (authToken: string, userEmail: string): Promise<AxiosResponse<CarOverview[]>> =>
+  axios.get<CarOverview[]>(`${apiUrl}/cars/${userEmail}`, {
     headers: {
       'Authorization': 'Bearer ' + authToken,
       'Content-Type': 'application/json'
@@ -12,8 +12,8 @@ export const getUserCars = (authToken: string, userEmail: string): Promise<Axios
   })
 
 
-export const getSellingCars = (authToken: string, search: CarSearchModel): Promise<AxiosResponse<Car[]>> =>
-  axios.get<Car[]>(`${apiUrl}/cars/selling`, {
+export const getSellingCars = (authToken: string, search: CarSearchModel): Promise<AxiosResponse<CarOverview[]>> =>
+  axios.get<CarOverview[]>(`${apiUrl}/cars/selling`, {
     headers: {
       'Authorization': 'Bearer ' + authToken,
       'Content-Type': 'application/json'

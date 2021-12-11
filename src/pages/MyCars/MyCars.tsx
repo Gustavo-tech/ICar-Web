@@ -9,12 +9,12 @@ import AppNavbar from '../../components/Navbar/Navbar'
 import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
 import { CarContext } from '../../contexts/CarContext'
 import { UIContext } from '../../contexts/UIContext'
-import { Car } from '../../api/response-types/car'
 import {
   CenteredContent,
   useStyles
 } from './styles'
 import { Button, Typography } from '@material-ui/core'
+import { CarOverview } from '../../models/car'
 
 const MyCars = () => {
 
@@ -54,8 +54,8 @@ const MyCars = () => {
           spacing={2}
         >
           {
-            cars.map((car: Car) => (
-              <Grid item xs={4} key={car.plate}>
+            cars.map((car: CarOverview) => (
+              <Grid item xs={4} key={car.id}>
                 <CarCard
                   id={car.id}
                   maker={car.maker}
@@ -63,7 +63,6 @@ const MyCars = () => {
                   kilometersTraveled={car.kilometersTraveled}
                   makeDate={car.makedDate}
                   makedDate={car.makedDate}
-                  color={car.color}
                   price={car.price}
                   location={car.address.localidade}
                   picture={car.pictures[0]}

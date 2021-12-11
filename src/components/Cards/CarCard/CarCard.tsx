@@ -19,18 +19,17 @@ import {
 } from './styles'
 import { useHistory } from 'react-router'
 
-type CardProps = {
-  id: number,
-  maker: string,
-  model: string,
-  kilometersTraveled: number,
-  location: string,
-  makeDate: number,
-  makedDate: number,
-  picture: string,
-  color: string,
-  price: number,
-  numberOfViews?: number
+type CarCardProps = {
+  id: string;
+  maker: string;
+  model: string;
+  kilometersTraveled: number;
+  location: string;
+  makeDate: number;
+  makedDate: number;
+  picture: string;
+  price: number;
+  numberOfViews?: number;
 }
 
 const CarCard = ({
@@ -44,12 +43,12 @@ const CarCard = ({
   picture,
   price,
   numberOfViews
-}: CardProps) => {
+}: CarCardProps) => {
 
   const history = useHistory()
 
-  function handleOnCardClick(id: number) {
-    history.push('/selling/' + id.toString())
+  function handleOnCardClick(id: string) {
+    history.push('/selling/' + id)
   }
 
   const classes = useStyles()

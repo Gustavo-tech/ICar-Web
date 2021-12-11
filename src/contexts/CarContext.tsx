@@ -1,14 +1,16 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
-import { getSellingCars, getUserCars, getCarWithId } from '../api/car/get';
-import { newCar } from '../api/car/input-types';
-import { addCar } from '../api/car/post';
-import { fetchLocationsApi } from '../api/location/get';
-import CarSearchModel from '../api/search-models/car';
-import { Car } from '../api/response-types/car';
-import { UIContext } from './UIContext';
+import { createContext, ReactNode, useContext, useState } from 'react'
+import { getSellingCars, getUserCars, getCarWithId } from '../api/car/get'
+import { newCar } from '../api/car/input-types'
+import { addCar } from '../api/car/post'
+import { fetchLocationsApi } from '../api/location/get'
+import CarSearchModel from '../api/search-models/car'
+import { UIContext } from './UIContext'
+import { updateNumberOfViews } from '../api/car/put'
+import { CarOverview } from '../models/car'
 
 type CarContextProps = {
   // Individual car properties
+  id: string;
   plate: string;
   maker: string;
   model: string;
@@ -30,11 +32,14 @@ type CarContextProps = {
   location: string;
   district: string;
   street: string;
+  ownerEmail: string;
+  ownerPhone: string;
 
   // Collections
-  cars: Car[];
+  cars: CarOverview[];
 
   // Indiviaual car setters
+  setId: (id: string) => void;
   setPlate: (p: string) => void;
   setMaker: (m: string) => void;
   setModel: (m: string) => void;
@@ -43,7 +48,7 @@ type CarContextProps = {
   setKilometers: (km: number) => void;
   setPrice: (price: number) => void;
   setExchangeType: (type: 'Manual' | 'Automatic') => void;
-  setGasolineType: (gTyoe: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex') => void;
+  setGasolineType: (gType: 'Diesel' | 'Gasoline' | 'Eletric' | 'Flex') => void;
   setNumberOfViews: (value: number) => void;
   setColor: (color: '#000000' | '#FFFFFF' | '#F9312B' | '#F97C2B' | '#F3DB0E' | '#0EF32A' | '#7DF30E' | '#0EF3CD' | '#0EB8F3' | '#0E6CF3' | '#AA0EF3' | '#F30EBF') => void;
   setMessage: (m: string) => void;
@@ -56,6 +61,8 @@ type CarContextProps = {
   setLocation: (location: string) => void;
   setStreet: (street: string) => void;
   setPictures: (pics: string[]) => void;
+  setOwnerEmail: (email: string) => void;
+  setOwnerPhone: (phone: string) => void;
 
   // API calls  
   fetchCars: (token: string) => void;
@@ -63,6 +70,7 @@ type CarContextProps = {
   fetchMyCars: (token: string, email: string) => void;
   fetchAddress: (zipCode: string) => void;
   createCar: (email: string, token: string) => void;
+  increaseNumberOfViews: (token: string) => void;
 
   // Search methods
   searchForMaker: (maker: string) => void;
@@ -82,7 +90,8 @@ type CarProviderProps = {
 }
 
 const CarContextProvider = ({ children }: CarProviderProps) => {
-  const [cars, setCars] = useState<Car[]>([])
+  const [id, setId] = useState<string>('')
+  const [cars, setCars] = useState<CarOverview[]>([])
   const [maker, setMaker] = useState<string>('')
   const [model, setModel] = useState<string>('')
   const [plate, setPlate] = useState<string>('')
@@ -104,61 +113,86 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [district, setDistrict] = useState<string>('')
   const [street, setStreet] = useState<string>('')
   const [zipCode, setZipCode] = useState<string>('')
+  const [ownerEmail, setOwnerEmail] = useState<string>('')
+  const [ownerPhone, setOwnerPhone] = useState<string>('')
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
 
   const { setIsLoading, setSuccess } = useContext(UIContext)
 
-  async function fetchCars(token: string) {
+  function fetchCars(token: string): void {
     setIsLoading(true)
-    try {
-      const resp = await getSellingCars(token, search)
-      const { data } = resp
-      setCars(data)
-    }
-    catch (e) {
-      setCars([])
-    }
-    setIsLoading(false)
+    getSellingCars(token, search)
+      .then(({ data }) => {
+        setCars(data)
+      })
+      .catch(error => {
+        console.error(error)
+        setCars([])
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
-  async function fetchCar(token: string, id: string): Promise<void> {
+  function fetchCar(token: string, id: string): void {
     setIsLoading(true)
-    const { data } = await getCarWithId(token, id)
-    setMaker(data.maker)
-    setModel(data.model)
-    setAcceptsChange(data.acceptsChange)
-    setColor(data.color)
-    setGasolineType(data.gasolineType)
-    setIpvaIsPaid(data.ipvaIsPaid)
-    setIsArmored(data.isArmored)
-    setIsLicensed(data.isLicensed)
-    setKilometers(data.kilometersTraveled)
-    setMakeDate(data.makeDate)
-    setMakedDate(data.makedDate)
-    setMessage(data.message)
-    setNumberOfViews(data.numberOfViews)
-    setPlate(data.plate)
-    setExchangeType(data.typeOfExchange)
-    setZipCode(data.address.cep)
-    setLocation(data.address.localidade)
-    setStreet(data.address.logradouro)
-    setDistrict(data.address.bairro)
-    setPictures(data.pictures)
-    setIsLoading(false)
+    getCarWithId(token, id)
+      .then(({ data }) => {
+        setMaker(data.maker)
+        setModel(data.model)
+        setAcceptsChange(data.acceptsChange)
+        setColor(data.color)
+        setGasolineType(data.gasolineType)
+        setIpvaIsPaid(data.ipvaIsPaid)
+        setIsArmored(data.isArmored)
+        setIsLicensed(data.isLicensed)
+        setKilometers(data.kilometersTraveled)
+        setMakeDate(data.makeDate)
+        setMakedDate(data.makedDate)
+        setMessage(data.message)
+        setNumberOfViews(data.numberOfViews)
+        setPlate(data.plate)
+        setExchangeType(data.typeOfExchange)
+        setZipCode(data.address.cep)
+        setLocation(data.address.localidade)
+        setStreet(data.address.logradouro)
+        setDistrict(data.address.bairro)
+        setPictures(data.pictures)
+        setOwnerEmail(data.ownerEmail)
+        setOwnerPhone(data.ownerPhone)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
-  async function fetchMyCars(token: string, email: string) {
+  function fetchMyCars(token: string, email: string): void {
     setIsLoading(true)
-    try {
-      const resp = await getUserCars(token, email)
-      const { data } = resp
-      setCars(data)
-    }
-    catch (e) {
-      setCars([])
-    }
+    getUserCars(token, email)
+      .then(({ data }) => {
+        setCars(data)
+      })
+      .catch(error => {
+        console.error(error)
+        setCars([])
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
 
-    setIsLoading(false)
+  async function fetchAddress(code: string | undefined): Promise<void> {
+    if (code?.length === 8) {
+      setZipCode(code)
+      const resp = await fetchLocationsApi(code)
+      const { data } = resp
+      setDistrict(data.bairro)
+      setStreet(data.logradouro)
+      setLocation(data.localidade)
+    }
   }
 
   function createCar(email: string, token: string): void {
@@ -178,19 +212,13 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       .finally(() => {
         setIsLoading(false)
       })
-
   }
 
-  async function fetchAddress(code: string | undefined): Promise<void> {
-    if (code?.length === 8) {
-      setZipCode(code)
-      const resp = await fetchLocationsApi(code)
-      const { data } = resp
-      setDistrict(data.bairro)
-      setStreet(data.logradouro)
-      setLocation(data.localidade)
-    }
-
+  function increaseNumberOfViews(token: string): void {
+    updateNumberOfViews(id, token)
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   function searchForMaker(maker: string) {
@@ -277,6 +305,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   return (
     <CarContext.Provider value={{
       // states
+      id,
       cars,
       maker,
       model,
@@ -299,8 +328,11 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       district,
       location,
       street,
+      ownerEmail,
+      ownerPhone,
 
       // set states
+      setId,
       setMaker,
       setModel,
       setMakeDate,
@@ -322,6 +354,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       setDistrict,
       setLocation,
       setStreet,
+      setOwnerEmail,
+      setOwnerPhone,
 
       // api calls
       searchForMaker,
@@ -331,9 +365,10 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       searchForModel,
       fetchCars,
       fetchMyCars,
+      fetchAddress,
       fetchCar,
       createCar,
-      fetchAddress,
+      increaseNumberOfViews,
 
       // context functions
       reset,

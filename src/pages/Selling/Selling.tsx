@@ -8,7 +8,7 @@ import AppNavbar from '../../components/Navbar/Navbar'
 import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
 import { CarContext } from '../../contexts/CarContext'
 import { UIContext } from '../../contexts/UIContext'
-import { Car } from '../../api/response-types/car'
+import { Car, CarOverview } from '../../models/car'
 import {
   CenteredContent,
   useStyles
@@ -51,7 +51,7 @@ const SellingCars = () => {
           xs={9}
         >
           {
-            cars.map((car: Car) => (
+            cars.map((car: CarOverview) => (
               <Grid item xs={4}>
                 <CarCard
                   key={car.id}
@@ -61,7 +61,6 @@ const SellingCars = () => {
                   kilometersTraveled={car.kilometersTraveled}
                   makeDate={car.makedDate}
                   makedDate={car.makedDate}
-                  color={car.color}
                   price={car.price}
                   location={car.address.localidade}
                   picture={car.pictures[0]}
