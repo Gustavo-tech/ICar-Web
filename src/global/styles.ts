@@ -9,10 +9,9 @@ const GlobalStyle = createGlobalStyle`
     --black: #0A111F;
   }
 
-  html, body, #root {
-    height: auto;
-    width: 100%;
+  html, body, #app {
     min-height: 100vh;
+    width: 100vw;
   }
 
   body {

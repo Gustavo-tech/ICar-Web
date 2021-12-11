@@ -55,9 +55,8 @@ const MyCars = () => {
         >
           {
             cars.map((car: Car) => (
-              <Grid item xs={4}>
+              <Grid item xs={4} key={car.plate}>
                 <CarCard
-                  key={car.plate}
                   id={car.id}
                   maker={car.maker}
                   model={car.model}
