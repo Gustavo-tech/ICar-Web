@@ -66,11 +66,10 @@ type CarContextProps = {
 
   // API calls  
   fetchCars: (token: string) => void;
-  fetchCar: (token: string, id: string) => void;
+  fetchCar: (id: string, userEmail: string, token: string) => void;
   fetchMyCars: (token: string, email: string) => void;
   fetchAddress: (zipCode: string) => void;
   createCar: (email: string, token: string) => void;
-  increaseNumberOfViews: (token: string) => void;
 
   // Search methods
   searchForMaker: (maker: string) => void;
@@ -134,10 +133,11 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       })
   }
 
-  function fetchCar(token: string, id: string): void {
+  function fetchCar(id: string, userEmail: string, token: string,): void {
     setIsLoading(true)
     getCarWithId(token, id)
       .then(({ data }) => {
+        setId(data.id)
         setMaker(data.maker)
         setModel(data.model)
         setAcceptsChange(data.acceptsChange)
@@ -160,6 +160,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
         setPictures(data.pictures)
         setOwnerEmail(data.ownerEmail)
         setOwnerPhone(data.ownerPhone)
+
+        increaseNumberOfViews(data.id, userEmail, token)
       })
       .catch(error => {
         console.error(error)
@@ -214,11 +216,13 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       })
   }
 
-  function increaseNumberOfViews(token: string): void {
-    updateNumberOfViews(id, token)
-      .catch(error => {
-        console.error(error)
-      })
+  function increaseNumberOfViews(carId: string, userEmail: string, token: string): void {
+    if (ownerEmail !== userEmail) {
+      updateNumberOfViews(carId, token)
+        .catch(error => {
+          console.error(error)
+        })
+    }
   }
 
   function searchForMaker(maker: string) {
@@ -368,7 +372,6 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       fetchAddress,
       fetchCar,
       createCar,
-      increaseNumberOfViews,
 
       // context functions
       reset,

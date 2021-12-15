@@ -47,7 +47,6 @@ const theme = createMuiTheme({
       primary: "#FFFFF"
     }
   }
-
 })
 
 const App = () => (

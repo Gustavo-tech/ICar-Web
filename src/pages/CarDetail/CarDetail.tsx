@@ -31,13 +31,13 @@ const CarDetail = () => {
       fetchCar
     } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
-  const { access_token } = oidcUser
+  const { access_token, profile } = oidcUser
+  const { email } = profile
   const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
-    fetchCar(access_token, id)
+    fetchCar(id, email!, access_token)
   }, [])
-
 
   function getBoolAnswer(value?: boolean): string {
     if (value)
