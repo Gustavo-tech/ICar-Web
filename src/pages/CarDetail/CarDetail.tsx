@@ -11,7 +11,7 @@ import {
   useStyles
 } from './styles'
 import LabelWithValue from '../../components/LabelWithValue/LabelWithValue'
-import { CircularProgress, Container, Grid } from '@material-ui/core'
+import { CircularProgress, Container, Grid, TextField } from '@material-ui/core'
 
 const CarDetail = () => {
   const { isLoading } = useContext(UIContext)
@@ -25,6 +25,7 @@ const CarDetail = () => {
     gasolineType,
     color,
     acceptsChange,
+    message,
     fetchCar
   } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
@@ -109,6 +110,17 @@ const CarDetail = () => {
                   <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
                 </Grid>
               </Grid>
+
+              <TextField
+                label="Description"
+                variant="outlined"
+                multiline
+                rows={10}
+                disabled
+                fullWidth
+                className={classes.description}
+                value={message}
+              />
             </Container>
           </Grid>
 

@@ -1,4 +1,5 @@
 import Typography from '@material-ui/core/Typography'
+import { useStyles } from './styles'
 
 type LabelWithValueProps = {
   label?: string;
@@ -6,10 +7,12 @@ type LabelWithValueProps = {
 }
 
 const LabelWithValue = ({ label, value }: LabelWithValueProps) => {
+
+  const classes = useStyles()
   return (
     <>
-      <Typography variant="subtitle2" gutterBottom color="primary" display="block">{label}</Typography>
-      <Typography variant="h6" gutterBottom display="block">{value}</Typography>
+      <Typography display="block" className={classes.label}>{label}</Typography>
+      <Typography display="block" className={classes.value}>{value}</Typography>
     </>
   )
 }

@@ -10,6 +10,9 @@ export const useStyles = makeStyles({
     backgroundColor: 'white',
     borderRadius: 7,
     padding: '3% 4%'
+  },
+  description: {
+    marginTop: '5%'
   }
 })
 
