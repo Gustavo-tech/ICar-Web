@@ -16,7 +16,7 @@ const Redirecting = () => {
         <Title>Hang tight !</Title>
         <Description>
           You are being redirected to another page. <br />
-          It may some seconds.
+          It may take some seconds.
         </Description>
       </Content>
     </Page>

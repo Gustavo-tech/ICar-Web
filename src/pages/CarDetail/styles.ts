@@ -1,4 +1,17 @@
-import styled from "styled-components";
+import styled from "styled-components"
+import { makeStyles } from '@material-ui/core'
+
+export const useStyles = makeStyles({
+  mainGrid: {
+    marginTop: '3%',
+    padding: '1%'
+  },
+  infoContainer: {
+    backgroundColor: 'white',
+    borderRadius: 7,
+    padding: '3% 4%'
+  }
+})
 
 export const Page = styled.div`
   width: 100%;
@@ -7,22 +20,6 @@ export const Page = styled.div`
 
 export const NameHeader = styled.header`
   margin-bottom: 3%;
-`
-
-export const InfosDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 3%;
-`
-
-export const InfoContainer = styled.div`
-  background-color: white;
-  border-radius: 17px;
-  width: 65%;
-  height: 80%;
-  padding: 3% 7% 3% 3%;
-  box-shadow: 5px 5px 29px -4px rgba(0,0,0,0.21);
 `
 
 type CarNameProps = {
