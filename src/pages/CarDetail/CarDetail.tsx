@@ -11,7 +11,18 @@ import {
   useStyles
 } from './styles'
 import LabelWithValue from '../../components/LabelWithValue/LabelWithValue'
-import { CircularProgress, Container, Grid, TextField } from '@material-ui/core'
+import {
+  CircularProgress,
+  Container,
+  Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TextField
+} from '@material-ui/core'
+import EmailIcon from '@material-ui/icons/Email'
+import PhoneIcon from '@material-ui/icons/Phone'
 
 const CarDetail = () => {
   const { isLoading } = useContext(UIContext)
@@ -26,6 +37,8 @@ const CarDetail = () => {
     color,
     acceptsChange,
     message,
+    ownerEmail,
+    ownerPhone,
     fetchCar
   } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
@@ -124,12 +137,30 @@ const CarDetail = () => {
             </Container>
           </Grid>
 
-          <Grid item xs={4}>
-            <Container className={classes.infoContainer}>
+          <Grid
+            container
+            item
+            xs={4}
+            alignItems='flex-start'
+          >
+            <Container className={`${classes.infoContainer} ${classes.contactContainer}`}>
+              <List>
+                <ListItem>
+                  <ListItemIcon>
+                    <EmailIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={ownerEmail} />
+                </ListItem>
 
+                <ListItem>
+                  <ListItemIcon>
+                    <PhoneIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={ownerPhone} />
+                </ListItem>
+              </List>
             </Container>
           </Grid>
-
         </Grid>}
     </Page>
   )

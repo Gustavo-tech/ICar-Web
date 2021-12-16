@@ -11,6 +11,12 @@ export const useStyles = makeStyles({
     borderRadius: 7,
     padding: '3% 4%'
   },
+  contactContainer: {
+    width: '80%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
   description: {
     marginTop: '5%'
   }

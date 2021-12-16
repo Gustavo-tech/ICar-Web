@@ -46,6 +46,13 @@ const theme = createMuiTheme({
     text: {
       primary: "#FFFFF"
     }
+  },
+  overrides: {
+    MuiListItemIcon: {
+      root: {
+        minWidth: 40
+      }
+    }
   }
 })
 
