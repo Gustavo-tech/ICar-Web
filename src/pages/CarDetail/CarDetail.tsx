@@ -12,6 +12,7 @@ import {
 } from './styles'
 import LabelWithValue from '../../components/LabelWithValue/LabelWithValue'
 import {
+  Button,
   CircularProgress,
   Container,
   Grid,
@@ -159,6 +160,23 @@ const CarDetail = () => {
                   <ListItemText primary={ownerPhone} />
                 </ListItem>
               </List>
+
+              <TextField
+                label="Message"
+                variant="outlined"
+                multiline
+                rows={7}
+                fullWidth
+              />
+
+              <Grid container justify="flex-start" className={classes.sendMessageFooter}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                >
+                  Send
+                </Button>
+              </Grid>
             </Container>
           </Grid>
         </Grid>}
