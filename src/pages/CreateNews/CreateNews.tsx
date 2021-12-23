@@ -20,8 +20,7 @@ import { useStyles } from './styles'
 const CreateNews = () => {
 
   const { oidcUser } = useReactOidc()
-  const { access_token, profile } = oidcUser
-  const { email } = profile
+  const { access_token } = oidcUser
   const { text, setText, title, setTitle, addNews } = useContext(NewsContext)
   const { isLoading, success, setSuccess } = useContext(UIContext)
 
@@ -67,7 +66,7 @@ const CreateNews = () => {
       {!isLoading && !userSubmited &&
         <form onSubmit={(e) => {
           e.preventDefault()
-          addNews(access_token, email!)
+          addNews(access_token)
           setUserSubmited(true)
         }}>
           <Container className={classes.formContainer}>
@@ -164,11 +163,7 @@ const CreateNews = () => {
           <DialogActions>
             <Button
               variant="contained"
-              onClick={() => {
-                if (email) {
-                  addNews(access_token, email)
-                }
-              }}
+              onClick={() => addNews(access_token)}
               color="primary"
             >
               Try again

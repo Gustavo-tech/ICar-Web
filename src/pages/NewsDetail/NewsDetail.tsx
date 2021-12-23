@@ -56,16 +56,16 @@ const NewsDetail = () => {
   const id = match.params.id
 
   useEffect(() => {
-    fetchNewsById(access_token, id, email!)
+    fetchNewsById(id, access_token)
   }, [access_token, id, email])
 
   function handleFormSubmit() {
-    updateNews(id, email!, access_token)
+    updateNews(id, access_token)
     setIsEditing(false)
   }
 
   function handleDeleteNewsClick() {
-    removeNews(id, email!, access_token)
+    removeNews(id, access_token)
     setOpenDeleteDialog(false)
     history.push('/mynews')
   }

@@ -17,12 +17,11 @@ const MyNews = () => {
   const { news, fetchMyNews } = useContext(NewsContext)
   const { isLoading } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
-  const { access_token, profile } = oidcUser
-  const { email } = profile
+  const { access_token } = oidcUser
 
   useEffect(() => {
-    fetchMyNews(access_token, email!)
-  }, [access_token, email])
+    fetchMyNews(access_token)
+  }, [access_token])
 
   const classes = useStyles()
   return (

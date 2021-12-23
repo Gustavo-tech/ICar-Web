@@ -17,8 +17,7 @@ const SellCar = () => {
   const [step, setStep] = useState<number>(0)
 
   const { oidcUser } = useReactOidc()
-  const { profile, access_token } = oidcUser
-  const { email } = profile
+  const { access_token } = oidcUser
   const { createCar } = useContext(CarContext)
 
   function handleNextClick(): void {
@@ -32,7 +31,7 @@ const SellCar = () => {
   }
 
   function handleCreateClick() {
-    createCar(email!, access_token)
+    createCar(access_token)
 
     if (step === 2) {
       setStep(step + 1)

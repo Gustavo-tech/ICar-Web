@@ -19,11 +19,11 @@ type NewsContextProps = {
 
   // api calls
   fetchNews: (token: string) => void;
-  fetchMyNews: (token: string, userEmail: string) => void;
-  fetchNewsById: (token: string, id: string, userEmail: string) => void;
-  addNews: (token: string, userEmail: string) => void;
-  updateNews: (id: string, userEmail: string, token: string) => void;
-  removeNews: (id: string, userEmail: string, token: string) => void;
+  fetchMyNews: (token: string) => void;
+  fetchNewsById: (id: string, token: string) => void;
+  addNews: (token: string) => void;
+  updateNews: (id: string, token: string) => void;
+  removeNews: (id: string, token: string) => void;
 }
 
 export const NewsContext = createContext({} as NewsContextProps)
@@ -55,9 +55,9 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       })
   }
 
-  function fetchMyNews(token: string, userEmail: string): void {
+  function fetchMyNews(token: string): void {
     setIsLoading(true)
-    getMyNews(token, userEmail)
+    getMyNews(token)
       .then(resp => [
         setNews(resp.data)
       ])
@@ -69,14 +69,13 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       })
   }
 
-  function fetchNewsById(token: string, id: string, userEmail: string) {
+  function fetchNewsById(id: string, token: string) {
     setIsLoading(true)
-    getNewsById(token, id)
+    getNewsById(id, token)
       .then(resp => {
         const { data } = resp
         setTitle(data.title)
         setText(data.text)
-        setUserIsAuthor(data.author === userEmail)
       })
       .catch(error => {
         console.error(error)
@@ -86,9 +85,9 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       })
   }
 
-  function addNews(token: string, userEmail: string): void {
+  function addNews(token: string): void {
     setIsLoading(true)
-    createNews(token, userEmail, title, text)
+    createNews(token, title, text)
       .then(resp => {
         if (resp.status === 200)
           setSuccess(true)
@@ -101,9 +100,9 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       })
   }
 
-  function updateNews(id: string, userEmail: string, token: string) {
+  function updateNews(id: string, token: string) {
     setIsLoading(true)
-    updateNewsRequest(id, title, text, userEmail, token)
+    updateNewsRequest(id, title, text, token)
       .catch(error => {
         console.error(error)
       })
@@ -112,9 +111,9 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       })
   }
 
-  function removeNews(id: string, userEmail: string, token: string) {
+  function removeNews(id: string, token: string) {
     setIsLoading(true)
-    deleteNews(id, userEmail, token)
+    deleteNews(id, token)
       .catch(error => {
         console.error(error)
       })

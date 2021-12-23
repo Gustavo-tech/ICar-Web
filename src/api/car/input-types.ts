@@ -19,5 +19,4 @@ export type newCar = {
   street: string;
   district: string;
   location: string;
-  userEmail: string;
 }

@@ -9,8 +9,8 @@ export const getNews = (token: string): Promise<AxiosResponse<News[]>> =>
     }
   })
 
-export const getMyNews = (token: string, email: string): Promise<AxiosResponse<News[]>> =>
-  axios.get<News[]>(`${apiUrl}/news/all/${email}`, {
+export const getMyNews = (token: string): Promise<AxiosResponse<News[]>> =>
+  axios.get<News[]>(`${apiUrl}/news/mynews`, {
     headers: {
       "Authorization": "Bearer " + token
     }

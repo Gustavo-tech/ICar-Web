@@ -4,13 +4,12 @@ import { useEffect, useState } from 'react'
 import { serverUrl } from '../../constants/urls';
 import { Wrapper, useStyles } from './styles'
 
-
 const Logout = () => {
   const [counter, setCounter] = useState(10)
 
   useEffect(() => {
     if (counter === 0)
-      window.location.replace(`${serverUrl}/auth/logout`)
+      window.location.replace(`${serverUrl}/logout`)
 
     else
       setCounter(counter - 1)

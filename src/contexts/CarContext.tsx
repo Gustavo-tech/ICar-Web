@@ -67,9 +67,9 @@ type CarContextProps = {
   // API calls  
   fetchCars: (token: string) => void;
   fetchCar: (id: string, userEmail: string, token: string) => void;
-  fetchMyCars: (token: string, email: string) => void;
+  fetchMyCars: (token: string) => void;
   fetchAddress: (zipCode: string) => void;
-  createCar: (email: string, token: string) => void;
+  createCar: (token: string) => void;
 
   // Search methods
   searchForMaker: (maker: string) => void;
@@ -171,9 +171,9 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       })
   }
 
-  function fetchMyCars(token: string, email: string): void {
+  function fetchMyCars(token: string): void {
     setIsLoading(true)
-    getUserCars(token, email)
+    getUserCars(token)
       .then(({ data }) => {
         setCars(data)
       })
@@ -197,9 +197,9 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     }
   }
 
-  function createCar(email: string, token: string): void {
+  function createCar(token: string): void {
     setIsLoading(true)
-    const car = createCarToPost(email)
+    const car = createCarToPost()
     addCar(token, car)
       .then((response) => {
         if (response.status === 200)
@@ -255,7 +255,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     setSearch(newSearch)
   }
 
-  function createCarToPost(email: string): newCar {
+  function createCarToPost(): newCar {
     return {
       plate: plate!,
       maker: maker!,
@@ -272,7 +272,6 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       exchangeType: exchangeType!,
       color: color!,
       gasolineType: gasolineType!,
-      userEmail: email,
       zipCode: zipCode!,
       location: location!,
       district: district!,

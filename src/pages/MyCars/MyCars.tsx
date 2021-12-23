@@ -21,11 +21,10 @@ const MyCars = () => {
   const { isLoading, isModalOpen } = useContext(UIContext)
   const { cars, fetchMyCars } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
-  const { access_token, profile } = oidcUser
-  const { email } = profile
+  const { access_token } = oidcUser
 
   useEffect(() => {
-    fetchMyCars(access_token, email!)
+    fetchMyCars(access_token)
   }, [])
 
   const classes = useStyles()
