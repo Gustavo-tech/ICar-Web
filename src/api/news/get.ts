@@ -16,7 +16,7 @@ export const getMyNews = (token: string): Promise<AxiosResponse<News[]>> =>
     }
   })
 
-export const getNewsById = (token: string, id: string): Promise<AxiosResponse<News>> =>
+export const getNewsById = (id: string, token: string): Promise<AxiosResponse<News>> =>
   axios.get<News>(`${apiUrl}/news/${id}`, {
     headers: {
       "Authorization": "Bearer " + token

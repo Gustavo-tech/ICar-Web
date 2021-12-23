@@ -24,6 +24,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import SaveIcon from '@material-ui/icons/Save'
 import { useStyles } from './styles'
 import { UIContext } from '../../contexts/UIContext'
+import { parseJwt } from '../../utilities/token-utilities'
 
 type MatchProps = {
   id: string;
@@ -48,8 +49,7 @@ const NewsDetail = () => {
   } = useContext(NewsContext)
   const { isLoading } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
-  const { access_token, profile } = oidcUser
-  const { email } = profile
+  const { access_token } = oidcUser
 
   const match = useRouteMatch<MatchProps>()
   const history = useHistory()
@@ -57,7 +57,7 @@ const NewsDetail = () => {
 
   useEffect(() => {
     fetchNewsById(id, access_token)
-  }, [access_token, id, email])
+  }, [access_token, id])
 
   function handleFormSubmit() {
     updateNews(id, access_token)
@@ -65,9 +65,10 @@ const NewsDetail = () => {
   }
 
   function handleDeleteNewsClick() {
-    removeNews(id, access_token)
     setOpenDeleteDialog(false)
-    history.push('/mynews')
+    removeNews(id, access_token, () => {
+      history.push('/mynews')
+    })
   }
 
   const classes = useStyles()

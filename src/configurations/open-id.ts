@@ -6,5 +6,3 @@ export const clientConfig = {
   scope: 'https://icarorg.onmicrosoft.com/8bb8359a-7a4c-4436-8a49-ccb215a87581/all',
   silent_redirect_uri: 'http://localhost:3000/authentication/silent_callback'
 }
-
-//https://icarorg.b2clogin.com/icarorg.onmicrosoft.com/<policy-name>/v2.0/.well-known/openid-configuration

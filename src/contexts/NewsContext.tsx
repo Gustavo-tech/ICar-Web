@@ -4,6 +4,7 @@ import { getMyNews, getNews, getNewsById } from '../api/news/get'
 import { createNews } from '../api/news/post'
 import { updateNewsRequest } from '../api/news/put'
 import News from '../models/news'
+import { parseJwt } from '../utilities/token-utilities'
 import { UIContext } from './UIContext'
 
 type NewsContextProps = {
@@ -23,7 +24,7 @@ type NewsContextProps = {
   fetchNewsById: (id: string, token: string) => void;
   addNews: (token: string) => void;
   updateNews: (id: string, token: string) => void;
-  removeNews: (id: string, token: string) => void;
+  removeNews: (id: string, token: string, callback?: () => any) => void;
 }
 
 export const NewsContext = createContext({} as NewsContextProps)
@@ -74,8 +75,10 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
     getNewsById(id, token)
       .then(resp => {
         const { data } = resp
+        const jwtData = parseJwt(token)
         setTitle(data.title)
         setText(data.text)
+        setUserIsAuthor(jwtData.oid === data.authorId)
       })
       .catch(error => {
         console.error(error)
@@ -111,7 +114,7 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       })
   }
 
-  function removeNews(id: string, token: string) {
+  function removeNews(id: string, token: string, callback?: () => any) {
     setIsLoading(true)
     deleteNews(id, token)
       .catch(error => {
@@ -119,6 +122,9 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
       })
       .finally(() => {
         setIsLoading(false)
+
+        if (callback)
+          callback()
       })
   }
 

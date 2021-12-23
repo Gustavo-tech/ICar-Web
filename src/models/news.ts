@@ -2,7 +2,7 @@ type News = {
   id: string;
   title: string;
   text: string;
-  author: string;
+  authorId: string;
   createdAt: Date;
   updatedAt: Date;
 }
