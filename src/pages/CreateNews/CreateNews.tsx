@@ -16,6 +16,7 @@ import AppNavbar from '../../components/Navbar/Navbar'
 import { NewsContext } from '../../contexts/NewsContext'
 import { UIContext } from '../../contexts/UIContext'
 import { useStyles } from './styles'
+import { useHistory } from 'react-router-dom'
 
 const CreateNews = () => {
 
@@ -27,6 +28,8 @@ const CreateNews = () => {
   const [titleIsValid, setTitleIsValid] = useState<boolean>(true)
   const [textIsValid, setTextIsValid] = useState<boolean>(true)
   const [userSubmited, setUserSubmited] = useState<boolean>(false)
+
+  const history = useHistory()
 
   function handleTitleChange(changedText: string): void {
     let isValid: boolean = true
@@ -138,7 +141,7 @@ const CreateNews = () => {
 
             <Button
               variant="contained"
-              onClick={resetComponent}
+              onClick={() => history.push('/mynews')}
               color="primary"
             >
               Go to my news
