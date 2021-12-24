@@ -1,13 +1,22 @@
 import { useReactOidc } from '@axa-fr/react-oidc-context'
-import { Avatar, Grid, List, ListItem, ListItemIcon, ListItemText, TextField, Typography } from '@material-ui/core'
+import {
+  Avatar,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TextField,
+  Typography
+} from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
 import { useContext, useEffect, useState } from 'react'
-import { getTalks } from '../../api/account/get'
-import { TalkResponse } from '../../api/response-types/account'
 import AppNavbar from '../../components/Navbar/Navbar'
 import TalkSidebar from '../../components/Sidebars/TalkSidebar/TalkSidebar'
 import { UIContext } from '../../contexts/UIContext'
 import EmailIcon from '@material-ui/icons/Email'
+import { getTalks } from '../../api/messages/get'
 import {
   Message,
   NickName,
@@ -16,19 +25,19 @@ import {
   UserInfo,
   useStyles
 } from './styles'
+import { Talk } from '../../models/talk'
 
 const Messages = () => {
 
   const { isLoading, setIsLoading } = useContext(UIContext);
   const { oidcUser } = useReactOidc()
-  const { access_token, profile } = oidcUser
-  const email = profile.email
+  const { access_token } = oidcUser
 
-  const [talks, setTalks] = useState<TalkResponse[]>([])
+  const [talks, setTalks] = useState<Talk[]>([])
 
   useEffect(() => {
     setIsLoading(true)
-    getTalks(access_token, email, (data) => {
+    getTalks(access_token, (data) => {
       setTalks(data)
     })
   }, [])
@@ -43,7 +52,7 @@ const Messages = () => {
           <TalkSidebar />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={9}>
           <Grid container spacing={1} direction="column">
             <Grid item xs={12}>
               <TalkHeaderTitle>ICar</TalkHeaderTitle>
@@ -58,8 +67,8 @@ const Messages = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Grid container spacing={2}>
-                <Grid item xs={10}>
+              <Grid container spacing={1}>
+                <Grid item xs={11}>
                   <TextField
                     fullWidth
                     label="message"
@@ -68,32 +77,16 @@ const Messages = () => {
                   />
                 </Grid>
 
-                <Grid container item xs={2} justify="center" alignItems="center">
-                  <SendIcon className={classes.sendIcon} />
+                <Grid container item xs={1} justify="center" alignItems="center">
+                  <IconButton color="primary">
+                    <SendIcon />
+                  </IconButton>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid
-          item
-          xs={3}
-        >
-          <UserInfo>
-            <Avatar>GH</Avatar>
-            <Typography variant="h6">Gustavo Henrique</Typography>
-
-            <List>
-              <ListItem>
-                <ListItemIcon className={classes.listIcon}>
-                  <EmailIcon />
-                </ListItemIcon>
-                <ListItemText primary="gustavo@gmail.com" />
-              </ListItem>
-            </List>
-          </UserInfo>
-        </Grid>
       </Grid>
     </>
   )

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { apiUrl } from "../../constants/urls"
-import { LoginResponse, TalkResponse, UserInfoResponse } from "../response-types/account"
+import { LoginResponse, UserInfoResponse } from "../response-types/account"
 
 export function getUserInfo(token: string, email?: string, callback?: (data: UserInfoResponse) => void): void {
   axios.get(`${apiUrl}/user/info/${email}`, {
@@ -23,18 +23,5 @@ export function getLogins(token: string, email: string, callback?: (data: LoginR
     .then(response => {
       if (callback)
         callback(response.data)
-    })
-}
-
-export function getTalks(token: string, email?: string, callback?: (data: TalkResponse[]) => any): void {
-  axios.get(`${apiUrl}/user/talks/${email}`, {
-    headers: {
-      Authorization: 'Bearer ' + token
-    },
-  })
-    .then(response => {
-      if (callback) {
-        callback(response.data)
-      }
     })
 }

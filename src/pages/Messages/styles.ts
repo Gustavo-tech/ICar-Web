@@ -3,13 +3,7 @@ import { makeStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles({
   grid: {
-    marginTop: '2%'
-  },
-  sendIcon: {
-    fill: 'var(--red)',
-    cursor: 'pointer',
-    alignSelf: 'center',
-    justifySelf: 'center'
+    marginTop: '2%',
   },
   listIcon: {
     minWidth: '21%'
