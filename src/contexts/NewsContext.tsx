@@ -4,7 +4,7 @@ import { getMyNews, getNews, getNewsById } from '../api/news/get'
 import { createNews } from '../api/news/post'
 import { updateNewsRequest } from '../api/news/put'
 import News from '../models/news'
-import { parseJwt } from '../utilities/token-utilities'
+import { parseUserWithJwt } from '../utilities/token-utilities'
 import { UIContext } from './UIContext'
 
 type NewsContextProps = {
@@ -75,7 +75,7 @@ const NewsContextProvider = ({ children }: ProviderProps) => {
     getNewsById(id, token)
       .then(resp => {
         const { data } = resp
-        const jwtData = parseJwt(token)
+        const jwtData = parseUserWithJwt(token)
         setTitle(data.title)
         setText(data.text)
         setUserIsAuthor(jwtData.oid === data.authorId)

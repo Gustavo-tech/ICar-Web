@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import NotFound from './pages/NotFound/NotFound'
 import Home from './pages/Home/Home'
 import PersonalInfo from './pages/PersonalInfo/PersonalInfo'
-import Security from './pages/Security/Security'
 import Redirecting from './pages/Redirecting/Redirecting'
 import SellCar from './pages/SellCar/SellCar'
 import MyCars from './pages/MyCars/MyCars'
@@ -76,7 +75,6 @@ const App = () => (
 
                 {/* Account routes */}
                 <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
-                <Route exact path='/account/security' component={withOidcSecure(Security)} />
                 <Route exact path='/account/logout' component={withOidcSecure(Logout)} />
 
                 {/* Car routes */}

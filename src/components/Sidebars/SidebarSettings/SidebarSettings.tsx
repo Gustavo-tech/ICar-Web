@@ -28,15 +28,6 @@ const SidebarSettings = () => {
         </ListItemAvatar>
         <ListItemText className={classes.accountText} primary="Account" />
       </ListItem>
-
-      <ListItem className={classes.securityItem} onClick={() => history.push('/account/security')}>
-        <ListItemAvatar>
-          <Avatar className={classes.avatar}>
-            <SecurityIcon className={classes.iconSecurity} />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText className={classes.securityText} primary="Security" />
-      </ListItem>
     </List>
   )
 }

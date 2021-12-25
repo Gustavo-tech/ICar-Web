@@ -19,27 +19,13 @@ export const useStyles = makeStyles<Theme, Props>({
       backgroundColor: ({ accountActive }) => accountActive ? 'var(--red)' : '#D6D5D5'
     }
   },
-  securityItem: {
-    transitionDuration: '0.5s',
-    backgroundColor: ({ securityActive }) => securityActive ? 'var(--red)' : 'white',
-    cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: ({ securityActive }) => securityActive ? 'var(--red)' : '#D6D5D5'
-    }
-  },
   avatar: {
     backgroundColor: 'transparent'
   },
   iconAccount: {
     fill: ({ accountActive }) => accountActive ? 'white' : '#7A7A7A'
   },
-  iconSecurity: {
-    fill: ({ securityActive }) => securityActive ? 'white' : '#7A7A7A'
-  },
   accountText: {
     color: ({ accountActive }) => accountActive ? 'white' : '#7A7A7A'
   },
-  securityText: {
-    color: ({ securityActive }) => securityActive ? 'white' : '#7A7A7A'
-  }
 })
