@@ -1,4 +1,4 @@
-export type Talk = {
+export type LastMessageWithUser = {
   name: string;
   lastMessage: string;
 }

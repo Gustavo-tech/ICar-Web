@@ -1,45 +1,30 @@
+import { useEffect, useContext } from 'react'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import {
-  Avatar,
   Grid,
   IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  TextField,
-  Typography
+  TextField
 } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send'
-import { useContext, useEffect, useState } from 'react'
 import AppNavbar from '../../components/Navbar/Navbar'
 import TalkSidebar from '../../components/Sidebars/TalkSidebar/TalkSidebar'
-import { UIContext } from '../../contexts/UIContext'
-import EmailIcon from '@material-ui/icons/Email'
-import { getTalks } from '../../api/messages/get'
 import {
   Message,
-  NickName,
   TalkBody,
   TalkHeaderTitle,
-  UserInfo,
   useStyles
 } from './styles'
-import { Talk } from '../../models/talk'
+import { MessageContext } from '../../contexts/MessageContext'
 
 const Messages = () => {
 
-  const { isLoading, setIsLoading } = useContext(UIContext);
   const { oidcUser } = useReactOidc()
   const { access_token } = oidcUser
 
-  const [talks, setTalks] = useState<Talk[]>([])
+  const { lastMessagesWithUsers, fetchLastMessagesWithUsers } = useContext(MessageContext)
 
   useEffect(() => {
-    setIsLoading(true)
-    getTalks(access_token, (data) => {
-      setTalks(data)
-    })
+    fetchLastMessagesWithUsers(access_token)
   }, [])
 
   const classes = useStyles()

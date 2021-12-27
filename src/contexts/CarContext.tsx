@@ -38,7 +38,7 @@ type CarContextProps = {
   // Collections
   cars: CarOverview[];
 
-  // Indiviaual car setters
+  // Individual car setters
   setId: (id: string) => void;
   setPlate: (p: string) => void;
   setMaker: (m: string) => void;
