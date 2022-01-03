@@ -1,18 +1,22 @@
 import { useState, useContext } from 'react'
 import { UIContext } from './UIContext'
 import { createContext, ReactNode } from 'react'
-import { LastMessageWithUser } from '../models/lastMessageWithUser'
-import { getLastMessagesWithUsers } from '../api/messages/get'
+import { Interaction } from '../models/interaction'
+import { getUserInteractions, getMessagesWithUser } from '../api/messages/get'
+import { Message } from '../models/message'
 
 type MessageContextProps = {
   // states
-  lastMessagesWithUsers: LastMessageWithUser[];
+  userInteractions: Interaction[];
+  messages: Message[];
 
   // set states
-  setLastMessagesWithUsers: (lastMessagesWithUsers: LastMessageWithUser[]) => void;
+  setUserInteractions: (interactions: Interaction[]) => void;
+  setMessages: (messages: Message[]) => void;
 
   // api calls
-  fetchLastMessagesWithUsers: (token: string) => void;
+  fetchUserInteractions: (token: string) => void;
+  fetchMessagesWithUser: (withUserId: string, token: string) => void;
 }
 
 export const MessageContext = createContext({} as MessageContextProps)
@@ -25,11 +29,27 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
 
   const { setIsLoading } = useContext(UIContext)
 
-  const [lastMessagesWithUsers, setLastMessagesWithUsers] = useState<LastMessageWithUser[]>([])
+  const [userInteractions, setUserInteractions] = useState<Interaction[]>([])
+  const [messages, setMessages] = useState<Message[]>([])
 
-  function fetchLastMessagesWithUsers(token: string) {
+  function fetchUserInteractions(token: string): void {
     setIsLoading(true)
-    getLastMessagesWithUsers(token)
+    getUserInteractions(token)
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
+  function fetchMessagesWithUser(withUserId: string, token: string): void {
+    setIsLoading(true)
+    getMessagesWithUser(withUserId, token)
+      .then(response => {
+        const { data } = response
+        setMessages(data)
+      })
       .catch(error => {
         console.error(error)
       })
@@ -41,13 +61,16 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
   return (
     <MessageContext.Provider value={{
       // states
-      lastMessagesWithUsers,
+      userInteractions,
+      messages,
 
       // set states
-      setLastMessagesWithUsers,
+      setUserInteractions,
+      setMessages,
 
       // api calls
-      fetchLastMessagesWithUsers
+      fetchUserInteractions,
+      fetchMessagesWithUser
     }}>
       {children}
     </MessageContext.Provider>

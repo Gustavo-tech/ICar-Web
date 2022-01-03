@@ -1,27 +1,23 @@
+import { Sidebar, useStyles } from './style'
 import {
-  Sidebar,
-} from './style'
-import { TextField, List, ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+  TextField,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText
+} from '@material-ui/core'
+import { Interaction } from '../../../models/interaction'
 
-const useStyles = makeStyles({
-  textField: {
-    backgroundColor: 'white',
-    borderRadius: '7px'
-  },
-  list: {
-    marginTop: '4%'
-  },
-  listItem: {
-    cursor: 'pointer',
-    transitionDuration: '0.5s',
-    '&:hover': {
-      backgroundColor: '#EAEAEA'
-    }
+type TalkSidebarProps = {
+  interactions: Interaction[];
+}
+
+const TalkSidebar = ({ interactions }: TalkSidebarProps) => {
+
+  function getUserAvatar(firstName: string, lastName: string): string {
+    return firstName[0] + lastName[0]
   }
-})
-
-const TalkSidebar = () => {
 
   const classes = useStyles()
   return (
@@ -32,14 +28,20 @@ const TalkSidebar = () => {
         className={classes.textField}
       />
       <List className={classes.list}>
-        <ListItem className={classes.listItem}>
-          <ListItemAvatar>
-            <Avatar>
-
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Gustavo" secondary="Hello, I am interested in your car" />
-        </ListItem>
+        {
+          interactions.map((x) => {
+            const avatarText = getUserAvatar(x.firstName, x.lastName)
+            return (
+              <ListItem className={classes.listItem}>
+                <ListItemAvatar>
+                  <Avatar>{avatarText}</Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={`${x.firstName} ${x.lastName}`}
+                  secondary={x.lastMessage} />
+              </ListItem>
+            )
+          })
+        }
       </List>
     </Sidebar>
   )

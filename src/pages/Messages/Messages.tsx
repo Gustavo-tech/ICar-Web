@@ -21,10 +21,10 @@ const Messages = () => {
   const { oidcUser } = useReactOidc()
   const { access_token } = oidcUser
 
-  const { lastMessagesWithUsers, fetchLastMessagesWithUsers } = useContext(MessageContext)
+  const { userInteractions, fetchUserInteractions } = useContext(MessageContext)
 
   useEffect(() => {
-    fetchLastMessagesWithUsers(access_token)
+    fetchUserInteractions(access_token)
   }, [])
 
   const classes = useStyles()
@@ -34,7 +34,7 @@ const Messages = () => {
       <Grid container spacing={1} className={classes.grid}>
 
         <Grid item xs={3}>
-          <TalkSidebar />
+          <TalkSidebar interactions={userInteractions} />
         </Grid>
 
         <Grid item xs={9}>
