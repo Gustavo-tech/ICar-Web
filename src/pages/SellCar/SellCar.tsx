@@ -81,7 +81,6 @@ const SellCar = () => {
 
         <Dialog
           open={showContactWarning}
-          onClose={() => setShowContactWarning(false)}
         >
           <DialogTitle>You don't have a registered contact</DialogTitle>
           <DialogContent>
