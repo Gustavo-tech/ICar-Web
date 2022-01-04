@@ -24,7 +24,8 @@ const ContactInfo = () => {
     userHasContact,
     setContact,
     fetchMyContact,
-    createContact
+    createContact,
+    updatePhoneNumber
   } = useContext(ContactContext)
 
   useEffect(() => {
@@ -41,7 +42,6 @@ const ContactInfo = () => {
   }
 
   const classes = useStyles()
-  const fieldsDisabled: boolean = !isEditing && userHasContact
   return (
     <>
       <Navbar showSearch={false} />
@@ -62,12 +62,20 @@ const ContactInfo = () => {
           justify="center"
           alignItems="center"
         >
-          <Typography variant="h4" gutterBottom>Contact information</Typography>
+          <Typography variant="h4">Contact information</Typography>
+          <Typography variant="subtitle1" gutterBottom>
+            This is the contact that will be shown for all of your cars.
+          </Typography>
           <ContactForm onSubmit={(e) => {
             e.preventDefault()
 
             if (!userHasContact)
               createContact(access_token)
+
+            else if (userHasContact) {
+              updatePhoneNumber(access_token)
+              setIsEditing(false)
+            }
           }}>
             <Grid
               container
@@ -80,7 +88,7 @@ const ContactInfo = () => {
                   label="First Name"
                   onChange={(e) => setContactCopyWithPropertyValue('firstName', e.target.value)}
                   value={contact.firstName}
-                  disabled={fieldsDisabled}
+                  disabled={userHasContact}
                   required
                   fullWidth
                 />
@@ -90,7 +98,7 @@ const ContactInfo = () => {
                   label="Last Name"
                   onChange={(e) => setContactCopyWithPropertyValue('lastName', e.target.value)}
                   value={contact.lastName}
-                  disabled={fieldsDisabled}
+                  disabled={userHasContact}
                   required
                   fullWidth
                 />
@@ -101,7 +109,7 @@ const ContactInfo = () => {
               label="Phone Number"
               onChange={(e) => setContactCopyWithPropertyValue('phoneNumber', e.target.value)}
               value={contact.phoneNumber}
-              disabled={fieldsDisabled}
+              disabled={!isEditing && userHasContact}
               required
               fullWidth
             />
@@ -140,9 +148,6 @@ const ContactInfo = () => {
                 </Button>}
             </Grid>
           </ContactForm>
-          <Typography variant="body2" className={classes.contactWarning}>
-            This is the contact that will be shown for all of your cars
-          </Typography>
         </Grid>
       </Grid>
     </>

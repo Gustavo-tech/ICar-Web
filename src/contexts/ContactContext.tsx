@@ -3,6 +3,7 @@ import { Contact } from '../models/contact'
 import { UIContext } from './UIContext'
 import { getMyContact } from '../api/contact/get'
 import { addContact } from '../api/contact/post'
+import { updateContact } from '../api/contact/put'
 
 type ContactContextProps = {
   // states
@@ -16,6 +17,7 @@ type ContactContextProps = {
   // api calls
   fetchMyContact: (token: string) => void;
   createContact: (token: string) => void;
+  updatePhoneNumber: (token: string) => void;
 }
 
 export const ContactContext = createContext({} as ContactContextProps)
@@ -65,6 +67,17 @@ const ContactContextProvider = ({ children }: ContactContextProviderProps) => {
       })
   }
 
+  function updatePhoneNumber(token: string): void {
+    setIsLoading(true)
+    updateContact(contact.phoneNumber, token)
+      .catch((error) => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
   return (
     <ContactContext.Provider value={{
       // states
@@ -77,7 +90,8 @@ const ContactContextProvider = ({ children }: ContactContextProviderProps) => {
 
       // api calls
       fetchMyContact,
-      createContact
+      createContact,
+      updatePhoneNumber
     }}>
       {children}
     </ContactContext.Provider>
