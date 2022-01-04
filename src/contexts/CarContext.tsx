@@ -8,6 +8,7 @@ import { UIContext } from './UIContext'
 import { updateNumberOfViews } from '../api/car/put'
 import { CarOverview } from '../models/car'
 import { Contact } from '../models/contact'
+import { AddressEn } from '../models/address'
 
 type CarContextProps = {
   // Individual car properties
@@ -29,10 +30,7 @@ type CarContextProps = {
   ipvaIsPaid: boolean;
   isLicensed: boolean;
   pictures: string[];
-  zipCode: string;
-  location: string;
-  district: string;
-  street: string;
+  address: AddressEn;
   contact: Contact;
 
   // Collections
@@ -56,11 +54,8 @@ type CarContextProps = {
   setIsArmored: (value: boolean) => void;
   setIpvaIsPaid: (value: boolean) => void;
   setIsLicensed: (value: boolean) => void;
-  setZipCode: (zipCode: string) => void;
-  setDistrict: (district: string) => void;
-  setLocation: (location: string) => void;
-  setStreet: (street: string) => void;
   setPictures: (pics: string[]) => void;
+  setAddress: (address: AddressEn) => void;
   setContact: (contact: Contact) => void;
 
   // API calls  
@@ -107,10 +102,12 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [ipvaIsPaid, setIpvaIsPaid] = useState<boolean>(false)
   const [isLicensed, setIsLicensed] = useState<boolean>(false)
   const [pictures, setPictures] = useState<string[]>([])
-  const [location, setLocation] = useState<string>('')
-  const [district, setDistrict] = useState<string>('')
-  const [street, setStreet] = useState<string>('')
-  const [zipCode, setZipCode] = useState<string>('')
+  const [address, setAddress] = useState<AddressEn>({
+    district: '',
+    location: '',
+    street: '',
+    zipCode: ''
+  })
   const [contact, setContact] = useState<Contact>({
     emailAddress: '',
     firstName: '',
@@ -156,10 +153,13 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
         setNumberOfViews(data.numberOfViews)
         setPlate(data.plate)
         setExchangeType(data.typeOfExchange)
-        setZipCode(data.address.cep)
-        setLocation(data.address.localidade)
-        setStreet(data.address.logradouro)
-        setDistrict(data.address.bairro)
+        setAddress({
+          ...address,
+          district: data.address.bairro,
+          street: data.address.logradouro,
+          location: data.address.localidade,
+          zipCode: data.address.cep
+        })
         setPictures(data.pictures)
         setContact(data.contact)
         increaseNumberOfViews(data.id, token)
@@ -189,18 +189,22 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
   async function fetchAddress(code: string | undefined): Promise<void> {
     if (code?.length === 8) {
-      setZipCode(code)
       const resp = await fetchLocationsApi(code)
       const { data } = resp
-      setDistrict(data.bairro)
-      setStreet(data.logradouro)
-      setLocation(data.localidade)
+      setAddress({
+        ...address,
+        zipCode: code,
+        district: data.bairro,
+        street: data.logradouro,
+        location: data.localidade
+      })
     }
   }
 
   function createCar(token: string): void {
     setIsLoading(true)
     const car = createCarToPost()
+    console.log(car)
     addCar(token, car)
       .then((response) => {
         if (response.status === 200)
@@ -271,10 +275,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       exchangeType: exchangeType!,
       color: color!,
       gasolineType: gasolineType!,
-      zipCode: zipCode!,
-      location: location!,
-      district: district!,
-      street: street!,
+      address: address,
       pictures
     }
   }
@@ -297,10 +298,12 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     setIpvaIsPaid(false)
     setIsLicensed(false)
     setPictures([])
-    setLocation('')
-    setDistrict('')
-    setStreet('')
-    setZipCode('')
+    setAddress({
+      district: '',
+      location: '',
+      street: '',
+      zipCode: ''
+    })
     setSearch(new CarSearchModel())
   }
 
@@ -326,10 +329,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       isLicensed,
       isArmored,
       pictures,
-      zipCode,
-      district,
-      location,
-      street,
+      address,
       contact,
 
       // set states
@@ -351,10 +351,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       setIsArmored,
       setPlate,
       setPictures,
-      setZipCode,
-      setDistrict,
-      setLocation,
-      setStreet,
+      setAddress,
       setContact,
 
       // api calls

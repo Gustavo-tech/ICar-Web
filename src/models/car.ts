@@ -1,4 +1,4 @@
-import { Address } from './address'
+import { AddressPt } from './address'
 import { Contact } from './contact'
 
 export type CarOverview = {
@@ -11,7 +11,7 @@ export type CarOverview = {
   numberOfViews: number;
   kilometersTraveled: number;
   pictures: string[];
-  address: Address;
+  address: AddressPt;
 }
 
 export type Car = CarOverview & {
