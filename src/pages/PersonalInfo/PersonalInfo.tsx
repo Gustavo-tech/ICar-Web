@@ -52,15 +52,6 @@ const PersonalInfo = () => {
           <Typography variant="subtitle1" gutterBottom>Your basic account information</Typography>
           <Container className={classes.infoContainer}>
             <Grid container direction="column" spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  label="Phone"
-                  variant="outlined"
-                  value={user.extension_phone}
-                  fullWidth
-                  disabled
-                />
-              </Grid>
 
               <Grid item xs={12}>
                 <TextField
@@ -80,12 +71,6 @@ const PersonalInfo = () => {
                   fullWidth
                   disabled
                 />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Button variant="contained" color="primary">
-                  Edit
-                </Button>
               </Grid>
             </Grid>
           </Container>

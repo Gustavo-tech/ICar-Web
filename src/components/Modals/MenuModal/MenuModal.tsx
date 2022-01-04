@@ -22,6 +22,7 @@ import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
 import ListAltIcon from '@material-ui/icons/ListAlt'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone'
 
 const MenuModal = () => {
 
@@ -50,6 +51,12 @@ const MenuModal = () => {
     },
     {
       id: 2,
+      icon: <ContactPhoneIcon className={classes.menuIcon} />,
+      text: 'Contact info',
+      path: '/account/contact'
+    },
+    {
+      id: 3,
       icon: <ExitToAppIcon className={classes.menuIcon} />,
       text: 'Logout',
       path: '/account/logout'
