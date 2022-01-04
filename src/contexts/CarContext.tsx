@@ -7,6 +7,7 @@ import CarSearchModel from '../api/search-models/car'
 import { UIContext } from './UIContext'
 import { updateNumberOfViews } from '../api/car/put'
 import { CarOverview } from '../models/car'
+import { Contact } from '../models/contact'
 
 type CarContextProps = {
   // Individual car properties
@@ -32,8 +33,7 @@ type CarContextProps = {
   location: string;
   district: string;
   street: string;
-  ownerEmail: string;
-  ownerPhone: string;
+  contact: Contact;
 
   // Collections
   cars: CarOverview[];
@@ -61,8 +61,7 @@ type CarContextProps = {
   setLocation: (location: string) => void;
   setStreet: (street: string) => void;
   setPictures: (pics: string[]) => void;
-  setOwnerEmail: (email: string) => void;
-  setOwnerPhone: (phone: string) => void;
+  setContact: (contact: Contact) => void;
 
   // API calls  
   fetchCars: (token: string) => void;
@@ -112,8 +111,12 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [district, setDistrict] = useState<string>('')
   const [street, setStreet] = useState<string>('')
   const [zipCode, setZipCode] = useState<string>('')
-  const [ownerEmail, setOwnerEmail] = useState<string>('')
-  const [ownerPhone, setOwnerPhone] = useState<string>('')
+  const [contact, setContact] = useState<Contact>({
+    emailAddress: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+  })
   const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
 
   const { setIsLoading, setSuccess } = useContext(UIContext)
@@ -158,9 +161,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
         setStreet(data.address.logradouro)
         setDistrict(data.address.bairro)
         setPictures(data.pictures)
-        setOwnerEmail(data.ownerEmail)
-        setOwnerPhone(data.ownerPhone)
-
+        setContact(data.contact)
         increaseNumberOfViews(data.id, token)
       })
       .catch(error => {
@@ -329,8 +330,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       district,
       location,
       street,
-      ownerEmail,
-      ownerPhone,
+      contact,
 
       // set states
       setId,
@@ -355,8 +355,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       setDistrict,
       setLocation,
       setStreet,
-      setOwnerEmail,
-      setOwnerPhone,
+      setContact,
 
       // api calls
       searchForMaker,

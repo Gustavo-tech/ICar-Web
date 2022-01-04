@@ -38,8 +38,7 @@ const CarDetail = () => {
     color,
     acceptsChange,
     message,
-    ownerEmail,
-    ownerPhone,
+    contact,
     fetchCar
   } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
@@ -149,14 +148,14 @@ const CarDetail = () => {
                   <ListItemIcon>
                     <EmailIcon />
                   </ListItemIcon>
-                  <ListItemText primary={ownerEmail} />
+                  <ListItemText primary={contact.emailAddress} />
                 </ListItem>
 
                 <ListItem>
                   <ListItemIcon>
                     <PhoneIcon />
                   </ListItemIcon>
-                  <ListItemText primary={ownerPhone} />
+                  <ListItemText primary={contact.phoneNumber} />
                 </ListItem>
               </List>
 

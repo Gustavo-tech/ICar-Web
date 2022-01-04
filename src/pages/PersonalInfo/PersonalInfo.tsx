@@ -48,7 +48,6 @@ const PersonalInfo = () => {
           justify="center"
           alignItems="center"
         >
-
           <Typography variant="h4">Account information</Typography>
           <Typography variant="subtitle1" gutterBottom>Your basic account information</Typography>
           <Container className={classes.infoContainer}>
@@ -89,7 +88,6 @@ const PersonalInfo = () => {
                 </Button>
               </Grid>
             </Grid>
-
           </Container>
         </Grid>
       </Grid>

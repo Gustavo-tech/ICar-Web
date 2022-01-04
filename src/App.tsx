@@ -30,6 +30,8 @@ import CreateNews from './pages/CreateNews/CreateNews'
 import MyNews from './pages/MyNews/MyNews'
 import Logout from './pages/Logout/Logout'
 import { MessageContextProvider } from './contexts/MessageContext'
+import ContactContextProvider from './contexts/ContactContext'
+import ContactInfo from './pages/ContactInfo/ContactInfo'
 
 const theme = createMuiTheme({
   palette: {
@@ -69,36 +71,39 @@ const App = () => (
         <CarContextProvider>
           <NewsContextProvider>
             <MessageContextProvider>
-              <BrowserRouter>
-                <Switch>
+              <ContactContextProvider>
+                <BrowserRouter>
+                  <Switch>
 
-                  {/* home */}
-                  <Route exact path="/" component={withOidcSecure(Home)} />
+                    {/* home */}
+                    <Route exact path="/" component={withOidcSecure(Home)} />
 
-                  {/* Account routes */}
-                  <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
-                  <Route exact path='/account/logout' component={withOidcSecure(Logout)} />
+                    {/* Account routes */}
+                    <Route exact path='/account/personal' component={withOidcSecure(PersonalInfo)} />
+                    <Route exact path='/account/contact' component={withOidcSecure(ContactInfo)} />
+                    <Route exact path='/account/logout' component={withOidcSecure(Logout)} />
 
-                  {/* Car routes */}
-                  <Route exact path='/mycars' component={withOidcSecure(MyCars)} />
-                  <Route exact path='/selling' component={withOidcSecure(SellingCars)} />
-                  <Route exact path='/selling/:id' component={withOidcSecure(CarDetail)} />
-                  <Route exact path='/car/sell' component={withOidcSecure(SellCar)} />
+                    {/* Car routes */}
+                    <Route exact path='/mycars' component={withOidcSecure(MyCars)} />
+                    <Route exact path='/selling' component={withOidcSecure(SellingCars)} />
+                    <Route exact path='/selling/:id' component={withOidcSecure(CarDetail)} />
+                    <Route exact path='/car/sell' component={withOidcSecure(SellCar)} />
 
-                  {/* Chat routes */}
-                  <Route exact path='/messages' component={withOidcSecure(Messages)} />
+                    {/* Chat routes */}
+                    <Route exact path='/messages' component={withOidcSecure(Messages)} />
 
-                  {/* News routes */}
-                  <Route exact path='/news/create' component={withOidcSecure(CreateNews)} />
-                  <Route exact path='/news/details/:id' component={withOidcSecure(NewsDetail)} />
-                  <Route exact path='/news' component={withOidcSecure(News)} />
-                  <Route exact path='/mynews' component={withOidcSecure(MyNews)} />
+                    {/* News routes */}
+                    <Route exact path='/news/create' component={withOidcSecure(CreateNews)} />
+                    <Route exact path='/news/details/:id' component={withOidcSecure(NewsDetail)} />
+                    <Route exact path='/news' component={withOidcSecure(News)} />
+                    <Route exact path='/mynews' component={withOidcSecure(MyNews)} />
 
-                  {/* Routes that does not exists */}
-                  <Route exact path='*' component={NotFound} />
-                </Switch>
-              </BrowserRouter>
-              <GlobalStyle />
+                    {/* Routes that does not exists */}
+                    <Route exact path='*' component={NotFound} />
+                  </Switch>
+                </BrowserRouter>
+                <GlobalStyle />
+              </ContactContextProvider>
             </MessageContextProvider>
           </NewsContextProvider>
         </CarContextProvider>
