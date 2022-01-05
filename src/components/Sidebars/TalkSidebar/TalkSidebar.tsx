@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Sidebar, useStyles } from './style'
 import {
   TextField,
@@ -15,8 +16,24 @@ type TalkSidebarProps = {
 
 const TalkSidebar = ({ interactions }: TalkSidebarProps) => {
 
+  const [interactionsAux, setInteractionsAux] = useState<Interaction[]>(interactions)
+
   function getUserAvatar(firstName: string, lastName: string): string {
     return firstName[0] + lastName[0]
+  }
+
+  function handleSearchTextChange(text: string): void {
+    if (text === '')
+      setInteractionsAux(interactions)
+
+    else {
+      let newInteractions: Interaction[] = interactions.filter(x => {
+        const fullName: string = `${x.firstName} ${x.lastName}`
+        return fullName.includes(text)
+      })
+
+      setInteractionsAux(newInteractions)
+    }
   }
 
   const classes = useStyles()
@@ -26,13 +43,14 @@ const TalkSidebar = ({ interactions }: TalkSidebarProps) => {
         variant="outlined"
         label="Search someone"
         className={classes.textField}
+        onChange={(e) => handleSearchTextChange(e.target.value)}
       />
       <List className={classes.list}>
         {
-          interactions.map((x) => {
+          interactionsAux.map((x) => {
             const avatarText = getUserAvatar(x.firstName, x.lastName)
             return (
-              <ListItem className={classes.listItem}>
+              <ListItem className={classes.listItem} key={x.id}>
                 <ListItemAvatar>
                   <Avatar>{avatarText}</Avatar>
                 </ListItemAvatar>

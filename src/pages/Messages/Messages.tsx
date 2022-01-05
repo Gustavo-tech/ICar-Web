@@ -28,6 +28,7 @@ const Messages = () => {
   }, [])
 
   const classes = useStyles()
+  console.log(userInteractions)
   return (
     <>
       <AppNavbar showSearch={false} />

@@ -1,4 +1,5 @@
 export type Interaction = {
+  id: string;
   userId: string;
   withUserId: string;
   firstName: string;

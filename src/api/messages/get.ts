@@ -4,7 +4,7 @@ import { Interaction } from '../../models/interaction'
 import { Message } from '../../models/message'
 
 export function getUserInteractions(token: string): Promise<AxiosResponse<Interaction[]>> {
-  return axios.get<Interaction[]>(`${apiUrl}/messages/talks`, {
+  return axios.get<Interaction[]>(`${apiUrl}/interactions`, {
     headers: {
       Authorization: 'Bearer ' + token
     },
