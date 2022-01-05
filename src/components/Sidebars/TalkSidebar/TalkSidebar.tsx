@@ -1,20 +1,24 @@
 import { useState } from 'react'
-import { Sidebar, useStyles } from './style'
+import { NotFoundContainer, Sidebar, useStyles } from './style'
 import {
   TextField,
   List,
   ListItem,
   ListItemAvatar,
   Avatar,
-  ListItemText
+  ListItemText,
+  Typography
 } from '@material-ui/core'
 import { Interaction } from '../../../models/interaction'
+import SearchIcon from '@material-ui/icons/Search'
 
 type TalkSidebarProps = {
   interactions: Interaction[];
+  interactionSelected: Interaction;
+  onInteractionClick: (interactionClicked: Interaction) => any;
 }
 
-const TalkSidebar = ({ interactions }: TalkSidebarProps) => {
+const TalkSidebar = ({ interactions, onInteractionClick }: TalkSidebarProps) => {
 
   const [interactionsAux, setInteractionsAux] = useState<Interaction[]>(interactions)
 
@@ -45,22 +49,35 @@ const TalkSidebar = ({ interactions }: TalkSidebarProps) => {
         className={classes.textField}
         onChange={(e) => handleSearchTextChange(e.target.value)}
       />
-      <List className={classes.list}>
-        {
-          interactionsAux.map((x) => {
-            const avatarText = getUserAvatar(x.firstName, x.lastName)
-            return (
-              <ListItem className={classes.listItem} key={x.id}>
-                <ListItemAvatar>
-                  <Avatar>{avatarText}</Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={`${x.firstName} ${x.lastName}`}
-                  secondary={x.lastMessage} />
-              </ListItem>
-            )
-          })
-        }
-      </List>
+
+      {interactions.length > 0 &&
+        <List className={classes.list}>
+          {
+            interactionsAux.map((x) => {
+              const avatarText = getUserAvatar(x.firstName, x.lastName)
+              return (
+                <ListItem
+                  className={classes.listItem}
+                  key={x.id}
+                  onClick={() => onInteractionClick(x)}
+                >
+                  <ListItemAvatar>
+                    <Avatar>{avatarText}</Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={`${x.firstName} ${x.lastName}`}
+                    secondary={x.lastMessage} />
+                </ListItem>
+              )
+            })
+          }
+        </List>}
+
+      {interactions.length === 0 &&
+        <NotFoundContainer>
+          <SearchIcon fontSize="large" />
+          <Typography variant="body2">You haven't talked to anyone</Typography>
+        </NotFoundContainer>}
+
     </Sidebar>
   )
 }

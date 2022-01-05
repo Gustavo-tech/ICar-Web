@@ -11,8 +11,9 @@ export function getUserInteractions(token: string): Promise<AxiosResponse<Intera
   })
 }
 
-export function getMessagesWithUser(withUserId: string, token: string): Promise<AxiosResponse<Message[]>> {
-  return axios.get<Message[]>(`${apiUrl}/messages/${withUserId}`, {
+export function getMessagesWithUser(withUserId: string, subjectId: string,
+  token: string): Promise<AxiosResponse<Message[]>> {
+  return axios.get<Message[]>(`${apiUrl}/messages/${withUserId}/${subjectId}`, {
     headers: {
       Authorization: 'Bearer ' + token
     }

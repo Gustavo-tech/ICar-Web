@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState } from 'react'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import {
   Grid,
@@ -15,27 +15,55 @@ import {
   useStyles
 } from './styles'
 import { MessageContext } from '../../contexts/MessageContext'
+import { Interaction } from '../../models/interaction'
+import { parseUserWithJwt } from '../../utilities/token-utilities'
 
 const Messages = () => {
 
+  const [interactionSelected, setInteractionSelected] = useState<Interaction>({
+    firstName: '',
+    id: '',
+    lastMessage: '',
+    lastName: '',
+    subjectId: '',
+    userId: '',
+    withUserId: ''
+  })
+
   const { oidcUser } = useReactOidc()
   const { access_token } = oidcUser
+  const userId = parseUserWithJwt(access_token).oid
 
-  const { userInteractions, fetchUserInteractions } = useContext(MessageContext)
+  const {
+    userInteractions,
+    messages,
+    fetchUserInteractions,
+    fetchMessagesWithUser
+  } = useContext(MessageContext)
 
   useEffect(() => {
     fetchUserInteractions(access_token)
   }, [])
 
+  function handleInteractionClick(interaction: Interaction): void {
+    setInteractionSelected(interaction)
+    console.log(interaction)
+    fetchMessagesWithUser(interaction.withUserId, interaction.subjectId, access_token)
+  }
+
   const classes = useStyles()
-  console.log(userInteractions)
+  console.log(messages)
   return (
     <>
       <AppNavbar showSearch={false} />
       <Grid container spacing={1} className={classes.grid}>
 
         <Grid item xs={3}>
-          <TalkSidebar interactions={userInteractions} />
+          <TalkSidebar
+            onInteractionClick={handleInteractionClick}
+            interactionSelected={interactionSelected}
+            interactions={userInteractions}
+          />
         </Grid>
 
         <Grid item xs={9}>
@@ -46,9 +74,12 @@ const Messages = () => {
 
             <Grid item xs={12}>
               <TalkBody>
-                <Message sent={false}>Hello</Message>
-                <Message sent={true}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi temporibus totam quis eum maxime optio nulla in, dolorem consectetur eveniet.</Message>
-                <Message sent={false}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi temporibus totam quis eum maxime optio nulla in, dolorem consectetur eveniet.</Message>
+                {messages.map(x => {
+                  const userSentTheMessage = x.fromUser === userId
+                  return (
+                    <Message key={x.id} sent={userSentTheMessage}>{x.text}</Message>
+                  )
+                })}
               </TalkBody>
             </Grid>
 

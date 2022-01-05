@@ -19,7 +19,7 @@ type MessageContextProps = {
 
   // api calls
   fetchUserInteractions: (token: string) => void;
-  fetchMessagesWithUser: (withUserId: string, token: string) => void;
+  fetchMessagesWithUser: (withUserId: string, subjectId: string, token: string) => void;
   addUserInteraction: (subjectId: string, token: string) => void;
 }
 
@@ -52,9 +52,9 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
       })
   }
 
-  function fetchMessagesWithUser(withUserId: string, token: string): void {
+  function fetchMessagesWithUser(withUserId: string, subjectId: string, token: string): void {
     setIsLoading(true)
-    getMessagesWithUser(withUserId, token)
+    getMessagesWithUser(withUserId, subjectId, token)
       .then(response => {
         const { data } = response
         setMessages(data)
