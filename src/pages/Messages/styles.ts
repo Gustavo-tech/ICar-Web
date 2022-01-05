@@ -27,7 +27,7 @@ export const TalkBody = styled.div`
   flex-direction: column;
   background-color: transparent;
   width: 100%;
-  height: 87%;
+  height: 65vh;
   border: 1px solid #B5B5B5;
   padding: 4% 4% 1% 4%;
 `

@@ -47,12 +47,10 @@ const Messages = () => {
 
   function handleInteractionClick(interaction: Interaction): void {
     setInteractionSelected(interaction)
-    console.log(interaction)
     fetchMessagesWithUser(interaction.withUserId, interaction.subjectId, access_token)
   }
 
   const classes = useStyles()
-  console.log(messages)
   return (
     <>
       <AppNavbar showSearch={false} />
