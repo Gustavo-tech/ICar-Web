@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
-import { getSellingCars, getUserCars, getCarWithId } from '../api/car/get'
+import { getSellingCars, getUserCars, getCarWithId, getMostSeenMakers, getMostSeenCars } from '../api/car/get'
 import { newCar } from '../api/car/input-types'
 import { addCar } from '../api/car/post'
 import { fetchLocationsApi } from '../api/location/get'
@@ -32,6 +32,8 @@ type CarContextProps = {
   pictures: string[];
   address: AddressEn;
   contact: Contact;
+  mostSeenMakers: string[];
+  mostSeenCars: CarOverview[];
 
   // Collections
   cars: CarOverview[];
@@ -63,6 +65,8 @@ type CarContextProps = {
   fetchCar: (id: string, token: string) => void;
   fetchMyCars: (token: string) => void;
   fetchAddress: (zipCode: string) => void;
+  fetchMostSeenCars: (quantity: number, token: string) => void;
+  fetchMostSeenMakers: (quantity: number, token: string) => void;
   createCar: (token: string) => void;
 
   // Search methods
@@ -102,6 +106,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [ipvaIsPaid, setIpvaIsPaid] = useState<boolean>(false)
   const [isLicensed, setIsLicensed] = useState<boolean>(false)
   const [pictures, setPictures] = useState<string[]>([])
+  const [mostSeenMakers, setMostSeenMakers] = useState<string[]>([])
+  const [mostSeenCars, setMostSeenCars] = useState<CarOverview[]>([])
   const [address, setAddress] = useState<AddressEn>({
     district: '',
     location: '',
@@ -228,6 +234,36 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       })
   }
 
+  function fetchMostSeenCars(quantity: number, token: string): void {
+    setIsLoading(true)
+    getMostSeenCars(quantity, token)
+      .then(response => {
+        const { data } = response
+        setMostSeenCars(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
+  function fetchMostSeenMakers(quantity: number, token: string): void {
+    setIsLoading(true)
+    getMostSeenMakers(quantity, token)
+      .then(response => {
+        const { data } = response
+        setMostSeenMakers(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
   function searchForMaker(maker: string) {
     let newSearch: CarSearchModel = search.clone(search)
     newSearch.maker = maker
@@ -331,6 +367,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       pictures,
       address,
       contact,
+      mostSeenCars,
+      mostSeenMakers,
 
       // set states
       setId,
@@ -364,6 +402,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       fetchMyCars,
       fetchAddress,
       fetchCar,
+      fetchMostSeenCars,
+      fetchMostSeenMakers,
       createCar,
 
       // context functions

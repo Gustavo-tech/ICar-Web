@@ -42,7 +42,6 @@ const Messages = () => {
     userInteractions,
     messages,
     messageText,
-    setMessages,
     setMessageText,
     fetchUserInteractions,
     fetchMessagesWithUser,
@@ -63,13 +62,9 @@ const Messages = () => {
           .configureLogging(LogLevel.Information)
           .build()
 
-        connection.on("ReceiveMessage", (message: Message) => {
-          addMessage(message)
-        })
+        connection.on("ReceiveMessage", (message: Message) => handleMessageReceived(message))
 
-        connection.on("MessageSent", (message: Message) => {
-          addMessage(message)
-        })
+        connection.on("MessageSent", (message: Message) => handleMessageSent(message))
 
         await connection.start()
         await connection.invoke('connect', access_token)
@@ -80,11 +75,8 @@ const Messages = () => {
       }
     }
 
-    if (userInteractions.length > 0) {
-      connect()
-    }
-
-  }, [userInteractions])
+    connect()
+  }, [])
 
   function handleInteractionClick(interaction: Interaction): void {
     setInteractionSelected(interaction)
@@ -99,7 +91,14 @@ const Messages = () => {
     }
   }
 
-  console.log(messages)
+  function handleMessageReceived(message: Message): void {
+    addMessage(message)
+  }
+
+  function handleMessageSent(message: Message): void {
+    addMessage(message)
+  }
+
   const classes = useStyles()
   return (
     <>

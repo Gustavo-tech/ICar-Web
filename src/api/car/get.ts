@@ -27,3 +27,23 @@ export const getCarWithId = (authToken: string, id: string): Promise<AxiosRespon
       'Content-Type': 'application/json'
     }
   })
+
+export const getMostSeenMakers = (quantity: number, token: string): Promise<AxiosResponse<string[]>> =>
+  axios.get<string[]>(`${apiUrl}/cars/mostseen/makers`, {
+    headers: {
+      "Authorization": "Bearer " + token
+    },
+    params: {
+      quantity
+    }
+  })
+
+export const getMostSeenCars = (quantity: number, token: string): Promise<AxiosResponse<CarOverview[]>> =>
+  axios.get<CarOverview[]>(`${apiUrl}/cars/mostseen/cars`, {
+    headers: {
+      "Authorization": "Bearer " + token
+    },
+    params: {
+      quantity
+    }
+  })

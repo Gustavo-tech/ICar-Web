@@ -77,8 +77,11 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
   }
 
   function addMessage(message: Message): void {
+    console.log(messages)
     const messagesCopy: Message[] = [...messages, message]
+    console.log(messagesCopy)
     const messagesOrdered: Message[] = sortMessagesByDate(messagesCopy)
+    console.log(messagesOrdered)
     setMessages(messagesOrdered)
   }
 
@@ -119,8 +122,8 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
     return new Date(year, month, day, hour, minutes, seconds)
   }
 
-  function sortMessagesByDate(messages: Message[]): Message[] {
-    return messages.sort((x: Message, y: Message) => {
+  function sortMessagesByDate(m: Message[]): Message[] {
+    return m.sort((x: Message, y: Message) => {
       let xDate = getDateWithMessage(x)
       let yDate = getDateWithMessage(y)
 

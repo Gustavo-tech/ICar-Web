@@ -16,16 +16,25 @@ import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { NewsContext } from '../../contexts/NewsContext'
 import { UIContext } from '../../contexts/UIContext'
 import NewsCard from '../../components/Cards/NewsCard/NewsCard'
+import { CarContext } from '../../contexts/CarContext'
 
 const Home = () => {
 
   const { news, fetchNews } = useContext(NewsContext)
   const { isLoading } = useContext(UIContext)
+  const {
+    mostSeenCars,
+    mostSeenMakers,
+    fetchMostSeenCars,
+    fetchMostSeenMakers
+  } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
   const { access_token } = oidcUser
 
   useEffect(() => {
     fetchNews(access_token)
+    fetchMostSeenCars(5, access_token)
+    fetchMostSeenMakers(5, access_token)
   }, [])
 
   const classes = useStyles()
@@ -39,7 +48,7 @@ const Home = () => {
           <CircularProgress color="primary" />
         </CenteredContent>}
 
-      {!isLoading &&
+      {!isLoading && localNews.length > 0 &&
         <Container className={classes.container}>
           <Grid container direction="column">
             <Grid
