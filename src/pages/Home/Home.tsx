@@ -13,6 +13,7 @@ import NewsCard from '../../components/Cards/NewsCard/NewsCard'
 import { CarContext } from '../../contexts/CarContext'
 import HomeContainerContent from '../../components/HomeContainerContent/HomeContainerContent'
 import { useHistory } from 'react-router-dom'
+import CarCard from '../../components/Cards/CarCard/CarCard'
 
 const Home = () => {
 
@@ -39,14 +40,40 @@ const Home = () => {
   return (
     <>
       <Navbar showSearch={false} />
-
       {isLoading &&
         <CenteredContent>
           <CircularProgress color="primary" />
         </CenteredContent>}
 
-      {!isLoading && localNews.length > 0 &&
+      {!isLoading && mostSeenCars.length > 0 &&
+        <HomeContainerContent
+          buttonIcon={<TvIcon />}
+          buttonText="Check All"
+          headerTitle="Most Seen Cars"
+          onButtonClick={() => history.push("/news")}
+        >
+          <Grid container item xs={12} spacing={2}>
+            {mostSeenCars.map((x) => (
+              <Grid item xs={3}>
+                <CarCard
+                  key={x.id}
+                  id={x.id}
+                  kilometersTraveled={x.kilometersTraveled}
+                  location={x.address.localidade}
+                  makeDate={x.makeDate}
+                  makedDate={x.makedDate}
+                  maker={x.maker}
+                  model={x.model}
+                  picture={x.pictures[0]}
+                  price={x.price}
+                />
+              </Grid>
+            ))}
+          </Grid>
 
+        </HomeContainerContent>}
+
+      {!isLoading && localNews.length > 0 &&
         <HomeContainerContent
           buttonIcon={<TvIcon />}
           buttonText="Check all"
