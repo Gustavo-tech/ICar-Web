@@ -30,6 +30,7 @@ export const TalkBody = styled.div`
   height: 65vh;
   border: 1px solid #B5B5B5;
   padding: 4% 4% 1% 4%;
+  overflow-y: auto;
 `
 
 export const UserInfo = styled.div`
@@ -43,11 +44,11 @@ export const UserInfo = styled.div`
   width: 100%;
 `
 
-interface MessageProps {
+interface MessageContainerProps {
   sent: boolean;
 }
 
-export const Message = styled.div<MessageProps>`
+export const MessageContainer = styled.div<MessageContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;

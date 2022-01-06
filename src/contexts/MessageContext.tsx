@@ -21,6 +21,7 @@ type MessageContextProps = {
   fetchUserInteractions: (token: string) => void;
   fetchMessagesWithUser: (withUserId: string, subjectId: string, token: string) => void;
   addUserInteraction: (subjectId: string, token: string) => void;
+  addMessage: (message: Message) => void;
 }
 
 export const MessageContext = createContext({} as MessageContextProps)
@@ -74,6 +75,11 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
       })
   }
 
+  function addMessage(message: Message): void {
+    let messagesCopy: Message[] = [...messages, message]
+    setMessages(messagesCopy)
+  }
+
   return (
     <MessageContext.Provider value={{
       // states
@@ -90,6 +96,7 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
       fetchUserInteractions,
       fetchMessagesWithUser,
       addUserInteraction,
+      addMessage
     }}>
       {children}
     </MessageContext.Provider>

@@ -10,7 +10,7 @@ import SendIcon from '@material-ui/icons/Send'
 import AppNavbar from '../../components/Navbar/Navbar'
 import TalkSidebar from '../../components/Sidebars/TalkSidebar/TalkSidebar'
 import {
-  Message,
+  MessageContainer,
   TalkBody,
   TalkHeaderTitle,
   useStyles
@@ -19,6 +19,7 @@ import { MessageContext } from '../../contexts/MessageContext'
 import { Interaction } from '../../models/interaction'
 import { parseUserWithJwt } from '../../utilities/token-utilities'
 import { hubUrl } from '../../constants/urls'
+import { Message } from '../../models/message'
 
 const Messages = () => {
 
@@ -41,9 +42,11 @@ const Messages = () => {
     userInteractions,
     messages,
     messageText,
+    setMessages,
     setMessageText,
     fetchUserInteractions,
-    fetchMessagesWithUser
+    fetchMessagesWithUser,
+    addMessage
   } = useContext(MessageContext)
 
   useEffect(() => {
@@ -60,8 +63,12 @@ const Messages = () => {
           .configureLogging(LogLevel.Information)
           .build()
 
-        connection.on("ReceiveMessage", (fromUser: string, subject: string, text: string) => {
-          console.log(fromUser, subject, text)
+        connection.on("ReceiveMessage", (message: Message) => {
+          addMessage(message)
+        })
+
+        connection.on("MessageSent", (message: Message) => {
+          addMessage(message)
         })
 
         await connection.start()
@@ -87,10 +94,12 @@ const Messages = () => {
   async function handleSendMessageClick(): Promise<any> {
     if (connection) {
       const { withUserId, subjectId } = interactionSelected
+      setMessageText('')
       await connection.invoke('SendMessage', access_token, withUserId, subjectId, messageText)
     }
   }
 
+  console.log(messages)
   const classes = useStyles()
   return (
     <>
@@ -116,7 +125,7 @@ const Messages = () => {
                 {messages.map(x => {
                   const userSentTheMessage = x.fromUser === userId
                   return (
-                    <Message key={x.id} sent={userSentTheMessage}>{x.text}</Message>
+                    <MessageContainer key={x.id} sent={userSentTheMessage}>{x.text}</MessageContainer>
                   )
                 })}
               </TalkBody>
