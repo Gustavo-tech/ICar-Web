@@ -1,4 +1,5 @@
 import { useEffect, useContext, useState } from 'react'
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import {
   Grid,
@@ -17,9 +18,11 @@ import {
 import { MessageContext } from '../../contexts/MessageContext'
 import { Interaction } from '../../models/interaction'
 import { parseUserWithJwt } from '../../utilities/token-utilities'
+import { hubUrl } from '../../constants/urls'
 
 const Messages = () => {
 
+  const [connection, setConnection] = useState<HubConnection | null>(null)
   const [interactionSelected, setInteractionSelected] = useState<Interaction>({
     firstName: '',
     id: '',
@@ -37,6 +40,8 @@ const Messages = () => {
   const {
     userInteractions,
     messages,
+    messageText,
+    setMessageText,
     fetchUserInteractions,
     fetchMessagesWithUser
   } = useContext(MessageContext)
@@ -45,9 +50,45 @@ const Messages = () => {
     fetchUserInteractions(access_token)
   }, [])
 
+  useEffect(() => {
+    async function connect() {
+      try {
+        const connection = new HubConnectionBuilder()
+          .withUrl(`${hubUrl}/chat`, {
+            accessTokenFactory: () => access_token
+          })
+          .configureLogging(LogLevel.Information)
+          .build()
+
+        connection.on("ReceiveMessage", (fromUser: string, subject: string, text: string) => {
+          console.log(fromUser, subject, text)
+        })
+
+        await connection.start()
+        await connection.invoke('connect', access_token)
+
+        setConnection(connection)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    if (userInteractions.length > 0) {
+      connect()
+    }
+
+  }, [userInteractions])
+
   function handleInteractionClick(interaction: Interaction): void {
     setInteractionSelected(interaction)
     fetchMessagesWithUser(interaction.withUserId, interaction.subjectId, access_token)
+  }
+
+  async function handleSendMessageClick(): Promise<any> {
+    if (connection) {
+      const { withUserId, subjectId } = interactionSelected
+      await connection.invoke('SendMessage', access_token, withUserId, subjectId, messageText)
+    }
   }
 
   const classes = useStyles()
@@ -89,11 +130,13 @@ const Messages = () => {
                     label="message"
                     variant="outlined"
                     placeholder="Type your message"
+                    value={messageText}
+                    onChange={(e) => setMessageText(e.target.value)}
                   />
                 </Grid>
 
                 <Grid container item xs={1} justify="center" alignItems="center">
-                  <IconButton color="primary">
+                  <IconButton color="primary" onClick={handleSendMessageClick}>
                     <SendIcon />
                   </IconButton>
                 </Grid>
