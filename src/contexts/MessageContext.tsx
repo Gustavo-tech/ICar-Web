@@ -58,7 +58,8 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
     getMessagesWithUser(withUserId, subjectId, token)
       .then(response => {
         const { data } = response
-        setMessages(data)
+        const orderedData = sortMessagesByDate(data)
+        setMessages(orderedData)
       })
       .catch(error => {
         console.error(error)
@@ -76,8 +77,55 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
   }
 
   function addMessage(message: Message): void {
-    let messagesCopy: Message[] = [...messages, message]
-    setMessages(messagesCopy)
+    const messagesCopy: Message[] = [...messages, message]
+    const messagesOrdered: Message[] = sortMessagesByDate(messagesCopy)
+    setMessages(messagesOrdered)
+  }
+
+  function getDateField(field: 'year' | 'month' | 'day' | 'hour' | 'minutes' | 'seconds',
+    message: Message): number {
+    switch (field) {
+      case 'year':
+        return Number.parseInt(message.sentAt.toString().substring(0, 4))
+
+      case 'month':
+        return Number.parseInt(message.sentAt.toString().substring(5, 7))
+
+      case 'day':
+        return Number.parseInt(message.sentAt.toString().substring(8, 10))
+
+      case 'hour':
+        return Number.parseInt(message.sentAt.toString().substring(11, 13))
+
+      case 'minutes':
+        return Number.parseInt(message.sentAt.toString().substring(14, 16))
+
+      case 'seconds':
+        return Number.parseInt(message.sentAt.toString().substring(17, 19))
+
+      default:
+        return 0
+    }
+  }
+
+  function getDateWithMessage(x: Message): Date {
+    let year = getDateField('year', x)
+    let month = getDateField('month', x)
+    let day = getDateField('month', x)
+    let hour = getDateField('hour', x)
+    let minutes = getDateField('minutes', x)
+    let seconds = getDateField('seconds', x)
+
+    return new Date(year, month, day, hour, minutes, seconds)
+  }
+
+  function sortMessagesByDate(messages: Message[]): Message[] {
+    return messages.sort((x: Message, y: Message) => {
+      let xDate = getDateWithMessage(x)
+      let yDate = getDateWithMessage(y)
+
+      return xDate.getTime() - yDate.getTime()
+    })
   }
 
   return (
