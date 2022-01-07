@@ -6,6 +6,8 @@ import {
   Grid,
 } from '@material-ui/core'
 import TvIcon from '@material-ui/icons/Tv'
+import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation'
+import DriveEtaIcon from '@material-ui/icons/DriveEta'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import { NewsContext } from '../../contexts/NewsContext'
 import { UIContext } from '../../contexts/UIContext'
@@ -14,6 +16,7 @@ import { CarContext } from '../../contexts/CarContext'
 import HomeContainerContent from '../../components/HomeContainerContent/HomeContainerContent'
 import { useHistory } from 'react-router-dom'
 import CarCard from '../../components/Cards/CarCard/CarCard'
+import MakerCard from '../../components/Cards/MakerCard/MakerCard'
 
 const Home = () => {
 
@@ -23,7 +26,8 @@ const Home = () => {
     mostSeenCars,
     mostSeenMakers,
     fetchMostSeenCars,
-    fetchMostSeenMakers
+    fetchMostSeenMakers,
+    setMakerText
   } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
   const { access_token } = oidcUser
@@ -47,10 +51,10 @@ const Home = () => {
 
       {!isLoading && mostSeenCars.length > 0 &&
         <HomeContainerContent
-          buttonIcon={<TvIcon />}
+          buttonIcon={<DriveEtaIcon />}
           buttonText="Check All"
           headerTitle="Most Seen Cars"
-          onButtonClick={() => history.push("/news")}
+          onButtonClick={() => history.push("/selling")}
         >
           <Grid container item xs={12} spacing={2}>
             {mostSeenCars.map((x) => (
@@ -71,6 +75,31 @@ const Home = () => {
             ))}
           </Grid>
 
+        </HomeContainerContent>}
+
+      {!isLoading && mostSeenMakers.length > 0 &&
+        <HomeContainerContent
+          buttonIcon={<EmojiTransportationIcon />}
+          buttonText="Check all"
+          headerTitle="Most Seen Makers"
+          onButtonClick={() => history.push('/selling')}
+        >
+          <Grid container item xs={12} spacing={2}>
+            {
+              mostSeenMakers.map((item, index) => {
+                return (
+                  <MakerCard
+                    key={index}
+                    makerName={item}
+                    onCardClick={(maker: string) => {
+                      setMakerText(maker)
+                      history.push('/selling')
+                    }}
+                  />
+                )
+              })
+            }
+          </Grid>
         </HomeContainerContent>}
 
       {!isLoading && localNews.length > 0 &&

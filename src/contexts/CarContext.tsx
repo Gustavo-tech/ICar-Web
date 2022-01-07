@@ -3,7 +3,6 @@ import { getSellingCars, getUserCars, getCarWithId, getMostSeenMakers, getMostSe
 import { newCar } from '../api/car/input-types'
 import { addCar } from '../api/car/post'
 import { fetchLocationsApi } from '../api/location/get'
-import CarSearchModel from '../api/search-models/car'
 import { UIContext } from './UIContext'
 import { updateNumberOfViews } from '../api/car/put'
 import { CarOverview } from '../models/car'
@@ -34,6 +33,20 @@ type CarContextProps = {
   contact: Contact;
   mostSeenMakers: string[];
   mostSeenCars: CarOverview[];
+
+  // search properties
+  makerText: string | null;
+  modelText: string | null;
+  minPrice: number | null;
+  maxPrice: number | null;
+  maxKilometers: number;
+
+  // set search properties
+  setMakerText: (text: string | null) => void;
+  setModelText: (text: string | null) => void;
+  setMinPrice: (value: number | null) => void;
+  setMaxPrice: (value: number | null) => void;
+  setMaxKilometers: (value: number) => void;
 
   // Collections
   cars: CarOverview[];
@@ -68,13 +81,6 @@ type CarContextProps = {
   fetchMostSeenCars: (quantity: number, token: string) => void;
   fetchMostSeenMakers: (quantity: number, token: string) => void;
   createCar: (token: string) => void;
-
-  // Search methods
-  searchForMaker: (maker: string) => void;
-  searchForModel: (model: string) => void;
-  searchForMinPrice: (price: number) => void;
-  searchForMaxPrice: (price: number) => void;
-  searchForMaxKilometers: (km: number) => void;
 
   // Context functions
   reset: () => void;
@@ -120,13 +126,17 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     lastName: '',
     phoneNumber: '',
   })
-  const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
+  const [makerText, setMakerText] = useState<string | null>(null)
+  const [modelText, setModelText] = useState<string | null>(null)
+  const [minPrice, setMinPrice] = useState<number | null>(null)
+  const [maxPrice, setMaxPrice] = useState<number | null>(null)
+  const [maxKilometers, setMaxKilometers] = useState<number>(0)
 
   const { setIsLoading, setSuccess } = useContext(UIContext)
 
   function fetchCars(token: string): void {
     setIsLoading(true)
-    getSellingCars(token, search)
+    getSellingCars(makerText, modelText, minPrice, maxPrice, maxKilometers, token)
       .then(({ data }) => {
         setCars(data)
       })
@@ -180,7 +190,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
   function fetchMyCars(token: string): void {
     setIsLoading(true)
-    getUserCars(token)
+    getUserCars(makerText, modelText, minPrice, maxPrice, maxKilometers, token)
       .then(({ data }) => {
         setCars(data)
       })
@@ -210,7 +220,6 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   function createCar(token: string): void {
     setIsLoading(true)
     const car = createCarToPost()
-    console.log(car)
     addCar(token, car)
       .then((response) => {
         if (response.status === 200)
@@ -264,36 +273,6 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       })
   }
 
-  function searchForMaker(maker: string) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.maker = maker
-    setSearch(newSearch)
-  }
-
-  function searchForModel(model: string) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.model = model
-    setSearch(newSearch)
-  }
-
-  function searchForMinPrice(price: number) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.minPrice = price
-    setSearch(newSearch)
-  }
-
-  function searchForMaxPrice(price: number) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.maxPrice = price
-    setSearch(newSearch)
-  }
-
-  function searchForMaxKilometers(km: number) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.maxKilometers = km
-    setSearch(newSearch)
-  }
-
   function createCarToPost(): newCar {
     return {
       plate: plate!,
@@ -340,7 +319,11 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       street: '',
       zipCode: ''
     })
-    setSearch(new CarSearchModel())
+    setMakerText('')
+    setModelText('')
+    setMinPrice(null)
+    setMaxPrice(null)
+    setMaxKilometers(0)
   }
 
   return (
@@ -370,6 +353,20 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       mostSeenCars,
       mostSeenMakers,
 
+      // search properties
+      makerText,
+      modelText,
+      minPrice,
+      maxPrice,
+      maxKilometers,
+
+      // set search properties
+      setMakerText,
+      setModelText,
+      setMinPrice,
+      setMaxPrice,
+      setMaxKilometers,
+
       // set states
       setId,
       setMaker,
@@ -393,11 +390,6 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       setContact,
 
       // api calls
-      searchForMaker,
-      searchForMaxKilometers,
-      searchForMaxPrice,
-      searchForMinPrice,
-      searchForModel,
       fetchCars,
       fetchMyCars,
       fetchAddress,
@@ -407,7 +399,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       createCar,
 
       // context functions
-      reset,
+      reset
     }}>
       {children}
     </CarContext.Provider>
