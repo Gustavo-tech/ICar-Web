@@ -28,6 +28,7 @@ import {
 } from '@material-ui/core'
 import EmailIcon from '@material-ui/icons/Email'
 import PhoneIcon from '@material-ui/icons/Phone'
+import PersonIcon from '@material-ui/icons/Person'
 import { MessageContext } from '../../contexts/MessageContext'
 import { ContactContext } from '../../contexts/ContactContext'
 
@@ -202,6 +203,13 @@ const CarDetail = () => {
             >
               <Container className={`${classes.infoContainer} ${classes.contactContainer}`}>
                 <List>
+                  <ListItem>
+                    <ListItemIcon>
+                      <PersonIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={`${contact.firstName} ${contact.lastName}`} />
+                  </ListItem>
+
                   <ListItem>
                     <ListItemIcon>
                       <EmailIcon />

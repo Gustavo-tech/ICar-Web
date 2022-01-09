@@ -77,12 +77,11 @@ export const MessageContextProvider = ({ children }: MessageProviderProps) => {
   }
 
   function addMessage(message: Message): void {
-    console.log(messages)
-    const messagesCopy: Message[] = [...messages, message]
-    console.log(messagesCopy)
-    const messagesOrdered: Message[] = sortMessagesByDate(messagesCopy)
-    console.log(messagesOrdered)
-    setMessages(messagesOrdered)
+    setMessages((messages: Message[]) => {
+      const newMessages: Message[] = [...messages, message]
+      const messagesOrdered: Message[] = sortMessagesByDate(newMessages)
+      return messagesOrdered
+    })
   }
 
   function getDateField(field: 'year' | 'month' | 'day' | 'hour' | 'minutes' | 'seconds',

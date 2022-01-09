@@ -4,18 +4,22 @@ import { makeStyles } from '@material-ui/core'
 export const useStyles = makeStyles({
   mainGrid: {
     marginTop: '3%',
-    padding: '1%'
+    padding: '1%',
   },
   infoContainer: {
     backgroundColor: 'white',
+    border: '1px solid #DFDFDF',
     borderRadius: 7,
-    padding: '3% 4%'
+    padding: '3% 4%',
+    marginBottom: '5%',
   },
   sendMessageFooter: {
     marginTop: '4%'
   },
   contactContainer: {
     width: '80%',
+    border: '1px solid #DFDFDF',
+    borderRadius: 7,
   },
   description: {
     marginTop: '5%'
