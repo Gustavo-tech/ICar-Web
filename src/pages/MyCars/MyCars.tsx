@@ -43,7 +43,7 @@ const MyCars = () => {
     mainContent =
       <Grid container className={classes.grid} spacing={4}>
         <Grid item xs={3}>
-          <FilterSidebar />
+          <FilterSidebar onSearchClick={() => fetchMyCars(access_token)} />
         </Grid>
 
         <Grid

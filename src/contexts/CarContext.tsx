@@ -35,17 +35,17 @@ type CarContextProps = {
   mostSeenCars: CarOverview[];
 
   // search properties
-  makerText: string | null;
-  modelText: string | null;
-  minPrice: number | null;
-  maxPrice: number | null;
+  makerText: string;
+  modelText: string;
+  minPrice: number;
+  maxPrice: number;
   maxKilometers: number;
 
   // set search properties
-  setMakerText: (text: string | null) => void;
-  setModelText: (text: string | null) => void;
-  setMinPrice: (value: number | null) => void;
-  setMaxPrice: (value: number | null) => void;
+  setMakerText: (text: string) => void;
+  setModelText: (text: string) => void;
+  setMinPrice: (value: number) => void;
+  setMaxPrice: (value: number) => void;
   setMaxKilometers: (value: number) => void;
 
   // Collections
@@ -126,10 +126,10 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     lastName: '',
     phoneNumber: '',
   })
-  const [makerText, setMakerText] = useState<string | null>(null)
-  const [modelText, setModelText] = useState<string | null>(null)
-  const [minPrice, setMinPrice] = useState<number | null>(null)
-  const [maxPrice, setMaxPrice] = useState<number | null>(null)
+  const [makerText, setMakerText] = useState<string>('')
+  const [modelText, setModelText] = useState<string>('')
+  const [minPrice, setMinPrice] = useState<number>(0)
+  const [maxPrice, setMaxPrice] = useState<number>(0)
   const [maxKilometers, setMaxKilometers] = useState<number>(0)
 
   const { setIsLoading, setSuccess } = useContext(UIContext)
@@ -321,8 +321,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     })
     setMakerText('')
     setModelText('')
-    setMinPrice(null)
-    setMaxPrice(null)
+    setMinPrice(0)
+    setMaxPrice(0)
     setMaxKilometers(0)
   }
 
