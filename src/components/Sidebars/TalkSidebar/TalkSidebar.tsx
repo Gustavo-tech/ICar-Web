@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NotFoundContainer, Sidebar, useStyles } from './style'
 import {
   TextField,
@@ -20,7 +20,12 @@ type TalkSidebarProps = {
 
 const TalkSidebar = ({ interactions, onInteractionClick }: TalkSidebarProps) => {
 
-  const [interactionsAux, setInteractionsAux] = useState<Interaction[]>(interactions)
+  const [interactionsAux, setInteractionsAux] = useState<Interaction[]>([])
+
+  useEffect(() => {
+    const newInteractionsAux = [...interactions]
+    setInteractionsAux(newInteractionsAux)
+  }, [interactions])
 
   function getUserAvatar(firstName: string, lastName: string): string {
     return firstName[0] + lastName[0]
@@ -57,8 +62,8 @@ const TalkSidebar = ({ interactions, onInteractionClick }: TalkSidebarProps) => 
               const avatarText = getUserAvatar(x.firstName, x.lastName)
               return (
                 <ListItem
-                  className={classes.listItem}
                   key={x.id}
+                  className={classes.listItem}
                   onClick={() => onInteractionClick(x)}
                 >
                   <ListItemAvatar>
