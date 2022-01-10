@@ -13,10 +13,10 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import { useStyles, Form } from './styles'
-import { CarContext } from '../../../../contexts/CarContext'
-import { capitalizeText } from '../../../../utilities/string-utilities'
-import CarValidator from '../../../../utilities/validators/car-validator'
-import { getCarColors } from '../../../../constants/colors'
+import { CarContext } from '../../contexts/CarContext'
+import { capitalizeText } from '../../utilities/string-utilities'
+import CarValidator from '../../utilities/validators/car-validator'
+import { getCarColors } from '../../constants/colors'
 
 type CarDetailsProps = {
   onNextClick: () => void;

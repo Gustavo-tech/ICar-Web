@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button'
 import BurstModeIcon from '@material-ui/icons/BurstMode'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { useStyles, FileInput, Img } from './styles'
-import { CarContext } from '../../../../contexts/CarContext'
+import { CarContext } from '../../contexts/CarContext'
 
 type PicturesProps = {
   onNextClick: () => void;

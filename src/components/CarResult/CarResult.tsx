@@ -9,8 +9,8 @@ import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation'
 import ErrorIcon from '@material-ui/icons/Error'
 import AddIcon from '@material-ui/icons/Add'
 import ReplayIcon from '@material-ui/icons/Replay'
-import { CarContext } from '../../../../contexts/CarContext'
-import { UIContext } from '../../../../contexts/UIContext'
+import { CarContext } from '../../contexts/CarContext'
+import { UIContext } from '../../contexts/UIContext'
 import {
   useStyles
 } from './styles'

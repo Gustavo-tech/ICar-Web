@@ -261,6 +261,7 @@ const CarDetail = () => {
                         color="primary"
                         variant="contained"
                         endIcon={<EditIcon />}
+                        onClick={() => history.push(`/car/edit/${id}`)}
                       >
                         Edit Car
                       </Button>
