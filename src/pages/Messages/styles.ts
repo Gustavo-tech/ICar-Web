@@ -7,17 +7,21 @@ export const useStyles = makeStyles({
   },
   listIcon: {
     minWidth: '21%'
+  },
+  talkHeader: {
+    backgroundColor: 'white',
+    marginLeft: '0.4%',
+    border: '1px solid #B5B5B5',
+  },
+  talkHeaderTitle: {
+    fontSize: '3vh',
+    marginLeft: '20px'
+  },
+  carAvatar: {
+    marginRight: '20px',
+    cursor: 'pointer'
   }
 })
-
-export const TalkHeaderTitle = styled.h2`
-  color: var(--red);
-  font-family: 'Satisfy', cursive;
-  background-color: white;
-  border: 1px solid #B5B5B5;
-  margin: 0;
-  padding: 0.5% 4%;
-`
 
 export const TalkBody = styled.div`
   display: flex;
