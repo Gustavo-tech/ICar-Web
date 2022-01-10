@@ -202,7 +202,9 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   function fetchMyCars(token: string): void {
     setIsLoading(true)
     getUserCars(makerText, modelText, minPrice, maxPrice, maxKilometers, token)
-      .then(({ data }) => {
+      .then(response => {
+        console.log(response)
+        const { data } = response
         setCars(data)
       })
       .catch(error => {

@@ -55,7 +55,8 @@ const CarDetail = () => {
     message,
     contact,
     pictures,
-    fetchCar
+    fetchCar,
+    reset
   } = useContext(CarContext)
   const {
     messageText,
@@ -71,6 +72,10 @@ const CarDetail = () => {
   useEffect(() => {
     fetchCar(id, access_token)
     fetchMyContact(access_token)
+
+    return () => {
+      reset()
+    }
   }, [])
 
   useEffect(() => {
@@ -78,7 +83,7 @@ const CarDetail = () => {
     const userEmail = emails[0].toLocaleLowerCase()
     const carEmail = contact.emailAddress.toLowerCase()
     setUserIsOwner(userEmail === carEmail)
-  }, [access_token])
+  }, [access_token, contact])
 
   function getBoolAnswer(value?: boolean): string {
     if (value)
@@ -259,6 +264,17 @@ const CarDetail = () => {
                       </Button>
                     </Grid>
                   </>}
+
+                {userIsOwner &&
+                  <Grid container justify="flex-start" className={classes.sendMessageFooter}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => history.push('/account/contact')}
+                    >
+                      Edit Contact
+                    </Button>
+                  </Grid>}
               </Container>
             </Grid>
           </Grid>
