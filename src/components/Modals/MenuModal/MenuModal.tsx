@@ -6,17 +6,15 @@ import {
   Tabs,
   Typography
 } from '@material-ui/core'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { UIContext } from '../../../contexts/UIContext'
 import { useStyles } from './styles'
-import { serverUrl } from '../../../constants/urls'
 import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import MessageIcon from '@material-ui/icons/Message'
 import DriveEtaIcon from '@material-ui/icons/DriveEta'
 import CreateIcon from '@material-ui/icons/Create'
 import InfoIcon from '@material-ui/icons/Info'
-import SecurityIcon from '@material-ui/icons/Security'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import StoreIcon from '@material-ui/icons/Store'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
@@ -24,6 +22,7 @@ import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
 import ListAltIcon from '@material-ui/icons/ListAlt'
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone'
 
 const MenuModal = () => {
 
@@ -52,9 +51,9 @@ const MenuModal = () => {
     },
     {
       id: 2,
-      icon: <SecurityIcon className={classes.menuIcon} />,
-      text: 'Security',
-      path: '/account/security'
+      icon: <ContactPhoneIcon className={classes.menuIcon} />,
+      text: 'Contact info',
+      path: '/account/contact'
     },
     {
       id: 3,

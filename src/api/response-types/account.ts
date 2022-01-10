@@ -5,11 +5,6 @@ export interface UserInfoResponse {
   userName: string
 }
 
-export interface TalkResponse {
-  name: string;
-  lastMessage: string;
-}
-
 export interface LoginResponse {
   id: number,
   time: string,

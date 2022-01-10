@@ -27,63 +27,54 @@ const SellingCars = () => {
   }, [])
 
   const classes = useStyles()
-  let mainContent
-
-  if (isLoading) {
-    mainContent =
-      <CenteredContent>
-        <CircularProgress />
-      </CenteredContent>
-  }
-
-  else if (cars.length > 0 && !isModalOpen) {
-    mainContent =
-      <Grid container spacing={4} className={classes.grid}>
-
-        <Grid item xs={3}>
-          <FilterSidebar />
-        </Grid>
-
-        <Grid
-          item
-          container
-          spacing={2}
-          xs={9}
-        >
-          {
-            cars.map((car: CarOverview) => (
-              <Grid item xs={4}>
-                <CarCard
-                  key={car.id}
-                  id={car.id}
-                  maker={car.maker}
-                  model={car.model}
-                  kilometersTraveled={car.kilometersTraveled}
-                  makeDate={car.makedDate}
-                  makedDate={car.makedDate}
-                  price={car.price}
-                  location={car.address.localidade}
-                  picture={car.pictures[0]}
-                />
-              </Grid>
-            ))
-          }
-        </Grid>
-      </Grid>
-  }
-
-  else {
-    mainContent =
-      <CenteredContent>
-        <RemoveShoppingCartIcon fontSize="small" color="primary" />
-        <Typography variant="h6">Ops... looks like we haven't a selling car yet</Typography>
-      </CenteredContent>
-  }
-
   return (
     <>
       <AppNavbar showSearch />
-      {mainContent}
+
+      {isLoading &&
+        <CenteredContent>
+          <CircularProgress />
+        </CenteredContent>}
+
+      {!isLoading &&
+        <Grid container spacing={4} className={classes.grid}>
+
+          <Grid item xs={3}>
+            <FilterSidebar onSearchClick={() => fetchCars(access_token)} />
+          </Grid>
+
+          <Grid
+            item
+            container
+            spacing={2}
+            xs={9}
+          >
+            {cars.length > 0 &&
+              cars.map((car: CarOverview) => (
+                <Grid item xs={4}>
+                  <CarCard
+                    key={car.id}
+                    id={car.id}
+                    maker={car.maker}
+                    model={car.model}
+                    kilometersTraveled={car.kilometersTraveled}
+                    makeDate={car.makedDate}
+                    makedDate={car.makedDate}
+                    price={car.price}
+                    location={car.address.localidade}
+                    picture={car.pictures[0]}
+                  />
+                </Grid>
+              ))
+            }
+
+            {cars.length === 0 &&
+              <CenteredContent>
+                <RemoveShoppingCartIcon fontSize="small" color="primary" />
+                <Typography variant="h6">Ops... we didn't find any car</Typography>
+              </CenteredContent>}
+          </Grid>
+        </Grid>}
     </>
   )
 }

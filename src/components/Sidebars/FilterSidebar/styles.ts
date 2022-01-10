@@ -2,9 +2,16 @@ import styled from "styled-components"
 import { makeStyles } from "@material-ui/core"
 
 export const useStyles = makeStyles({
-  formControl: {
-    width: '100%',
+  filterField: {
+    margin: '2%'
   },
+  sidebar: {
+    backgroundColor: 'white',
+    padding: '5%'
+  },
+  searchButton: {
+    marginTop: '7%'
+  }
 })
 
 export const Sidebar = styled.div`

@@ -1,16 +1,15 @@
-type tokenObj = {
-  oid: string;
-  emails: string[];
-}
+import { User } from '../models/user'
 
-export function parseJwt(token: string): tokenObj {
+export function parseUserWithJwt(token: string): User {
   try {
     return JSON.parse(atob(token.split('.')[1]));
   }
 
   catch (e) {
-    let obj: tokenObj = {
+    let obj: User = {
       oid: '',
+      extension_phone: '',
+      name: '',
       emails: []
     }
 

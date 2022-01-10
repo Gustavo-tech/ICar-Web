@@ -23,9 +23,7 @@ const CarAddress = ({ onPreviousClick, onNextClick }: CarAddressProps) => {
   const [localZipCode, setLocalZipCode] = useState<string>('')
 
   const {
-    district,
-    location,
-    street,
+    address,
     fetchAddress
   } = useContext(CarContext)
 
@@ -82,7 +80,7 @@ const CarAddress = ({ onPreviousClick, onNextClick }: CarAddressProps) => {
               disabled
               variant="outlined"
               label="District"
-              value={district}
+              value={address.district}
             />
           </Grid>
 
@@ -92,7 +90,7 @@ const CarAddress = ({ onPreviousClick, onNextClick }: CarAddressProps) => {
               disabled
               variant="outlined"
               label="Street"
-              value={street}
+              value={address.street}
             />
           </Grid>
 
@@ -102,7 +100,7 @@ const CarAddress = ({ onPreviousClick, onNextClick }: CarAddressProps) => {
               disabled
               variant="outlined"
               label="Location"
-              value={location}
+              value={address.location}
             />
           </Grid>
         </Grid>

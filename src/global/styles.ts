@@ -18,7 +18,9 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     background-color: var(--white);
     overflow-x: hidden;
+  }
 
+  * {
     &::-webkit-scrollbar {
       width: 7px;
     }

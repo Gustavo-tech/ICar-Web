@@ -5,8 +5,8 @@ import {
   ListItemAvatar,
   ListItemText
 } from '@material-ui/core'
-import { AccountCircle } from '@material-ui/icons'
-import SecurityIcon from '@material-ui/icons/Security'
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone'
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline'
 import { useHistory, useLocation } from 'react-router'
 import { useStyles } from './styles'
 
@@ -14,7 +14,7 @@ const SidebarSettings = () => {
   let location = useLocation()
   let history = useHistory()
   const classes = useStyles({
-    securityActive: location.pathname === '/account/security',
+    contactActive: location.pathname === '/account/contact',
     accountActive: location.pathname === '/account/personal'
   })
 
@@ -23,19 +23,19 @@ const SidebarSettings = () => {
       <ListItem className={classes.accountItem} onClick={() => history.push('/account/personal')}>
         <ListItemAvatar>
           <Avatar className={classes.avatar}>
-            <AccountCircle className={classes.iconAccount} />
+            <PersonOutlineIcon className={classes.iconAccount} />
           </Avatar>
         </ListItemAvatar>
         <ListItemText className={classes.accountText} primary="Account" />
       </ListItem>
 
-      <ListItem className={classes.securityItem} onClick={() => history.push('/account/security')}>
+      <ListItem className={classes.contactItem} onClick={() => history.push('/account/contact')}>
         <ListItemAvatar>
           <Avatar className={classes.avatar}>
-            <SecurityIcon className={classes.iconSecurity} />
+            <ContactPhoneIcon className={classes.iconContact} />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText className={classes.securityText} primary="Security" />
+        <ListItemText className={classes.contactText} primary="Contact" />
       </ListItem>
     </List>
   )

@@ -15,8 +15,10 @@ export type newCar = {
   color: string;
   exchangeType: string;
   gasolineType: string;
-  zipCode: string;
-  street: string;
-  district: string;
-  location: string;
+  address: {
+    zipCode: string;
+    street: string;
+    district: string;
+    location: string;
+  }
 }

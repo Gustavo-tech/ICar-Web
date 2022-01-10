@@ -24,7 +24,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import SaveIcon from '@material-ui/icons/Save'
 import { useStyles } from './styles'
 import { UIContext } from '../../contexts/UIContext'
-import { parseJwt } from '../../utilities/token-utilities'
+import { parseUserWithJwt } from '../../utilities/token-utilities'
 
 type MatchProps = {
   id: string;

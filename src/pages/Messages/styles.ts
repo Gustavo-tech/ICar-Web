@@ -3,27 +3,25 @@ import { makeStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles({
   grid: {
-    marginTop: '2%'
-  },
-  sendIcon: {
-    fill: 'var(--red)',
-    cursor: 'pointer',
-    alignSelf: 'center',
-    justifySelf: 'center'
+    marginTop: '2%',
   },
   listIcon: {
     minWidth: '21%'
+  },
+  talkHeader: {
+    backgroundColor: 'white',
+    marginLeft: '0.4%',
+    border: '1px solid #B5B5B5',
+  },
+  talkHeaderTitle: {
+    fontSize: '3vh',
+    marginLeft: '20px'
+  },
+  carAvatar: {
+    marginRight: '20px',
+    cursor: 'pointer'
   }
 })
-
-export const TalkHeaderTitle = styled.h2`
-  color: var(--red);
-  font-family: 'Satisfy', cursive;
-  background-color: white;
-  border: 1px solid #B5B5B5;
-  margin: 0;
-  padding: 0.5% 4%;
-`
 
 export const TalkBody = styled.div`
   display: flex;
@@ -33,9 +31,10 @@ export const TalkBody = styled.div`
   flex-direction: column;
   background-color: transparent;
   width: 100%;
-  height: 87%;
+  height: 65vh;
   border: 1px solid #B5B5B5;
   padding: 4% 4% 1% 4%;
+  overflow-y: auto;
 `
 
 export const UserInfo = styled.div`
@@ -49,11 +48,11 @@ export const UserInfo = styled.div`
   width: 100%;
 `
 
-interface MessageProps {
+interface MessageContainerProps {
   sent: boolean;
 }
 
-export const Message = styled.div<MessageProps>`
+export const MessageContainer = styled.div<MessageContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;

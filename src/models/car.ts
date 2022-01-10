@@ -1,4 +1,5 @@
-import { Address } from './address'
+import { AddressPt } from './address'
+import { Contact } from './contact'
 
 export type CarOverview = {
   id: string;
@@ -10,7 +11,7 @@ export type CarOverview = {
   numberOfViews: number;
   kilometersTraveled: number;
   pictures: string[];
-  address: Address;
+  address: AddressPt;
 }
 
 export type Car = CarOverview & {
@@ -23,6 +24,5 @@ export type Car = CarOverview & {
   message: string;
   plate: string;
   typeOfExchange: 'Manual' | 'Automatic';
-  ownerEmail: string;
-  ownerPhone: string;
+  contact: Contact;
 }

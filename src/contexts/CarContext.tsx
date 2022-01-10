@@ -1,12 +1,24 @@
-import { createContext, ReactNode, useContext, useState } from 'react'
-import { getSellingCars, getUserCars, getCarWithId } from '../api/car/get'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState
+} from 'react'
+import {
+  getSellingCars,
+  getUserCars,
+  getCarWithId,
+  getMostSeenMakers,
+  getMostSeenCars
+} from '../api/car/get'
 import { newCar } from '../api/car/input-types'
 import { addCar } from '../api/car/post'
 import { fetchLocationsApi } from '../api/location/get'
-import CarSearchModel from '../api/search-models/car'
 import { UIContext } from './UIContext'
 import { updateNumberOfViews } from '../api/car/put'
 import { CarOverview } from '../models/car'
+import { Contact } from '../models/contact'
+import { AddressEn } from '../models/address'
 
 type CarContextProps = {
   // Individual car properties
@@ -28,17 +40,29 @@ type CarContextProps = {
   ipvaIsPaid: boolean;
   isLicensed: boolean;
   pictures: string[];
-  zipCode: string;
-  location: string;
-  district: string;
-  street: string;
-  ownerEmail: string;
-  ownerPhone: string;
+  address: AddressEn;
+  contact: Contact;
+  mostSeenMakers: string[];
+  mostSeenCars: CarOverview[];
+
+  // search properties
+  makerText: string;
+  modelText: string;
+  minPrice: number;
+  maxPrice: number;
+  maxKilometers: number;
+
+  // set search properties
+  setMakerText: (text: string) => void;
+  setModelText: (text: string) => void;
+  setMinPrice: (value: number) => void;
+  setMaxPrice: (value: number) => void;
+  setMaxKilometers: (value: number) => void;
 
   // Collections
   cars: CarOverview[];
 
-  // Indiviaual car setters
+  // Individual car setters
   setId: (id: string) => void;
   setPlate: (p: string) => void;
   setMaker: (m: string) => void;
@@ -56,27 +80,18 @@ type CarContextProps = {
   setIsArmored: (value: boolean) => void;
   setIpvaIsPaid: (value: boolean) => void;
   setIsLicensed: (value: boolean) => void;
-  setZipCode: (zipCode: string) => void;
-  setDistrict: (district: string) => void;
-  setLocation: (location: string) => void;
-  setStreet: (street: string) => void;
   setPictures: (pics: string[]) => void;
-  setOwnerEmail: (email: string) => void;
-  setOwnerPhone: (phone: string) => void;
+  setAddress: (address: AddressEn) => void;
+  setContact: (contact: Contact) => void;
 
   // API calls  
   fetchCars: (token: string) => void;
-  fetchCar: (id: string, userEmail: string, token: string) => void;
+  fetchCar: (id: string, token: string) => void;
   fetchMyCars: (token: string) => void;
   fetchAddress: (zipCode: string) => void;
+  fetchMostSeenCars: (quantity: number, token: string) => void;
+  fetchMostSeenMakers: (quantity: number, token: string) => void;
   createCar: (token: string) => void;
-
-  // Search methods
-  searchForMaker: (maker: string) => void;
-  searchForModel: (model: string) => void;
-  searchForMinPrice: (price: number) => void;
-  searchForMaxPrice: (price: number) => void;
-  searchForMaxKilometers: (km: number) => void;
 
   // Context functions
   reset: () => void;
@@ -108,19 +123,31 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   const [ipvaIsPaid, setIpvaIsPaid] = useState<boolean>(false)
   const [isLicensed, setIsLicensed] = useState<boolean>(false)
   const [pictures, setPictures] = useState<string[]>([])
-  const [location, setLocation] = useState<string>('')
-  const [district, setDistrict] = useState<string>('')
-  const [street, setStreet] = useState<string>('')
-  const [zipCode, setZipCode] = useState<string>('')
-  const [ownerEmail, setOwnerEmail] = useState<string>('')
-  const [ownerPhone, setOwnerPhone] = useState<string>('')
-  const [search, setSearch] = useState<CarSearchModel>(new CarSearchModel())
+  const [mostSeenMakers, setMostSeenMakers] = useState<string[]>([])
+  const [mostSeenCars, setMostSeenCars] = useState<CarOverview[]>([])
+  const [address, setAddress] = useState<AddressEn>({
+    district: '',
+    location: '',
+    street: '',
+    zipCode: ''
+  })
+  const [contact, setContact] = useState<Contact>({
+    emailAddress: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+  })
+  const [makerText, setMakerText] = useState<string>('')
+  const [modelText, setModelText] = useState<string>('')
+  const [minPrice, setMinPrice] = useState<number>(0)
+  const [maxPrice, setMaxPrice] = useState<number>(0)
+  const [maxKilometers, setMaxKilometers] = useState<number>(0)
 
   const { setIsLoading, setSuccess } = useContext(UIContext)
 
   function fetchCars(token: string): void {
     setIsLoading(true)
-    getSellingCars(token, search)
+    getSellingCars(makerText, modelText, minPrice, maxPrice, maxKilometers, token)
       .then(({ data }) => {
         setCars(data)
       })
@@ -133,7 +160,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       })
   }
 
-  function fetchCar(id: string, userEmail: string, token: string,): void {
+  function fetchCar(id: string, token: string,): void {
     setIsLoading(true)
     getCarWithId(token, id)
       .then(({ data }) => {
@@ -153,15 +180,16 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
         setNumberOfViews(data.numberOfViews)
         setPlate(data.plate)
         setExchangeType(data.typeOfExchange)
-        setZipCode(data.address.cep)
-        setLocation(data.address.localidade)
-        setStreet(data.address.logradouro)
-        setDistrict(data.address.bairro)
+        setAddress({
+          ...address,
+          district: data.address.bairro,
+          street: data.address.logradouro,
+          location: data.address.localidade,
+          zipCode: data.address.cep
+        })
         setPictures(data.pictures)
-        setOwnerEmail(data.ownerEmail)
-        setOwnerPhone(data.ownerPhone)
-
-        increaseNumberOfViews(data.id, userEmail, token)
+        setContact(data.contact)
+        increaseNumberOfViews(data.id, token)
       })
       .catch(error => {
         console.error(error)
@@ -173,7 +201,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
   function fetchMyCars(token: string): void {
     setIsLoading(true)
-    getUserCars(token)
+    getUserCars(makerText, modelText, minPrice, maxPrice, maxKilometers, token)
       .then(({ data }) => {
         setCars(data)
       })
@@ -188,12 +216,15 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
   async function fetchAddress(code: string | undefined): Promise<void> {
     if (code?.length === 8) {
-      setZipCode(code)
       const resp = await fetchLocationsApi(code)
       const { data } = resp
-      setDistrict(data.bairro)
-      setStreet(data.logradouro)
-      setLocation(data.localidade)
+      setAddress({
+        ...address,
+        zipCode: code,
+        district: data.bairro,
+        street: data.logradouro,
+        location: data.localidade
+      })
     }
   }
 
@@ -216,43 +247,41 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       })
   }
 
-  function increaseNumberOfViews(carId: string, userEmail: string, token: string): void {
-    if (ownerEmail !== userEmail) {
-      updateNumberOfViews(carId, token)
-        .catch(error => {
-          console.error(error)
-        })
-    }
+  function increaseNumberOfViews(carId: string, token: string): void {
+    updateNumberOfViews(carId, token)
+      .catch(error => {
+        console.error(error)
+      })
   }
 
-  function searchForMaker(maker: string) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.maker = maker
-    setSearch(newSearch)
+  function fetchMostSeenCars(quantity: number, token: string): void {
+    setIsLoading(true)
+    getMostSeenCars(quantity, token)
+      .then(response => {
+        const { data } = response
+        setMostSeenCars(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
-  function searchForModel(model: string) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.model = model
-    setSearch(newSearch)
-  }
-
-  function searchForMinPrice(price: number) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.minPrice = price
-    setSearch(newSearch)
-  }
-
-  function searchForMaxPrice(price: number) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.maxPrice = price
-    setSearch(newSearch)
-  }
-
-  function searchForMaxKilometers(km: number) {
-    let newSearch: CarSearchModel = search.clone(search)
-    newSearch.maxKilometers = km
-    setSearch(newSearch)
+  function fetchMostSeenMakers(quantity: number, token: string): void {
+    setIsLoading(true)
+    getMostSeenMakers(quantity, token)
+      .then(response => {
+        const { data } = response
+        setMostSeenMakers(data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   function createCarToPost(): newCar {
@@ -272,10 +301,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       exchangeType: exchangeType!,
       color: color!,
       gasolineType: gasolineType!,
-      zipCode: zipCode!,
-      location: location!,
-      district: district!,
-      street: street!,
+      address: address,
       pictures
     }
   }
@@ -298,11 +324,17 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     setIpvaIsPaid(false)
     setIsLicensed(false)
     setPictures([])
-    setLocation('')
-    setDistrict('')
-    setStreet('')
-    setZipCode('')
-    setSearch(new CarSearchModel())
+    setAddress({
+      district: '',
+      location: '',
+      street: '',
+      zipCode: ''
+    })
+    setMakerText('')
+    setModelText('')
+    setMinPrice(0)
+    setMaxPrice(0)
+    setMaxKilometers(0)
   }
 
   return (
@@ -327,12 +359,24 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       isLicensed,
       isArmored,
       pictures,
-      zipCode,
-      district,
-      location,
-      street,
-      ownerEmail,
-      ownerPhone,
+      address,
+      contact,
+      mostSeenCars,
+      mostSeenMakers,
+
+      // search properties
+      makerText,
+      modelText,
+      minPrice,
+      maxPrice,
+      maxKilometers,
+
+      // set search properties
+      setMakerText,
+      setModelText,
+      setMinPrice,
+      setMaxPrice,
+      setMaxKilometers,
 
       // set states
       setId,
@@ -353,27 +397,20 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       setIsArmored,
       setPlate,
       setPictures,
-      setZipCode,
-      setDistrict,
-      setLocation,
-      setStreet,
-      setOwnerEmail,
-      setOwnerPhone,
+      setAddress,
+      setContact,
 
       // api calls
-      searchForMaker,
-      searchForMaxKilometers,
-      searchForMaxPrice,
-      searchForMinPrice,
-      searchForModel,
       fetchCars,
       fetchMyCars,
       fetchAddress,
       fetchCar,
+      fetchMostSeenCars,
+      fetchMostSeenMakers,
       createCar,
 
       // context functions
-      reset,
+      reset
     }}>
       {children}
     </CarContext.Provider>
