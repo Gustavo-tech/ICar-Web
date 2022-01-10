@@ -1,5 +1,16 @@
-import { createContext, ReactNode, useContext, useState } from 'react'
-import { getSellingCars, getUserCars, getCarWithId, getMostSeenMakers, getMostSeenCars } from '../api/car/get'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState
+} from 'react'
+import {
+  getSellingCars,
+  getUserCars,
+  getCarWithId,
+  getMostSeenMakers,
+  getMostSeenCars
+} from '../api/car/get'
 import { newCar } from '../api/car/input-types'
 import { addCar } from '../api/car/post'
 import { fetchLocationsApi } from '../api/location/get'
