@@ -26,6 +26,9 @@ export const useStyles = makeStyles({
   label: {
     color: '#696977',
     fontSize: '2.4vh'
+  },
+  carDetailsFooter: {
+    marginTop: '4%'
   }
 })
 

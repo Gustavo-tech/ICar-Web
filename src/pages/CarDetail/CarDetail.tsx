@@ -35,11 +35,15 @@ import { MessageContext } from '../../contexts/MessageContext'
 import { ContactContext } from '../../contexts/ContactContext'
 import CarGallery from '../../components/CarGallery/CarGallery'
 import { parseUserWithJwt } from '../../utilities/token-utilities'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
+import { deleteCar } from '../../api/car/delete'
 
 const CarDetail = () => {
 
   const [showContactWarning, setShowContactWarning] = useState<boolean>(false)
   const [userIsOwner, setUserIsOwner] = useState<boolean>(false)
+  const [deleteCarClicked, setDeleteCarClicked] = useState<boolean>(false)
 
   const history = useHistory()
 
@@ -106,6 +110,15 @@ const CarDetail = () => {
       setShowContactWarning(true)
   }
 
+  function handleDeleteCar(): void {
+    deleteCar(id, access_token)
+      .then(response => {
+        if (response.status === 200) {
+          history.push('/mycars')
+        }
+      })
+  }
+
   const classes = useStyles()
   return (
     <Page>
@@ -142,6 +155,35 @@ const CarDetail = () => {
                 onClick={() => history.push('/account/contact')}
               >
                 Create account
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={deleteCarClicked}
+            onClose={() => setDeleteCarClicked(false)}
+          >
+            <DialogContent>
+              <DialogContentText>
+                If you delete this car, you won't be able to recover it, you will
+                need to register it again.
+              </DialogContentText>
+            </DialogContent>
+
+            <DialogActions>
+              <Button
+                variant="outlined"
+                onClick={() => setDeleteCarClicked(false)}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleDeleteCar}
+              >
+                Confirm
               </Button>
             </DialogActions>
           </Dialog>
@@ -211,6 +253,31 @@ const CarDetail = () => {
                   className={classes.description}
                   value={message}
                 />
+
+                {userIsOwner &&
+                  <Grid container className={classes.carDetailsFooter} spacing={2}>
+                    <Grid item>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        endIcon={<EditIcon />}
+                      >
+                        Edit Car
+                      </Button>
+                    </Grid>
+
+                    <Grid item>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        endIcon={<DeleteIcon />}
+                        onClick={() => setDeleteCarClicked(true)}
+                      >
+                        Delete Car
+                      </Button>
+                    </Grid>
+
+                  </Grid>}
               </Container>
             </Grid>
 
