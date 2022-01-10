@@ -5,6 +5,7 @@ import AppNavbar from '../../components/Navbar/Navbar'
 import { UIContext } from '../../contexts/UIContext'
 import { CarContext } from '../../contexts/CarContext'
 import {
+  CarColor,
   CarName,
   NameHeader,
   Page,
@@ -24,7 +25,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  TextField
+  TextField,
+  Typography
 } from '@material-ui/core'
 import EmailIcon from '@material-ui/icons/Email'
 import PhoneIcon from '@material-ui/icons/Phone'
@@ -55,6 +57,10 @@ const CarDetail = () => {
     message,
     contact,
     pictures,
+    price,
+    ipvaIsPaid,
+    isLicensed,
+    isArmored,
     fetchCar,
     reset
   } = useContext(CarContext)
@@ -146,7 +152,10 @@ const CarDetail = () => {
             <Grid item xs={8}>
               <Container className={classes.infoContainer}>
                 <NameHeader>
-                  <CarName>{maker}</CarName> <CarName inRed>{model}</CarName>
+                  <div>
+                    <CarName>{maker}</CarName> <CarName inRed>{model}</CarName>
+                  </div>
+                  <CarName>$ {price}</CarName>
                 </NameHeader>
 
                 <Grid container>
@@ -169,7 +178,8 @@ const CarDetail = () => {
 
                 <Grid container>
                   <Grid item xs={3}>
-                    <LabelWithValue label="Color" value={color} />
+                    <Typography display="block" className={classes.label}>Color</Typography>
+                    <CarColor color={color} />
                   </Grid>
 
                   <Grid item xs={3}>
@@ -177,25 +187,17 @@ const CarDetail = () => {
                   </Grid>
 
                   <Grid item xs={3}>
-                    <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
+                    <LabelWithValue label="Ipva Is Paid" value={getBoolAnswer(ipvaIsPaid)} />
                   </Grid>
 
                   <Grid item xs={3}>
-                    <LabelWithValue label="Year" value={`${makeDate}/${makedDate}`} />
+                    <LabelWithValue label="Is Licensed" value={getBoolAnswer(isLicensed)} />
                   </Grid>
                 </Grid>
 
                 <Grid container>
                   <Grid item xs={3}>
-                    <LabelWithValue label="KM" value={kilometers.toString()} />
-                  </Grid>
-
-                  <Grid item xs={3}>
-                    <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
-                  </Grid>
-
-                  <Grid item xs={3}>
-                    <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
+                    <LabelWithValue label="Is Armored" value={getBoolAnswer(isArmored)} />
                   </Grid>
                 </Grid>
 
