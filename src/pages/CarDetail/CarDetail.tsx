@@ -31,6 +31,7 @@ import PhoneIcon from '@material-ui/icons/Phone'
 import PersonIcon from '@material-ui/icons/Person'
 import { MessageContext } from '../../contexts/MessageContext'
 import { ContactContext } from '../../contexts/ContactContext'
+import CarGallery from '../../components/CarGallery/CarGallery'
 
 const CarDetail = () => {
 
@@ -51,6 +52,7 @@ const CarDetail = () => {
     acceptsChange,
     message,
     contact,
+    pictures,
     fetchCar
   } = useContext(CarContext)
   const {
@@ -85,6 +87,7 @@ const CarDetail = () => {
   }
 
   const classes = useStyles()
+  console.log(pictures)
   return (
     <Page>
       <AppNavbar showSearch />
@@ -124,8 +127,9 @@ const CarDetail = () => {
             </DialogActions>
           </Dialog>
 
-          <Grid container spacing={3} className={classes.mainGrid}>
+          <CarGallery pictures={pictures} />
 
+          <Grid container spacing={3} className={classes.mainGrid}>
             <Grid item xs={8}>
               <Container className={classes.infoContainer}>
                 <NameHeader>

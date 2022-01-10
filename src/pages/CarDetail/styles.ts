@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles({
   mainGrid: {
-    marginTop: '3%',
     padding: '1%',
   },
   infoContainer: {
