@@ -64,6 +64,10 @@ const Messages = () => {
   }, [])
 
   useEffect(() => {
+    document.addEventListener('keypress', handleKeyPressed)
+  }, [])
+
+  useEffect(() => {
     if (interactionSelected.subjectId !== '') {
       getCarWithId(access_token, interactionSelected.subjectId)
         .then(response => {
@@ -106,6 +110,12 @@ const Messages = () => {
 
     connect()
   }, [])
+
+  function handleKeyPressed(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      handleSendMessageClick()
+    }
+  }
 
   function handleInteractionClick(interaction: Interaction): void {
     setInteractionSelected(interaction)
