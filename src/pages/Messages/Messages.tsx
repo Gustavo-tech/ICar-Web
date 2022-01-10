@@ -60,6 +60,10 @@ const Messages = () => {
   }, [])
 
   useEffect(() => {
+    setMessages([])
+  }, [])
+
+  useEffect(() => {
     if (interactionSelected.subjectId !== '') {
       getCarWithId(access_token, interactionSelected.subjectId)
         .then(response => {
