@@ -32,10 +32,12 @@ import PersonIcon from '@material-ui/icons/Person'
 import { MessageContext } from '../../contexts/MessageContext'
 import { ContactContext } from '../../contexts/ContactContext'
 import CarGallery from '../../components/CarGallery/CarGallery'
+import { parseUserWithJwt } from '../../utilities/token-utilities'
 
 const CarDetail = () => {
 
   const [showContactWarning, setShowContactWarning] = useState<boolean>(false)
+  const [userIsOwner, setUserIsOwner] = useState<boolean>(false)
 
   const history = useHistory()
 
@@ -71,6 +73,13 @@ const CarDetail = () => {
     fetchMyContact(access_token)
   }, [])
 
+  useEffect(() => {
+    const { emails } = parseUserWithJwt(access_token)
+    const userEmail = emails[0].toLocaleLowerCase()
+    const carEmail = contact.emailAddress.toLowerCase()
+    setUserIsOwner(userEmail === carEmail)
+  }, [access_token])
+
   function getBoolAnswer(value?: boolean): string {
     if (value)
       return "Yes"
@@ -87,7 +96,6 @@ const CarDetail = () => {
   }
 
   const classes = useStyles()
-  console.log(pictures)
   return (
     <Page>
       <AppNavbar showSearch />
@@ -229,25 +237,28 @@ const CarDetail = () => {
                   </ListItem>
                 </List>
 
-                <TextField
-                  label="Message"
-                  variant="outlined"
-                  value={messageText}
-                  onChange={(e) => setMessageText(e.target.value)}
-                  rows={7}
-                  multiline
-                  fullWidth
-                />
+                {!userIsOwner &&
+                  <>
+                    <TextField
+                      label="Message"
+                      variant="outlined"
+                      value={messageText}
+                      onChange={(e) => setMessageText(e.target.value)}
+                      rows={7}
+                      multiline
+                      fullWidth
+                    />
 
-                <Grid container justify="flex-start" className={classes.sendMessageFooter}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSendMessageClick}
-                  >
-                    Send
-                  </Button>
-                </Grid>
+                    <Grid container justify="flex-start" className={classes.sendMessageFooter}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSendMessageClick}
+                      >
+                        Send
+                      </Button>
+                    </Grid>
+                  </>}
               </Container>
             </Grid>
           </Grid>

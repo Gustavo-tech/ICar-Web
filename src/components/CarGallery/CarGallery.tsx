@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
@@ -15,20 +14,24 @@ const CarGallery = ({ pictures }: CarGalleryProps) => {
   const [localPictures, setLocalPictures] = useState<string[]>([])
 
   useEffect(() => {
-    const newPictures = pictures.slice(index, 3)
+    const newPictures = pictures.slice(index, index + 3)
     setLocalPictures(newPictures)
-  }, [index])
+  }, [index, pictures])
 
   function decreaseIndex(): void {
-    if (index > 0) {
+    if (index > 0)
       setIndex(index - 1)
-    }
+
+    else
+      setIndex(pictures.length - 3)
   }
 
   function increaseIndex(): void {
-    if (index < pictures.length - 2) {
+    if (index < pictures.length - 3)
       setIndex(index + 1)
-    }
+
+    else
+      setIndex(0)
   }
 
   const classes = useStyles()
