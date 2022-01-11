@@ -65,19 +65,19 @@ const MenuModal = () => {
 
   const carItems = [
     {
-      id: 1,
+      id: 4,
       icon: <AccountCircleIcon className={classes.menuIcon} />,
       text: 'My cars',
       path: '/mycars'
     },
     {
-      id: 2,
+      id: 5,
       icon: <StoreIcon className={classes.menuIcon} />,
       text: 'Buy',
       path: '/selling'
     },
     {
-      id: 3,
+      id: 6,
       icon: <MonetizationOnIcon className={classes.menuIcon} />,
       text: 'Sell',
       path: '/car/sell'
@@ -86,19 +86,19 @@ const MenuModal = () => {
 
   const newsItems = [
     {
-      id: 1,
+      id: 7,
       icon: <PermContactCalendarIcon className={classes.menuIcon} />,
       text: 'My News',
       path: '/mynews'
     },
     {
-      id: 2,
+      id: 8,
       icon: <CreateIcon className={classes.menuIcon} />,
       text: 'Create',
       path: '/news/create '
     },
     {
-      id: 3,
+      id: 9,
       icon: <ListAltIcon className={classes.menuIcon} />,
       text: 'All',
       path: '/news'
@@ -107,7 +107,7 @@ const MenuModal = () => {
 
   const messageItems = [
     {
-      id: 1,
+      id: 10,
       icon: <ChatBubbleOutlineIcon className={classes.menuIcon} />,
       text: 'Chat',
       path: '/messages'
