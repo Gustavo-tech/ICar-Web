@@ -10,8 +10,8 @@ import {
   Form,
   useStyles
 } from './styles'
-import { removeAllCharFromString } from '../../../../utilities/string-utilities'
-import { CarContext } from '../../../../contexts/CarContext'
+import { removeAllCharFromString } from '../../utilities/string-utilities'
+import { CarContext } from '../../contexts/CarContext'
 
 type CarAddressProps = {
   onNextClick: () => void;

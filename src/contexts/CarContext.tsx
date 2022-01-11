@@ -15,7 +15,7 @@ import { newCar } from '../api/car/input-types'
 import { addCar } from '../api/car/post'
 import { fetchLocationsApi } from '../api/location/get'
 import { UIContext } from './UIContext'
-import { updateNumberOfViews } from '../api/car/put'
+import { updateCar, updateNumberOfViews } from '../api/car/put'
 import { CarOverview } from '../models/car'
 import { Contact } from '../models/contact'
 import { AddressEn } from '../models/address'
@@ -48,16 +48,16 @@ type CarContextProps = {
   // search properties
   makerText: string;
   modelText: string;
-  minPrice: number;
-  maxPrice: number;
-  maxKilometers: number;
+  minPrice: number | undefined;
+  maxPrice: number | undefined;
+  maxKilometers: number | undefined;
 
   // set search properties
   setMakerText: (text: string) => void;
   setModelText: (text: string) => void;
   setMinPrice: (value: number) => void;
   setMaxPrice: (value: number) => void;
-  setMaxKilometers: (value: number) => void;
+  setMaxKilometers: (value: number | undefined) => void;
 
   // Collections
   cars: CarOverview[];
@@ -92,6 +92,7 @@ type CarContextProps = {
   fetchMostSeenCars: (quantity: number, token: string) => void;
   fetchMostSeenMakers: (quantity: number, token: string) => void;
   createCar: (token: string) => void;
+  updateCarProperties: (token: string, callback?: () => any) => void;
 
   // Context functions
   reset: () => void;
@@ -139,9 +140,9 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   })
   const [makerText, setMakerText] = useState<string>('')
   const [modelText, setModelText] = useState<string>('')
-  const [minPrice, setMinPrice] = useState<number>(0)
-  const [maxPrice, setMaxPrice] = useState<number>(0)
-  const [maxKilometers, setMaxKilometers] = useState<number>(0)
+  const [minPrice, setMinPrice] = useState<number | undefined>(undefined)
+  const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined)
+  const [maxKilometers, setMaxKilometers] = useState<number | undefined>(undefined)
 
   const { setIsLoading, setSuccess } = useContext(UIContext)
 
@@ -163,10 +164,12 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   function fetchCar(id: string, token: string,): void {
     setIsLoading(true)
     getCarWithId(token, id)
-      .then(({ data }) => {
+      .then(response => {
+        const { data } = response
         setId(data.id)
         setMaker(data.maker)
         setModel(data.model)
+        setPrice(data.price)
         setAcceptsChange(data.acceptsChange)
         setColor(data.color)
         setGasolineType(data.gasolineType)
@@ -202,7 +205,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
   function fetchMyCars(token: string): void {
     setIsLoading(true)
     getUserCars(makerText, modelText, minPrice, maxPrice, maxKilometers, token)
-      .then(({ data }) => {
+      .then(response => {
+        const { data } = response
         setCars(data)
       })
       .catch(error => {
@@ -238,6 +242,37 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
 
         else
           setSuccess(false)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }
+
+  function updateCarProperties(token: string, callback?: () => any): void {
+    const data = {
+      id: id,
+      kilometersTraveled: kilometers,
+      price: price,
+      message: message,
+      acceptsChange: acceptsChange,
+      ipvaIsPaid: ipvaIsPaid,
+      isLicensed: isLicensed,
+      isArmored: isArmored,
+      zipCode: address.zipCode,
+      location: address.location,
+      district: address.district,
+      street: address.street,
+      pictures: pictures
+    }
+
+    setIsLoading(true)
+    updateCar(data, token)
+      .then(response => {
+        if (response.status === 200 && callback)
+          callback()
       })
       .catch(error => {
         console.error(error)
@@ -333,8 +368,8 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
     setMakerText('')
     setModelText('')
     setMinPrice(0)
-    setMaxPrice(0)
-    setMaxKilometers(0)
+    setMaxPrice(undefined)
+    setMaxKilometers(undefined)
   }
 
   return (
@@ -408,6 +443,7 @@ const CarContextProvider = ({ children }: CarProviderProps) => {
       fetchMostSeenCars,
       fetchMostSeenMakers,
       createCar,
+      updateCarProperties,
 
       // context functions
       reset

@@ -13,17 +13,18 @@ import AssignmentIcon from '@material-ui/icons/Assignment'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import { useStyles, Form } from './styles'
-import { CarContext } from '../../../../contexts/CarContext'
-import { capitalizeText } from '../../../../utilities/string-utilities'
-import CarValidator from '../../../../utilities/validators/car-validator'
-import { getCarColors } from '../../../../constants/colors'
+import { CarContext } from '../../contexts/CarContext'
+import { capitalizeText } from '../../utilities/string-utilities'
+import CarValidator from '../../utilities/validators/car-validator'
+import { getCarColors } from '../../constants/colors'
 
 type CarDetailsProps = {
+  isUpdate: boolean;
   onNextClick: () => void;
   onBackClick: () => void;
 }
 
-const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
+const CarDetails = ({ isUpdate, onNextClick, onBackClick }: CarDetailsProps) => {
 
   const [plateIsValid, setPlateIsValid] = useState(true)
   const [makeDateIsValid, setMakeDateIsValid] = useState(true)
@@ -240,6 +241,7 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
               fullWidth
               required
               onChange={(e) => capitalizeAndSet(e.target.value, setMaker)}
+              disabled={isUpdate}
             />
           </Grid>
 
@@ -251,6 +253,7 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
               fullWidth
               required
               onChange={(e) => capitalizeAndSet(e.target.value, setModel)}
+              disabled={isUpdate}
             />
           </Grid>
         </Grid>
@@ -266,6 +269,7 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
               error={!plateIsValid}
               helperText={!plateIsValid ? 'This plate is not valid' : ''}
               required
+              disabled={isUpdate}
             />
           </Grid>
           <Grid item xs={3}>
@@ -278,6 +282,7 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
               error={!makeDateIsValid}
               helperText={!makeDateIsValid ? 'This year is not valid' : ''}
               required
+              disabled={isUpdate}
             />
           </Grid>
 
@@ -291,6 +296,7 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
               error={!makedDateIsValid}
               helperText={!makedDateIsValid ? 'This year is not valid' : ''}
               required
+              disabled={isUpdate}
             />
           </Grid>
 
@@ -323,7 +329,7 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
           </Grid>
 
           <Grid item xs={3}>
-            <FormControl variant="outlined" fullWidth required>
+            <FormControl variant="outlined" fullWidth required disabled={isUpdate}>
               <InputLabel id="exchange-type-label">Exchange</InputLabel>
               <Select
                 labelId="exchange-type-label"
@@ -339,7 +345,7 @@ const CarDetails = ({ onNextClick, onBackClick }: CarDetailsProps) => {
           </Grid>
 
           <Grid item xs={3}>
-            <FormControl variant="outlined" fullWidth required>
+            <FormControl variant="outlined" fullWidth required disabled={isUpdate}>
               <InputLabel id="gasoline-type-label">Gasoline type</InputLabel>
               <Select
                 labelId="gasoline-type-label"

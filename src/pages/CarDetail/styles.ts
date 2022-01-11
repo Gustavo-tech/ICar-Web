@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles({
   mainGrid: {
-    marginTop: '3%',
     padding: '1%',
   },
   infoContainer: {
@@ -23,6 +22,13 @@ export const useStyles = makeStyles({
   },
   description: {
     marginTop: '5%'
+  },
+  label: {
+    color: '#696977',
+    fontSize: '2.4vh'
+  },
+  carDetailsFooter: {
+    marginTop: '4%'
   }
 })
 
@@ -32,7 +38,22 @@ export const Page = styled.div`
 `
 
 export const NameHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
   margin-bottom: 3%;
+`
+
+type CarColorProps = {
+  color: string;
+}
+
+export const CarColor = styled.div<CarColorProps>`
+  display: block;
+  width: 70%;
+  height: 4vh;
+  background-color: ${props => props.color};
 `
 
 type CarNameProps = {

@@ -6,5 +6,8 @@ export const useStyles = makeStyles({
   },
   title: {
     marginTop: '4%'
+  },
+  noNewsIcon: {
+    fontSize: '17vh'
   }
 })

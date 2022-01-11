@@ -8,7 +8,7 @@ import AppNavbar from '../../components/Navbar/Navbar'
 import FilterSidebar from '../../components/Sidebars/FilterSidebar/FilterSidebar'
 import { CarContext } from '../../contexts/CarContext'
 import { UIContext } from '../../contexts/UIContext'
-import { Car, CarOverview } from '../../models/car'
+import { CarOverview } from '../../models/car'
 import {
   CenteredContent,
   useStyles
@@ -17,7 +17,7 @@ import { Typography } from '@material-ui/core'
 
 const SellingCars = () => {
 
-  const { isLoading, isModalOpen } = useContext(UIContext)
+  const { isLoading } = useContext(UIContext)
   const { fetchCars, cars } = useContext(CarContext)
   const { oidcUser } = useReactOidc()
   const { access_token } = oidcUser
@@ -50,22 +50,23 @@ const SellingCars = () => {
             xs={9}
           >
             {cars.length > 0 &&
-              cars.map((car: CarOverview) => (
-                <Grid item xs={4}>
-                  <CarCard
-                    key={car.id}
-                    id={car.id}
-                    maker={car.maker}
-                    model={car.model}
-                    kilometersTraveled={car.kilometersTraveled}
-                    makeDate={car.makedDate}
-                    makedDate={car.makedDate}
-                    price={car.price}
-                    location={car.address.localidade}
-                    picture={car.pictures[0]}
-                  />
-                </Grid>
-              ))
+              cars.map((car: CarOverview) => {
+                return (
+                  <Grid key={car.id} item xs={4}>
+                    <CarCard
+                      id={car.id}
+                      maker={car.maker}
+                      model={car.model}
+                      kilometersTraveled={car.kilometersTraveled}
+                      makeDate={car.makedDate}
+                      makedDate={car.makedDate}
+                      price={car.price}
+                      location={car.address.localidade}
+                      picture={car.pictures[0]}
+                    />
+                  </Grid>
+                )
+              })
             }
 
             {cars.length === 0 &&

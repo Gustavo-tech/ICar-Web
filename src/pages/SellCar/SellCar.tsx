@@ -5,10 +5,10 @@ import StepLabel from '@material-ui/core/StepLabel'
 import Container from '@material-ui/core/Container'
 import AppNavbar from '../../components/Navbar/Navbar'
 import { useStyles } from './styles'
-import CarPictures from './components/CarPictures/CarPictures'
-import CarDetails from './components/CarDetails/CarDetails'
-import CarAddress from './components/CarAddress/CarAddress'
-import CarResult from './components/CarResult/CarResult'
+import CarPictures from '../../components/CarPictures/CarPictures'
+import CarDetails from '../../components/CarDetails/CarDetails'
+import CarAddress from '../../components/CarAddress/CarAddress'
+import CarResult from '../../components/CarResult/CarResult'
 import { CarContext } from '../../contexts/CarContext'
 import { ContactContext } from '../../contexts/ContactContext'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
@@ -106,7 +106,11 @@ const SellCar = () => {
           <CarPictures onNextClick={handleNextClick} />}
 
         {step === 1 &&
-          <CarDetails onNextClick={handleNextClick} onBackClick={handleBackClick} />}
+          <CarDetails
+            onNextClick={handleNextClick}
+            onBackClick={handleBackClick}
+            isUpdate={false}
+          />}
 
         {step === 2 &&
           <CarAddress onNextClick={handleCreateClick} onPreviousClick={handleBackClick} />}

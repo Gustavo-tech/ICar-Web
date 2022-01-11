@@ -23,6 +23,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import UIProvider from './contexts/UIContext'
 import Authenticating from './pages/Authenticating/Authenticating'
 import SellingCars from './pages/Selling/Selling'
+import CarEdit from './pages/CarEdit/CarEdit'
 import CarContextProvider from './contexts/CarContext'
 import NewsContextProvider from './contexts/NewsContext'
 import NewsDetail from './pages/NewsDetail/NewsDetail'
@@ -88,6 +89,7 @@ const App = () => (
                     <Route exact path='/selling' component={withOidcSecure(SellingCars)} />
                     <Route exact path='/selling/:id' component={withOidcSecure(CarDetail)} />
                     <Route exact path='/car/sell' component={withOidcSecure(SellCar)} />
+                    <Route exact path='/car/edit/:id' component={withOidcSecure(CarEdit)} />
 
                     {/* Chat routes */}
                     <Route exact path='/messages' component={withOidcSecure(Messages)} />

@@ -1,5 +1,7 @@
 import { useEffect, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
+  Button,
   Container,
   Grid,
   Typography
@@ -11,6 +13,8 @@ import CenteredSpinner from '../../components/CenteredSpinner/CenteredSpinner'
 import { useReactOidc } from '@axa-fr/react-oidc-context'
 import NewsCard from '../../components/Cards/NewsCard/NewsCard'
 import { useStyles } from './styles'
+import CenteredContent from '../../components/CenteredContent/CenteredContent'
+import PersonalVideoIcon from '@material-ui/icons/PersonalVideo'
 
 const MyNews = () => {
 
@@ -18,6 +22,8 @@ const MyNews = () => {
   const { isLoading } = useContext(UIContext)
   const { oidcUser } = useReactOidc()
   const { access_token } = oidcUser
+
+  const history = useHistory()
 
   useEffect(() => {
     fetchMyNews(access_token)
@@ -31,7 +37,20 @@ const MyNews = () => {
       {isLoading &&
         <CenteredSpinner />}
 
-      {!isLoading &&
+      {!isLoading && news.length === 0 &&
+        <CenteredContent>
+          <PersonalVideoIcon className={classes.noNewsIcon} />
+          <Typography variant="h5">You don't have any news</Typography>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => history.push('/news/create')}
+          >
+            Add my first news
+          </Button>
+        </CenteredContent>}
+
+      {!isLoading && news.length > 0 &&
         <>
           <Typography
             variant="h5"

@@ -5,6 +5,7 @@ import AppNavbar from '../../components/Navbar/Navbar'
 import { UIContext } from '../../contexts/UIContext'
 import { CarContext } from '../../contexts/CarContext'
 import {
+  CarColor,
   CarName,
   NameHeader,
   Page,
@@ -24,17 +25,25 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  TextField
+  TextField,
+  Typography
 } from '@material-ui/core'
 import EmailIcon from '@material-ui/icons/Email'
 import PhoneIcon from '@material-ui/icons/Phone'
 import PersonIcon from '@material-ui/icons/Person'
 import { MessageContext } from '../../contexts/MessageContext'
 import { ContactContext } from '../../contexts/ContactContext'
+import CarGallery from '../../components/CarGallery/CarGallery'
+import { parseUserWithJwt } from '../../utilities/token-utilities'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
+import { deleteCar } from '../../api/car/delete'
 
 const CarDetail = () => {
 
   const [showContactWarning, setShowContactWarning] = useState<boolean>(false)
+  const [userIsOwner, setUserIsOwner] = useState<boolean>(false)
+  const [deleteCarClicked, setDeleteCarClicked] = useState<boolean>(false)
 
   const history = useHistory()
 
@@ -51,7 +60,13 @@ const CarDetail = () => {
     acceptsChange,
     message,
     contact,
-    fetchCar
+    pictures,
+    price,
+    ipvaIsPaid,
+    isLicensed,
+    isArmored,
+    fetchCar,
+    reset
   } = useContext(CarContext)
   const {
     messageText,
@@ -67,7 +82,18 @@ const CarDetail = () => {
   useEffect(() => {
     fetchCar(id, access_token)
     fetchMyContact(access_token)
+
+    return () => {
+      reset()
+    }
   }, [])
+
+  useEffect(() => {
+    const { emails } = parseUserWithJwt(access_token)
+    const userEmail = emails[0].toLocaleLowerCase()
+    const carEmail = contact.emailAddress.toLowerCase()
+    setUserIsOwner(userEmail === carEmail)
+  }, [access_token, contact])
 
   function getBoolAnswer(value?: boolean): string {
     if (value)
@@ -82,6 +108,15 @@ const CarDetail = () => {
 
     else
       setShowContactWarning(true)
+  }
+
+  function handleDeleteCar(): void {
+    deleteCar(id, access_token)
+      .then(response => {
+        if (response.status === 200) {
+          history.push('/mycars')
+        }
+      })
   }
 
   const classes = useStyles()
@@ -124,12 +159,45 @@ const CarDetail = () => {
             </DialogActions>
           </Dialog>
 
-          <Grid container spacing={3} className={classes.mainGrid}>
+          <Dialog
+            open={deleteCarClicked}
+            onClose={() => setDeleteCarClicked(false)}
+          >
+            <DialogContent>
+              <DialogContentText>
+                If you delete this car, you won't be able to recover it, you will
+                need to register it again.
+              </DialogContentText>
+            </DialogContent>
 
+            <DialogActions>
+              <Button
+                variant="outlined"
+                onClick={() => setDeleteCarClicked(false)}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleDeleteCar}
+              >
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          <CarGallery pictures={pictures} />
+
+          <Grid container spacing={3} className={classes.mainGrid}>
             <Grid item xs={8}>
               <Container className={classes.infoContainer}>
                 <NameHeader>
-                  <CarName>{maker}</CarName> <CarName inRed>{model}</CarName>
+                  <div>
+                    <CarName>{maker}</CarName> <CarName inRed>{model}</CarName>
+                  </div>
+                  <CarName>$ {price}</CarName>
                 </NameHeader>
 
                 <Grid container>
@@ -152,7 +220,8 @@ const CarDetail = () => {
 
                 <Grid container>
                   <Grid item xs={3}>
-                    <LabelWithValue label="Color" value={color} />
+                    <Typography display="block" className={classes.label}>Color</Typography>
+                    <CarColor color={color} />
                   </Grid>
 
                   <Grid item xs={3}>
@@ -160,25 +229,17 @@ const CarDetail = () => {
                   </Grid>
 
                   <Grid item xs={3}>
-                    <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
+                    <LabelWithValue label="Ipva Is Paid" value={getBoolAnswer(ipvaIsPaid)} />
                   </Grid>
 
                   <Grid item xs={3}>
-                    <LabelWithValue label="Year" value={`${makeDate}/${makedDate}`} />
+                    <LabelWithValue label="Is Licensed" value={getBoolAnswer(isLicensed)} />
                   </Grid>
                 </Grid>
 
                 <Grid container>
                   <Grid item xs={3}>
-                    <LabelWithValue label="KM" value={kilometers.toString()} />
-                  </Grid>
-
-                  <Grid item xs={3}>
-                    <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
-                  </Grid>
-
-                  <Grid item xs={3}>
-                    <LabelWithValue label="year" value={`${makeDate}/${makedDate}`} />
+                    <LabelWithValue label="Is Armored" value={getBoolAnswer(isArmored)} />
                   </Grid>
                 </Grid>
 
@@ -192,6 +253,32 @@ const CarDetail = () => {
                   className={classes.description}
                   value={message}
                 />
+
+                {userIsOwner &&
+                  <Grid container className={classes.carDetailsFooter} spacing={2}>
+                    <Grid item>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        endIcon={<EditIcon />}
+                        onClick={() => history.push(`/car/edit/${id}`)}
+                      >
+                        Edit Car
+                      </Button>
+                    </Grid>
+
+                    <Grid item>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        endIcon={<DeleteIcon />}
+                        onClick={() => setDeleteCarClicked(true)}
+                      >
+                        Delete Car
+                      </Button>
+                    </Grid>
+
+                  </Grid>}
               </Container>
             </Grid>
 
@@ -225,25 +312,39 @@ const CarDetail = () => {
                   </ListItem>
                 </List>
 
-                <TextField
-                  label="Message"
-                  variant="outlined"
-                  value={messageText}
-                  onChange={(e) => setMessageText(e.target.value)}
-                  rows={7}
-                  multiline
-                  fullWidth
-                />
+                {!userIsOwner &&
+                  <>
+                    <TextField
+                      label="Message"
+                      variant="outlined"
+                      value={messageText}
+                      onChange={(e) => setMessageText(e.target.value)}
+                      rows={7}
+                      multiline
+                      fullWidth
+                    />
 
-                <Grid container justify="flex-start" className={classes.sendMessageFooter}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSendMessageClick}
-                  >
-                    Send
-                  </Button>
-                </Grid>
+                    <Grid container justify="flex-start" className={classes.sendMessageFooter}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSendMessageClick}
+                      >
+                        Send
+                      </Button>
+                    </Grid>
+                  </>}
+
+                {userIsOwner &&
+                  <Grid container justify="flex-start" className={classes.sendMessageFooter}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => history.push('/account/contact')}
+                    >
+                      Edit Contact
+                    </Button>
+                  </Grid>}
               </Container>
             </Grid>
           </Grid>

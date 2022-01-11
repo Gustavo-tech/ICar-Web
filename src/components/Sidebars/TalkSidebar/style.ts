@@ -34,5 +34,5 @@ export const NotFoundContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 70vh;
 `
