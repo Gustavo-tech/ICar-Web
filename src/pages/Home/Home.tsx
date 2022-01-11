@@ -36,8 +36,8 @@ const Home = () => {
 
   useEffect(() => {
     fetchNews(access_token)
-    fetchMostSeenCars(5, access_token)
-    fetchMostSeenMakers(5, access_token)
+    fetchMostSeenCars(4, access_token)
+    fetchMostSeenMakers(4, access_token)
   }, [])
 
   const localNews = news.slice(0, 4)
