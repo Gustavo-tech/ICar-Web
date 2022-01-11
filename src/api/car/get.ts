@@ -2,8 +2,8 @@ import axios, { AxiosResponse } from 'axios'
 import { apiUrl } from '../../constants/urls'
 import { CarOverview, Car } from '../../models/car'
 
-export const getUserCars = (maker: string | null, model: string | null, minPrice: number | null,
-  maxPrice: number | null, maxKilometers: number | null, authToken: string): Promise<AxiosResponse<CarOverview[]>> =>
+export const getUserCars = (maker: string | undefined, model: string | undefined, minPrice: number | undefined,
+  maxPrice: number | undefined, maxKilometers: number | undefined, authToken: string): Promise<AxiosResponse<CarOverview[]>> =>
   axios.get<CarOverview[]>(`${apiUrl}/cars/mycars`, {
     headers: {
       'Authorization': 'Bearer ' + authToken,
@@ -18,8 +18,8 @@ export const getUserCars = (maker: string | null, model: string | null, minPrice
     }
   })
 
-export const getSellingCars = (maker: string | null, model: string | null, minPrice: number | null,
-  maxPrice: number | null, maxKilometers: number | null, authToken: string): Promise<AxiosResponse<CarOverview[]>> =>
+export const getSellingCars = (maker: string | undefined, model: string | undefined, minPrice: number | undefined,
+  maxPrice: number | undefined, maxKilometers: number | undefined, authToken: string): Promise<AxiosResponse<CarOverview[]>> =>
   axios.get<CarOverview[]>(`${apiUrl}/cars/selling`, {
     headers: {
       'Authorization': 'Bearer ' + authToken,

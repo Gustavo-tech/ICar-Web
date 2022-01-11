@@ -106,7 +106,11 @@ const SellCar = () => {
           <CarPictures onNextClick={handleNextClick} />}
 
         {step === 1 &&
-          <CarDetails onNextClick={handleNextClick} onBackClick={handleBackClick} />}
+          <CarDetails
+            onNextClick={handleNextClick}
+            onBackClick={handleBackClick}
+            isUpdate={false}
+          />}
 
         {step === 2 &&
           <CarAddress onNextClick={handleCreateClick} onPreviousClick={handleBackClick} />}

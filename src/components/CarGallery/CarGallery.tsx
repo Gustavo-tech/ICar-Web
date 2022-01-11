@@ -45,19 +45,21 @@ const CarGallery = ({ pictures }: CarGalleryProps) => {
         })
       }
 
-      <IconButton
-        className={`${classes.leftButton} ${classes.button}`}
-        onClick={decreaseIndex}
-      >
-        <NavigateBeforeIcon className={classes.arrowIcon} />
-      </IconButton>
+      {pictures.length > 3 &&
+        <IconButton
+          className={`${classes.leftButton} ${classes.button}`}
+          onClick={decreaseIndex}
+        >
+          <NavigateBeforeIcon className={classes.arrowIcon} />
+        </IconButton>}
 
-      <IconButton
-        className={`${classes.nextButton} ${classes.button}`}
-        onClick={increaseIndex}
-      >
-        <NavigateNextIcon className={classes.arrowIcon} />
-      </IconButton>
+      {pictures.length > 3 &&
+        <IconButton
+          className={`${classes.nextButton} ${classes.button}`}
+          onClick={increaseIndex}
+        >
+          <NavigateNextIcon className={classes.arrowIcon} />
+        </IconButton>}
     </Wrapper>
   )
 }
