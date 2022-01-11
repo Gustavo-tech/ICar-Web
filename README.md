@@ -16,8 +16,8 @@ I created this application with the intention to build a small portfolio using R
 - Styled Components
 
 ### Application pictures
-<img src="./github/screenshot_1.png" />
-<img src="./github/screenshot_2.png" />
-<img src="./github/screenshot_3.png" />
+<img src="./.github/screenshot_1.png" />
+<img src="./.github/screenshot_2.png" />
+<img src="./.github/screenshot_3.png" />
 
 [Link for the back end repository](https://github.com/Gustavo-tech/ICar-Services)
